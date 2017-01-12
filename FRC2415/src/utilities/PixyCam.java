@@ -12,7 +12,7 @@ public class PixyCam {
 	
 	AnalogInput pixyAim;
 	DigitalInput pixyBool;
-	double goal = 1.6969;
+	double goal;
 	
 	/**
 	 * Constructor for the PixyCam object
