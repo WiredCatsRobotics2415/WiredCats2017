@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot;
+package org.usfirst.frc.team2415.robot.utilities;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -21,18 +21,15 @@ public class WiredCatGamepad extends Joystick{
 	public WiredCatGamepad(int port) {
 		super(port);
 		
-		x_button = new JoystickButton(this, 1);
-		a_button = new JoystickButton(this, 2);
-		b_button = new JoystickButton(this, 3);
+		a_button = new JoystickButton(this, 1);
+		b_button = new JoystickButton(this, 2);
+		x_button = new JoystickButton(this, 3);
 		y_button = new JoystickButton(this, 4);
 		
 		
 		
 		leftBumper = new JoystickButton(this, 5);
-		rightBumper = new JoystickButton(this, 6);
-		
-		leftTrigger = new JoystickButton(this, 7);
-		rightTrigger = new JoystickButton(this, 8);	
+		rightBumper = new JoystickButton(this, 6);	
 	}
 	
 	public double leftY(){
@@ -49,5 +46,13 @@ public class WiredCatGamepad extends Joystick{
 	
 	public double rightX(){
 		return this.getRawAxis(4);
+	}
+	
+	public double leftTrigger(){
+		return this.getRawAxis(3);
+	}
+	
+	public double rightTrigger(){
+		return this.getRawAxis(2);
 	}
 }

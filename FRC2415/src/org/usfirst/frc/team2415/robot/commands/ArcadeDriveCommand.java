@@ -45,25 +45,16 @@ public class ArcadeDriveCommand extends Command {
     	leftY = INTERPOLATION_FACTOR*Math.pow(leftY, 3) + (1-INTERPOLATION_FACTOR)*leftY;
     	rightX = INTERPOLATION_FACTOR*Math.pow(rightX, 3) + (1-INTERPOLATION_FACTOR)*rightX;
     	
-    	double rightMotors = STRAIGHT_RESTRICTER*leftY + TURN_SPEED_BOOST*rightX;
-    	double leftMotors = STRAIGHT_RESTRICTER*leftY - TURN_SPEED_BOOST*rightX;
+    	double left = STRAIGHT_RESTRICTER*leftY + TURN_SPEED_BOOST*rightX;
+    	double right = STRAIGHT_RESTRICTER*leftY - TURN_SPEED_BOOST*rightX;
     	
-    	if (rightMotors > 1) {
-    		rightMotors = 1;
-    		leftMotors = leftMotors/rightMotors;
-    	} else if (rightMotors < -1) {
-    		rightMotors = -1;
-    		leftMotors = leftMotors/-rightMotors;
-    	}
-    	if (leftMotors > 1) {
-    		leftMotors = 1;
-    		rightMotors = rightMotors/leftMotors;
-    	} else if (leftMotors < -1) {
-    		leftMotors = -1;
-    		rightMotors = rightMotors/-leftMotors;
-    	}
+    	double max = Math.max(Math.abs(left), Math.abs(right));
+		if (max > 1){
+			left /= max;
+			right /= max;
+		}
     	
-    	Robot.driveSubsystem.setMotors(leftMotors, rightMotors);
+    	Robot.driveSubsystem.setMotors(left, right);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -79,5 +70,6 @@ public class ArcadeDriveCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.driveSubsystem.stopMotors();
     }
 }

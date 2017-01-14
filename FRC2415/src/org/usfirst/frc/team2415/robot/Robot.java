@@ -3,14 +3,12 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
-
+import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
+import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -114,5 +112,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+	
+	/**
+	 * a function to run all of the update status functions in each of the subsystems
+	 */
+	public void updateStatus() {
+		
 	}
 }
