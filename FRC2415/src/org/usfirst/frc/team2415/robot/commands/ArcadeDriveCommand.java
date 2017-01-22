@@ -2,6 +2,8 @@ package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,6 +15,7 @@ public class ArcadeDriveCommand extends Command {
 	private double DEADBAND = 0.05;
 	private double STRAIGHT_RESTRICTER = 0.8; 
 	private double TURN_SPEED_BOOST = 1.2;
+	private double overPower = .2;
 
     public ArcadeDriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -22,6 +25,7 @@ public class ArcadeDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	Robot.driveSubsystem.stopMotors();
     }
 
@@ -48,11 +52,19 @@ public class ArcadeDriveCommand extends Command {
     	double left = STRAIGHT_RESTRICTER*leftY + TURN_SPEED_BOOST*rightX;
     	double right = STRAIGHT_RESTRICTER*leftY - TURN_SPEED_BOOST*rightX;
     	
-    	double max = Math.max(Math.abs(left), Math.abs(right));
-		if (max > 1){
-			left /= max;
-			right /= max;
-		}
+        if (left > 1.0) {
+            right -= overPower * (left - 1.0);
+            left = 1.0;
+        } else if (right > 1.0) {
+            left -= overPower * (right - 1.0);
+            right = 1.0;
+        } else if (left < -1.0) {
+            right += overPower * (-1.0 - left);
+            left = -1.0;
+        } else if (right < -1.0) {
+            left += overPower * (-1.0 - right);
+            right = -1.0;
+        }
     	
     	Robot.driveSubsystem.setMotors(left, right);
     }

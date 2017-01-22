@@ -2,11 +2,13 @@
 package org.usfirst.frc.team2415.robot;
 
 
+import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -25,7 +27,7 @@ public class Robot extends IterativeRobot {
 	
 	public static boolean singlePlayerMode = false;
 	
-
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -78,6 +80,8 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
+		Command automousCommand = new TrajectoryCommand(Trajectories.CHEESY_PATH);
+		automousCommand.start();
 
 	}
 
