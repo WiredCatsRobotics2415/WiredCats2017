@@ -85,6 +85,10 @@ public class DriveSubsystem extends Subsystem {
     	return ahrs.getAngle();
     }
     
+    public double fPS2RPM(){
+    	return 0;
+    }
+    
     public void updateStatus() {
     	
     }
