@@ -40,7 +40,6 @@ public class DriveSubsystem extends Subsystem {
     	rightTalFront.changeControlMode(TalonControlMode.Follower);
     	rightTalFront.set(rightTalBack.getDeviceID());
     	
-    	leftTalBack.reverseOutput(true);
     	
     }
     
@@ -50,7 +49,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void setMotors(double left, double right) {
-     	leftTalBack.set(left);
+     	leftTalBack.set(-left);
      	rightTalBack.set(right);
     }
     

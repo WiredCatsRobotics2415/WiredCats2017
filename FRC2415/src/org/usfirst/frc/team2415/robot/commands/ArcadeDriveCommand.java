@@ -49,8 +49,8 @@ public class ArcadeDriveCommand extends Command {
     	leftY = INTERPOLATION_FACTOR*Math.pow(leftY, 3) + (1-INTERPOLATION_FACTOR)*leftY;
     	rightX = INTERPOLATION_FACTOR*Math.pow(rightX, 3) + (1-INTERPOLATION_FACTOR)*rightX;
     	
-    	double left = STRAIGHT_RESTRICTER*leftY - TURN_SPEED_BOOST*rightX;
-    	double right = STRAIGHT_RESTRICTER*leftY + TURN_SPEED_BOOST*rightX;
+    	double left = STRAIGHT_RESTRICTER*leftY + TURN_SPEED_BOOST*rightX;
+    	double right = STRAIGHT_RESTRICTER*leftY - TURN_SPEED_BOOST*rightX;
     	
         if (left > 1.0) {
             right -= overPower * (left - 1.0);
@@ -67,7 +67,7 @@ public class ArcadeDriveCommand extends Command {
         }
     	
 //    	Robot.driveSubsystem.setMotors(Robot.gamepad.leftY(), Robot.gamepad.rightY());
-    	Robot.driveSubsystem.setMotors(left, -right);
+    	Robot.driveSubsystem.setMotors(left, right);
     	System.out.println("Left: " + left + "\t Right: " + -right);
     }
 

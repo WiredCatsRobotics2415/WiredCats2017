@@ -33,7 +33,7 @@ public class WiredCatGamepad extends Joystick{
 	}
 	
 	public double leftY(){
-		return this.getRawAxis(1);
+		return -this.getRawAxis(1);
 	}
 	
 	public double leftX(){
@@ -41,7 +41,7 @@ public class WiredCatGamepad extends Joystick{
 	}
 	
 	public double rightY(){
-		return this.getRawAxis(5);
+		return -this.getRawAxis(5);
 	}
 	
 	public double rightX(){
