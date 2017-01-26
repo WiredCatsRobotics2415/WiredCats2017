@@ -13,7 +13,7 @@ public class ArcadeDriveCommand extends Command {
 	
 	private double INTERPOLATION_FACTOR = 0.75;
 	private double DEADBAND = 0.05;
-	private double STRAIGHT_RESTRICTER = 0.8; 
+	private double STRAIGHT_RESTRICTER = 1; 
 	private double TURN_SPEED_BOOST = 1.2;
 	private double overPower = .2;
 
@@ -43,14 +43,14 @@ public class ArcadeDriveCommand extends Command {
     		rightX = Robot.gamepad.rightX();
     	}
     	
-    	if (Math.abs(leftY)< DEADBAND) leftY = 0;
-    	if (Math.abs(rightX)< DEADBAND) rightX = 0;
+    	if (Math.abs(leftY) < DEADBAND) leftY = 0;
+    	if (Math.abs(rightX) < DEADBAND) rightX = 0;
     	
     	leftY = INTERPOLATION_FACTOR*Math.pow(leftY, 3) + (1-INTERPOLATION_FACTOR)*leftY;
     	rightX = INTERPOLATION_FACTOR*Math.pow(rightX, 3) + (1-INTERPOLATION_FACTOR)*rightX;
     	
-    	double left = STRAIGHT_RESTRICTER*leftY + TURN_SPEED_BOOST*rightX;
-    	double right = STRAIGHT_RESTRICTER*leftY - TURN_SPEED_BOOST*rightX;
+    	double left = STRAIGHT_RESTRICTER*leftY - TURN_SPEED_BOOST*rightX;
+    	double right = STRAIGHT_RESTRICTER*leftY + TURN_SPEED_BOOST*rightX;
     	
         if (left > 1.0) {
             right -= overPower * (left - 1.0);
@@ -66,7 +66,9 @@ public class ArcadeDriveCommand extends Command {
             right = -1.0;
         }
     	
-    	Robot.driveSubsystem.setMotors(left, right);
+//    	Robot.driveSubsystem.setMotors(Robot.gamepad.leftY(), Robot.gamepad.rightY());
+    	Robot.driveSubsystem.setMotors(left, -right);
+    	System.out.println("Left: " + left + "\t Right: " + -right);
     }
 
     // Make this return true when this Command no longer needs to run execute()
