@@ -14,8 +14,8 @@ public class ArcadeDriveCommand extends Command {
 	private double INTERPOLATION_FACTOR = 0.75;
 	private double DEADBAND = 0.05;
 	private double STRAIGHT_RESTRICTER = 1; 
-	private double TURN_SPEED_BOOST = 1.2;
-	private double overPower = .2;
+	private double TURN_SPEED_BOOST = 0.4;
+	private double overPower = .6;
 
     public ArcadeDriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -68,6 +68,7 @@ public class ArcadeDriveCommand extends Command {
     	
 //    	Robot.driveSubsystem.setMotors(Robot.gamepad.leftY(), Robot.gamepad.rightY());
     	Robot.driveSubsystem.setMotors(left, right);
+    	System.out.println(Robot.driveSubsystem.getVelocity()[0]);
     	System.out.println("Left: " + left + "\t Right: " + -right);
     }
 

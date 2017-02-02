@@ -3,6 +3,8 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
+import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
@@ -39,6 +41,10 @@ public class Robot extends IterativeRobot {
 		gamepad = new WiredCatGamepad(0); //CHECK THIS NUMBER
 		operator = new WiredCatJoystick(1); //CHECK THIS NUMBER
 
+//		gamepad.a_button.whileHeld(new VelocityDriveCommand(5));
+//		gamepad.b_button.whileHeld(new VelocityDriveCommand(10));
+//		gamepad.x_button.whileHeld(new VelocityDriveCommand(-5));
+//		gamepad.y_button.whileHeld(new VelocityDriveCommand(-10));
 		
 	}
 

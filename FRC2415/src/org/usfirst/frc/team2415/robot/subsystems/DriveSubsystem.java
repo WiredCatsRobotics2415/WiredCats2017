@@ -1,13 +1,17 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
+import org.usfirst.frc.team2415.robot.utilities.PixyCam;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.StatusFrameRate;
 import com.ctre.CANTalon.TalonControlMode;
-import com.kauailabs.navx.frc.*;
+import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,6 +21,9 @@ public class DriveSubsystem extends Subsystem {
 	
 	private CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
 	private AHRS ahrs;
+	private PixyCam pixy;
+	
+	double WHEEL_RADIUS;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -24,11 +31,19 @@ public class DriveSubsystem extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ArcadeDriveCommand());
+    	setDefaultCommand(new VelocityDriveCommand(69));
     }
     
     public DriveSubsystem() {
-    	ahrs = new AHRS(SPI.Port.kMXP);
+    	
+    	try {
+            /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+            /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+            /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+            ahrs = new AHRS(SerialPort.Port.kMXP); 
+        } catch (RuntimeException ex ) {
+            DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+        }
     	
     	leftTalBack = new CANTalon(RobotMap.LEFT_TALON_BACK);
     	leftTalFront = new CANTalon(RobotMap.LEFT_TALON_FRONT);
@@ -39,6 +54,14 @@ public class DriveSubsystem extends Subsystem {
     	leftTalFront.set(leftTalBack.getDeviceID());
     	rightTalFront.changeControlMode(TalonControlMode.Follower);
     	rightTalFront.set(rightTalBack.getDeviceID());
+    	
+    	leftTalBack.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	rightTalBack.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	
+    	leftTalBack.setStatusFrameRateMs(StatusFrameRate.Feedback, 20);
+    	rightTalBack.setStatusFrameRateMs(StatusFrameRate.Feedback, 20);
+    	
+    	
     	
     	
     }
@@ -59,6 +82,15 @@ public class DriveSubsystem extends Subsystem {
     	
     	if(mode == TalonControlMode.Speed){
     		//TODO: see 12.4
+    		leftTalBack.configNominalOutputVoltage(0, 0);
+    		leftTalBack.configPeakOutputVoltage(12, -12);
+    		setPIDF(leftTalBack, 0.8, 0, .1, 0.145489);
+
+    		rightTalBack.configNominalOutputVoltage(0, 0);
+    		rightTalBack.configPeakOutputVoltage(12, -12);
+    		setPIDF(rightTalBack, 0.8, 0, .1, 0.1469152);
+    		
+    		//0.154488160438 old f
     	}
     }
     
@@ -84,8 +116,16 @@ public class DriveSubsystem extends Subsystem {
     	return ahrs.getAngle();
     }
     
-    public double fPS2RPM(){
-    	return 0;
+    public double fPS2RPM(double fps){
+    	return (fps*60)/(2*Math.PI*WHEEL_RADIUS);
+    }
+    
+    public double[] getDistance(){
+    	return new double[]{0,0};
+    }
+    
+    public double[] getVelocity(){
+    	return new double[]{leftTalBack.getSpeed(), rightTalBack.getSpeed()};
     }
     
     public void updateStatus() {
