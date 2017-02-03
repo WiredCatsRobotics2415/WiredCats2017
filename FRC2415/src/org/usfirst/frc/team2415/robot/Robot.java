@@ -23,7 +23,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
+	//TODO: create carousel subsystem variable
 	public static DriveSubsystem driveSubsystem;
+	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
@@ -37,14 +39,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		//TODO: initialize carousel subsystem
 		driveSubsystem = new DriveSubsystem();
-		gamepad = new WiredCatGamepad(0); //CHECK THIS NUMBER
-		operator = new WiredCatJoystick(1); //CHECK THIS NUMBER
-
-//		gamepad.a_button.whileHeld(new VelocityDriveCommand(5));
-//		gamepad.b_button.whileHeld(new VelocityDriveCommand(10));
-//		gamepad.x_button.whileHeld(new VelocityDriveCommand(-5));
-//		gamepad.y_button.whileHeld(new VelocityDriveCommand(-10));
+		
+		gamepad = new WiredCatGamepad(0); 
+		operator = new WiredCatJoystick(1);
+		
+		//TODO: make carousel command run on button press 3 on joystick
 		
 	}
 

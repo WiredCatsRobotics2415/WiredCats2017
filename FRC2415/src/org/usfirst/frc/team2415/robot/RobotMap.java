@@ -17,10 +17,11 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 	
-	//TODO: CHECK THESE VALUES
-	public static final int LEFT_TALON_BACK = 1; //CHECK THESE VALUES
-	public static final int LEFT_TALON_FRONT = 2; //CHECK
-	public static final int RIGHT_TALON_BACK = 3; //CHECK
-	public static final int RIGHT_TALON_FRONT = 4; //CHECK
+	public static final int LEFT_TALON_BACK = 1;
+	public static final int LEFT_TALON_FRONT = 2; 
+	public static final int RIGHT_TALON_BACK = 3; 
+	public static final int RIGHT_TALON_FRONT = 4;
+	
+	//TODO: make device ID for carousel talon 
 	
 }
