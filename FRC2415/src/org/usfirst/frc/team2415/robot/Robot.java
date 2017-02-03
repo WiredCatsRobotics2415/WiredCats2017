@@ -1,15 +1,18 @@
 
 package org.usfirst.frc.team2415.robot;
 
+
+import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
+import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
+import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
+import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team2415.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2415.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,11 +23,13 @@ import org.usfirst.frc.team2415.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static OI oi;
-
-	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	public static DriveSubsystem driveSubsystem;
+	public static WiredCatGamepad gamepad;
+	public static WiredCatJoystick operator;
+	
+	public static boolean singlePlayerMode = false;
+	
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -32,10 +37,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		driveSubsystem = new DriveSubsystem();
+		gamepad = new WiredCatGamepad(0); //CHECK THIS NUMBER
+		operator = new WiredCatJoystick(1); //CHECK THIS NUMBER
+
+//		gamepad.a_button.whileHeld(new VelocityDriveCommand(5));
+//		gamepad.b_button.whileHeld(new VelocityDriveCommand(10));
+//		gamepad.x_button.whileHeld(new VelocityDriveCommand(-5));
+//		gamepad.y_button.whileHeld(new VelocityDriveCommand(-10));
+		
 	}
 
 	/**
@@ -66,7 +76,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -76,8 +86,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		Command automousCommand = new TrajectoryCommand(Trajectories.CHEESY_PATH);
+		automousCommand.start();
+
 	}
 
 	/**
@@ -94,8 +105,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+
 	}
 
 	/**
@@ -112,5 +122,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+	
+	/**
+	 * a function to run all of the update status functions in each of the subsystems
+	 */
+	public void updateStatus() {
+		
 	}
 }
