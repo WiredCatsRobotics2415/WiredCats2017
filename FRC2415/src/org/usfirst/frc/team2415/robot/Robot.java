@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
 	public static DriveSubsystem driveSubsystem;
+	//TODO: make a new feeder subsystem variable
+	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
@@ -37,14 +39,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		//TODO: initialize the feeder subsystem
 		driveSubsystem = new DriveSubsystem();
-		gamepad = new WiredCatGamepad(0); //CHECK THIS NUMBER
-		operator = new WiredCatJoystick(1); //CHECK THIS NUMBER
+		
+		gamepad = new WiredCatGamepad(0);
+		operator = new WiredCatJoystick(1);
 
-//		gamepad.a_button.whileHeld(new VelocityDriveCommand(5));
-//		gamepad.b_button.whileHeld(new VelocityDriveCommand(10));
-//		gamepad.x_button.whileHeld(new VelocityDriveCommand(-5));
-//		gamepad.y_button.whileHeld(new VelocityDriveCommand(-10));
+		//TODO: run the feeder command while button 7 is held down on the joystick
 		
 	}
 
