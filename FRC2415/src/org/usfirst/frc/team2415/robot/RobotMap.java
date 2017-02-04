@@ -24,4 +24,6 @@ public class RobotMap {
 	
 	//TODO: make device ID for carousel talon 
 	
+	public static final int CAROUSEL_TALON = 7;
+	
 }

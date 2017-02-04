@@ -2,15 +2,13 @@ package org.usfirst.frc.team2415.robot.utilities;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 
 /**
  * A class for the PixyCam
  * @author omarimatthews
  *
  */
-public class PixyCam implements PIDSource {
+public class PixyCam {
 	
 	AnalogInput pixyAim;
 	DigitalInput pixyBool;
@@ -21,25 +19,12 @@ public class PixyCam implements PIDSource {
 	 * TODO: set port values
 	 * @param AnalogPort the analog input port
 	 * @param DigitalPort the digital input port
+	 * @param goal the value that the pixy returns when it is perfectly lined up
 	 */
-	public PixyCam(int AnalogPort, int DigitalPort){
-		pixyAim = new AnalogInput(AnalogPort);
-		pixyBool = new DigitalInput(DigitalPort);
-	}
-	
-	/**
-	* setter for the goal
-	*/
-	public void setGoal(double goal){
+	public PixyCam(int AnalogPort, int DigitalPort, double goal){
+		pixyAim = new AnalogInput(0);
+		pixyBool = new DigitalInput(0);
 		this.goal = goal;
-	}
-	
-	public double POut(double kP, double steadyState){
-		if (Math.abs(getError()) < steadyState){
-			return 0;
-		} else {
-		return getErrorPrime() * kP;
-		}
 	}
 	
 	/**
@@ -63,7 +48,7 @@ public class PixyCam implements PIDSource {
 	 * @return the error if the target is in bounds, otherwise 0
 	 */
 	public double getErrorPrime(){
-		if (getTarget()) return getError();
+		if (getTarget()) return get();
 		else return 0;
 	}
 	
@@ -72,23 +57,7 @@ public class PixyCam implements PIDSource {
 	 * @return current pixy position - target position
 	 */
 	public double getError(){
-		return goal - get();
-	}
-
-	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public PIDSourceType getPIDSourceType() {
-		return PIDSourceType.kDisplacement;
-	}
-
-	@Override
-	public double pidGet() {
-		// TODO Auto-generated method stub
-		return get();
+		return get() - goal;
 	}
 	
 

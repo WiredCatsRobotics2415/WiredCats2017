@@ -3,8 +3,8 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
-import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
+import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 
 	//TODO: create carousel subsystem variable
 	public static DriveSubsystem driveSubsystem;
+	public static CarouselSubsystem carouselSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -41,11 +42,13 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		//TODO: initialize carousel subsystem
 		driveSubsystem = new DriveSubsystem();
+		carouselSubsystem = new CarouselSubsystem();
 		
 		gamepad = new WiredCatGamepad(0); 
 		operator = new WiredCatJoystick(1);
 		
 		//TODO: make carousel command run on button press 3 on joystick
+		operator.buttons[3].whileHeld(new CarouselCommand());
 		
 	}
 
