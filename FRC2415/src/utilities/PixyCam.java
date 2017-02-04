@@ -1,5 +1,4 @@
-package org.usfirst.frc.team2415.robot.utilities;
-
+package utilities;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 

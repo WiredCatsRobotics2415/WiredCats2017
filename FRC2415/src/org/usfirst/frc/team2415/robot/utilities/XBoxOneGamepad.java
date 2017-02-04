@@ -1,8 +1,9 @@
-package utilities;
+package org.usfirst.frc.team2415.robot.utilities;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-public class WiredCatGamepad extends Joystick{
+public class XBoxOneGamepad extends Joystick{
 	
 	/*HUGE NOTE!!!!!
 	 * Make sure that the controller is in DirectInput mode
@@ -17,7 +18,7 @@ public class WiredCatGamepad extends Joystick{
 	
 	public JoystickButton leftTrigger, rightTrigger;
 	
-	public WiredCatGamepad(int port) {
+	public XBoxOneGamepad(int port) {
 		super(port);
 		
 		a_button = new JoystickButton(this, 1);
@@ -25,14 +26,12 @@ public class WiredCatGamepad extends Joystick{
 		x_button = new JoystickButton(this, 3);
 		y_button = new JoystickButton(this, 4);
 		
-		
-		
 		leftBumper = new JoystickButton(this, 5);
 		rightBumper = new JoystickButton(this, 6);	
 	}
 	
 	public double leftY(){
-		return this.getRawAxis(1);
+		return -this.getRawAxis(1);
 	}
 	
 	public double leftX(){
@@ -40,7 +39,7 @@ public class WiredCatGamepad extends Joystick{
 	}
 	
 	public double rightY(){
-		return this.getRawAxis(5);
+		return -this.getRawAxis(5);
 	}
 	
 	public double rightX(){
@@ -48,10 +47,18 @@ public class WiredCatGamepad extends Joystick{
 	}
 	
 	public double leftTrigger(){
-		return this.getRawAxis(3);
+		return this.getRawAxis(2);
 	}
 	
 	public double rightTrigger(){
-		return this.getRawAxis(2);
+		return this.getRawAxis(3);
+	}
+	
+	public void rumbleLeft(double value){
+		this.setRumble(RumbleType.kLeftRumble, value);
+	}
+
+	public void rumbleRight(double value){
+		this.setRumble(RumbleType.kRightRumble, value);
 	}
 }

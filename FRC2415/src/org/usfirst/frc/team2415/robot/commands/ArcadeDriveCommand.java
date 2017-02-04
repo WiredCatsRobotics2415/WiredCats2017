@@ -67,9 +67,8 @@ public class ArcadeDriveCommand extends Command {
         }
     	
 //    	Robot.driveSubsystem.setMotors(Robot.gamepad.leftY(), Robot.gamepad.rightY());
-    	Robot.driveSubsystem.setMotors(left, right);
-    	System.out.println(Robot.driveSubsystem.getVelocity()[0]);
-    	System.out.println("Left: " + left + "\t Right: " + -right);
+    	Robot.driveSubsystem.setMotors(1, 1);
+    	System.out.println("LV: " + Robot.driveSubsystem.getVelocity()[0] + "\tRV: " + Robot.driveSubsystem.getVelocity()[1]);
     }
 
     // Make this return true when this Command no longer needs to run execute()

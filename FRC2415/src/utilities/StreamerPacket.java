@@ -1,5 +1,4 @@
-package org.usfirst.frc.team2415.robot.utilities;
-
+package utilities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class VelocityDriveCommand extends Command {
 
-	double velocity;
+	public double left1, right1;
 	private double INTERPOLATION_FACTOR = 0;
 	private double DEADBAND = 0.05;
 	private double STRAIGHT_RESTRICTER = 1; 
@@ -19,11 +19,10 @@ public class VelocityDriveCommand extends Command {
 	private double overPower = .1;
 	private boolean pointTurn;
 	
-    public VelocityDriveCommand(double velocity) {
+    public VelocityDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveSubsystem);
-    	this.velocity = velocity;
     }
 
     // Called just before this Command runs the first time
@@ -68,19 +67,15 @@ public class VelocityDriveCommand extends Command {
 //	            left += overPower * (-1.0 - right);
 //	            right = -1.0;
 //	        }
+	    	
+	    	left1 = 1079*left;
+	    	right1 = 1079*right;
 	        
 	    	Robot.driveSubsystem.setMotors(1079*left,1079*right);
+	    	Robot.gamepad.rumbleLeft(left);
+	    	Robot.gamepad.rumbleRight(right);
 		}
-    	
-    	
-//    	System.out.println("Left: " + Robot.driveSubsystem.getVelocity()[0] + "\tRight: " + Robot.driveSubsystem.getVelocity()[1]);
-    	// 11/54*
-    	//10000 = 5930
-    	//15000 = 6700
-    	//8000 = 4700
-    	//5000 = 
-    	//1000 = 
-    	//max? 970
+		
     }
 
     // Make this return true when this Command no longer needs to run execute()
