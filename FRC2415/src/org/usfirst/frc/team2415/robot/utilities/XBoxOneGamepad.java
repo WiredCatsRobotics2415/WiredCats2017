@@ -55,10 +55,10 @@ public class XBoxOneGamepad extends Joystick{
 	}
 	
 	public void rumbleLeft(double value){
-		this.setRumble(RumbleType.kLeftRumble, value);
+		this.setRumble(RumbleType.kLeftRumble, Math.abs(value));
 	}
 
 	public void rumbleRight(double value){
-		this.setRumble(RumbleType.kRightRumble, value);
+		this.setRumble(RumbleType.kRightRumble, Math.abs(value));
 	}
 }

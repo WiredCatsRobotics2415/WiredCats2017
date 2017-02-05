@@ -72,8 +72,8 @@ public class VelocityDriveCommand extends Command {
 	    	right1 = 1079*right;
 	        
 	    	Robot.driveSubsystem.setMotors(1079*left,1079*right);
-	    	Robot.gamepad.rumbleLeft(left);
-	    	Robot.gamepad.rumbleRight(right);
+//	    	Robot.gamepad.rumbleLeft(left);
+//	    	Robot.gamepad.rumbleRight(right);
 		}
 		
     }

@@ -31,7 +31,7 @@ public class DriveSubsystem extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new VelocityDriveCommand(69));
+    	setDefaultCommand(new VelocityDriveCommand());
     }
     
     public DriveSubsystem() {
@@ -84,11 +84,11 @@ public class DriveSubsystem extends Subsystem {
     		//TODO: see 12.4
     		leftTalBack.configNominalOutputVoltage(0, 0);
     		leftTalBack.configPeakOutputVoltage(12, -12);
-    		setPIDF(leftTalBack, 0.8, 0, .1, 0.145489);
+    		setPIDF(leftTalBack, .1696969696, 0, 0, .149853516420);
 
     		rightTalBack.configNominalOutputVoltage(0, 0);
     		rightTalBack.configPeakOutputVoltage(12, -12);
-    		setPIDF(rightTalBack, 0.8, 0, .1, 0.1469152);
+    		setPIDF(rightTalBack, .1696969696, 0, 0, .149853516420);
     		
     		//0.154488160438 old f
     	}
@@ -126,6 +126,10 @@ public class DriveSubsystem extends Subsystem {
     
     public double[] getVelocity(){
     	return new double[]{leftTalBack.getSpeed(), rightTalBack.getSpeed()};
+    }
+    
+    public double[] getError(){
+    	return new double[]{leftTalBack.getClosedLoopError(), rightTalBack.getClosedLoopError()};
     }
     
     public void updateStatus() {

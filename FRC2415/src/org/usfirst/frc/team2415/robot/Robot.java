@@ -2,7 +2,9 @@
 package org.usfirst.frc.team2415.robot;
 
 
+import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
@@ -34,13 +36,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		driveSubsystem = new DriveSubsystem();
+		
 		gamepad = new XBoxOneGamepad(0); 
 		operator = new WiredCatJoystick(1); 
 
-//		gamepad.a_button.whileHeld(new VelocityDriveCommand(5));
-//		gamepad.b_button.whileHeld(new VelocityDriveCommand(10));
-//		gamepad.x_button.whileHeld(new VelocityDriveCommand(-5));
-//		gamepad.y_button.whileHeld(new VelocityDriveCommand(-10));
 		
 	}
 
