@@ -3,9 +3,8 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
-import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 
@@ -23,6 +22,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
+	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -37,15 +37,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
-		gamepad = new WiredCatGamepad(0); //CHECK THIS NUMBER
-		operator = new WiredCatJoystick(1); //CHECK THIS NUMBER
-
-//		gamepad.a_button.whileHeld(new VelocityDriveCommand(5));
-//		gamepad.b_button.whileHeld(new VelocityDriveCommand(10));
-//		gamepad.x_button.whileHeld(new VelocityDriveCommand(-5));
-//		gamepad.y_button.whileHeld(new VelocityDriveCommand(-10));
 		
+		gamepad = new WiredCatGamepad(0);
+		operator = new WiredCatJoystick(1); 
 	}
 
 	/**
