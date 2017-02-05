@@ -34,6 +34,11 @@ public class CarouselSubsystem extends PIDSubsystem {
 
     public void initDefaultCommand() {
     	setDefaultCommand(new CarouselCommand());
+    	
+    	/* KAMI:
+    	 * no need to set it as the default 
+    	 * command since you're running it on a button
+    	 */
     }
 
     protected double returnPIDInput() {
@@ -41,6 +46,14 @@ public class CarouselSubsystem extends PIDSubsystem {
         return carouselTal.getOutputCurrent();
         
         //is this what im supposed to use for the PID input??
+        /* 
+         * KAMI: no--you're supposed to use the speed as input
+         * 		 but it doesn't matter because the carousel
+         * 		 doesn't have an encoder on it sorry :D
+         * 		 just make a regular subsystem and
+         * 		 run the talon on percentvbus and set the
+         * 		 forward speed to 0.69 or something
+         */
     }
 
     protected void usePIDOutput(double output) {

@@ -41,6 +41,17 @@ public class CarouselCommand extends Command {
     		}
     	}
     	Robot.carouselSubsystem.setCarouselSpeed(0.5);
+    	
+    	/* KAMI:
+    	 * so this won't work. in understand where your logic is going 
+    	 * but there are 2 tiny problems. a few hints:
+    	 * 1	so when a ball gets stuck in the intake and the intake starts
+    	 * 		to go in reverse, the current goes back down to normal levels
+    	 * 2	a while loop in this situation isn't really optimal because
+    	 * 		it doesn't let you choose between two options like an if
+    	 * 		statement does
+    	 * 3	you're missing an else -- find out where
+    	 */
     }
 
     // Make this return true when this Command no longer needs to run execute()
