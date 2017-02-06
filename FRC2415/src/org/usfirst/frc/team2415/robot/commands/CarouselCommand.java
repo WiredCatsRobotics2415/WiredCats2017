@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class CarouselCommand extends Command {
 
+	long backTime;
+	boolean voltageSpike;
+	
     public CarouselCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -34,14 +37,24 @@ public class CarouselCommand extends Command {
     	 * for now then it needs to go in reverse for a quarter of a second
     	 * and then continue to go forward
     	 */
-    	if(Robot.carouselSubsystem.getCurrent() >= 10){
-    		long backTime = System.currentTimeMillis()/1000;
-    		while (System.currentTimeMillis()/1000 - backTime < 0.25){
-    			Robot.carouselSubsystem.setCarouselSpeed(-0.25);
-    		}
+    	voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 10);
+    	if(voltageSpike) {
+    		backTime = System.currentTimeMillis()/1000;
     	}
-    	Robot.carouselSubsystem.setCarouselSpeed(0.5);
+		if (System.currentTimeMillis()/1000 - backTime < 0.25){
+			Robot.carouselSubsystem.setCarouselSpeed(-0.25);
+		} else {
+			Robot.carouselSubsystem.setCarouselSpeed(0.5);
+		}
     	
+		/* ok it is 2am not sure if this works either but it seems more logical
+		 * so even tho current goes back to normal when the talon goes backwards
+		 * shouldnt it not reset backTime so that it will complete the 0.25sec
+		 * of -0.25 speed? and if voltage never spikes it will always set to 0.5?
+		 * maybe im missing something again
+		 */
+		
+		
     	/* KAMI:
     	 * so this won't work. in understand where your logic is going 
     	 * but there are 2 tiny problems. a few hints:
