@@ -22,6 +22,5 @@ public class RobotMap {
 	public static final int RIGHT_TALON_BACK = 3; 
 	public static final int RIGHT_TALON_FRONT = 4; 
 	
-	//TODO: make the device ID for the shooter talon
-	
+	public static final int SHOOTER_TALON = 5;
 }

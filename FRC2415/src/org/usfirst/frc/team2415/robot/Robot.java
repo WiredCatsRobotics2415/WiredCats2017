@@ -4,8 +4,10 @@ package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
 import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
 import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 
@@ -23,7 +25,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
-	//TODO: make a shooter subsystem variable
+	public static ShooterSubsystem shooterSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	
 	public static WiredCatGamepad gamepad;
@@ -39,14 +41,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//TODO: initialize the shooter subsystem
+		
+		shooterSubsystem = new ShooterSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		
 		gamepad = new WiredCatGamepad(0); 
 		operator = new WiredCatJoystick(1); 
 
-		//TODO: make the shooter run while button 1 on the joystick is held
-		
+		operator.buttons[1].whileHeld(new ShooterCommand());
 	}
 
 	/**
