@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeCommand extends Command {
 	
-	long jamTime;
+	long jamTime, startTime;
+	boolean senseCurrent = false;
+	double sign = 0;
 
     public IntakeCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -20,19 +22,24 @@ public class IntakeCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//TODO: extend intake
+    	startTime = System.currentTimeMillis()/1000;
     	Robot.intakeSubsystem.setMotor(0);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if(Robot.intakeSubsystem.getCurrent() >= 10){
+    	System.out.println("Current: " + Robot.intakeSubsystem.getCurrent());
+    	if(Robot.intakeSubsystem.getCurrent() >= 30 && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
     		jamTime = System.currentTimeMillis()/1000;
     	}
     	
-    	if(System.currentTimeMillis()/1000 - jamTime <= 0.25) {
+    	if(System.currentTimeMillis()/1000 - jamTime <= 0.15) {
     		Robot.intakeSubsystem.setMotor(-0.25);
     	} else Robot.intakeSubsystem.setMotor(0.75);
+    	
+    	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
     	
     }
 

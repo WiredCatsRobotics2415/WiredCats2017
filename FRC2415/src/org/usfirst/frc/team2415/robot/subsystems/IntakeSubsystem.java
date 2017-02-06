@@ -33,4 +33,8 @@ public class IntakeSubsystem extends Subsystem {
     public double getCurrent(){
     	return intakeTalon.getOutputCurrent();
     }
+    
+    public double getMotor(){
+    	return intakeTalon.get();
+    }
 }

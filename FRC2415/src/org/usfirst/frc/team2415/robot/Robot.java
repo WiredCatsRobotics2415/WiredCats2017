@@ -3,6 +3,7 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
+import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
@@ -42,6 +43,8 @@ public class Robot extends IterativeRobot {
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1); 
+		
+		gamepad.a_button.toggleWhenPressed(new IntakeCommand());
 	}
 
 	/**
