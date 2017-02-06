@@ -16,12 +16,12 @@ public class CarouselSubsystem extends Subsystem {
 	
     // Initialize your subsystem here
     public CarouselSubsystem() {
-//     	carouselTal = new CANTalon(RobotMap.CAROUSEL_TALON);
+    	carouselTal = new CANTalon(RobotMap.CAROUSEL_TALON);
 
     }
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new CarouselCommand());
+//     	setDefaultCommand(new CarouselCommand());
     	
     	/* KAMI:
     	 * no need to set it as the default 
