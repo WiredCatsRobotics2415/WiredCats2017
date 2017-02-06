@@ -3,9 +3,9 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
-import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
-import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.FeederCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 
@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
 	public static DriveSubsystem driveSubsystem;
+	public static FeederSubsystem feederSubsystem;
 	//TODO: make a new feeder subsystem variable
 	
 	public static WiredCatGamepad gamepad;
@@ -41,9 +42,11 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		//TODO: initialize the feeder subsystem
 		driveSubsystem = new DriveSubsystem();
+		feederSubsystem = new FeederSubsystem();
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
+		gamepad.b_button.whileHeld(new FeederCommand());
 
 		//TODO: run the feeder command while button 7 is held down on the joystick
 		
