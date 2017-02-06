@@ -16,7 +16,7 @@ public class CarouselSubsystem extends Subsystem {
 	
     // Initialize your subsystem here
     public CarouselSubsystem() {
-    	carouselTal = new CANTalon(RobotMap.CAROUSEL_TALON);
+//     	carouselTal = new CANTalon(RobotMap.CAROUSEL_TALON);
 
     }
 
@@ -29,6 +29,8 @@ public class CarouselSubsystem extends Subsystem {
     	 */
     	
     	//ok but i can cant i :3
+	    
+	// no.
     }
 
     public void setCarouselSpeed(double speed){
