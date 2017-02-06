@@ -23,7 +23,7 @@ public class DriveSubsystem extends Subsystem {
 	private AHRS ahrs;
 	private PixyCam pixy;
 	
-	double WHEEL_RADIUS;
+	double WHEEL_DIAMETER = 3.25/12;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -117,7 +117,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double fPS2RPM(double fps){
-    	return (fps*60)/(2*Math.PI*WHEEL_RADIUS);
+    	return (fps*60)/(Math.PI*WHEEL_DIAMETER);
     }
     
     public double[] getDistance(){

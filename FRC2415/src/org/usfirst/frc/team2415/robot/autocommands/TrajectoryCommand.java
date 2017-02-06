@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TrajectoryCommand extends Command {
 	
 	double[][] waypoints;
-	double totalTime = 10; //max seconds we want to drive the path
+	double totalTime = 13; //max seconds we want to drive the path
 	double timeStep = 0.02; //period of control loop on Rio, seconds
 	double robotTrackWidth = 2.083333333; //distance between left and right wheels, feet
 	FalconPathPlanner path;
@@ -35,10 +35,10 @@ public class TrajectoryCommand extends Command {
     	path = new FalconPathPlanner(waypoints);
     	path.calculate(totalTime, timeStep, robotTrackWidth);
     	for(double step[] : path.smoothLeftVelocity){
-    		left.add(step[1]);
+    		left.add(Robot.driveSubsystem.fPS2RPM(step[1]));
     	}
     	for(double step[] : path.smoothRightVelocity){
-    		right.add(step[1]);
+    		right.add(Robot.driveSubsystem.fPS2RPM(step[1]));
     	}
     	
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
@@ -46,7 +46,6 @@ public class TrajectoryCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//TODO: convert fps to rpm
     	Robot.driveSubsystem.setMotors(left.removeFirst(), right.removeFirst());
     }
 
