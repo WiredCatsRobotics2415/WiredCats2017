@@ -12,6 +12,13 @@ public class IntakeCommand extends Command {
 	long jamTime, startTime;
 	boolean senseCurrent = false;
 	double sign = 0;
+	
+	double intakeSpeed = 0.5;
+	double outtakeSpeed = -0.5;
+	double currentCap = 26;
+	double reverseTime = 0.05;
+	double afterTime = 0.25;
+	
 
     public IntakeCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -31,13 +38,13 @@ public class IntakeCommand extends Command {
     protected void execute() {
     	
     	System.out.println("Current: " + Robot.intakeSubsystem.getCurrent());
-    	if(Robot.intakeSubsystem.getCurrent() >= 30 && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
+    	if(Robot.intakeSubsystem.getCurrent() >= currentCap && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
     		jamTime = System.currentTimeMillis()/1000;
     	}
     	
-    	if(System.currentTimeMillis()/1000 - jamTime <= 0.15) {
-    		Robot.intakeSubsystem.setMotor(-0.25);
-    	} else Robot.intakeSubsystem.setMotor(0.75);
+    	if(System.currentTimeMillis()/1000 - jamTime <= reverseTime) {
+    		Robot.intakeSubsystem.setMotor(outtakeSpeed);
+    	} else Robot.intakeSubsystem.setMotor(intakeSpeed);
     	
     	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
     	
@@ -52,8 +59,8 @@ public class IntakeCommand extends Command {
     protected void end() {
     	//TODO: retract intake
     	long overTime = System.currentTimeMillis()/1000;
-    	while(System.currentTimeMillis()/1000 - overTime <= 0.25){
-    		Robot.intakeSubsystem.setMotor(0.75);
+    	while(System.currentTimeMillis()/1000 - overTime <= 0.5){
+    		Robot.intakeSubsystem.setMotor(intakeSpeed);
     	}
     	Robot.intakeSubsystem.setMotor(0);
     }
@@ -63,8 +70,8 @@ public class IntakeCommand extends Command {
     protected void interrupted() {
     	//TODO: retract intake
     	long overTime = System.currentTimeMillis()/1000;
-    	while(System.currentTimeMillis()/1000 - overTime <= 0.25){
-    		Robot.intakeSubsystem.setMotor(0.75);
+    	while(System.currentTimeMillis()/1000 - overTime <= afterTime){
+    		Robot.intakeSubsystem.setMotor(intakeSpeed);
     	}
     	Robot.intakeSubsystem.setMotor(0);
     }
