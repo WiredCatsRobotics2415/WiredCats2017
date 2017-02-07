@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2415.robot.commands;
 
-import java.awt.Robot;
+import org.usfirst.frc.team2415.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -23,7 +23,7 @@ public class ShooterCommand extends Command{
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//I don't know what the maxspeed of a Talon is
-    	Robot.shooterSubsystem.setTalonSpeed(0);
+    	Robot.shooterSubsystem.setTalonSpeed(1000);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,35 +1,53 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
  *
  */
-public class ShooterSubsystem extends Subsystem {
-	
+public class ShooterSubsystem extends PIDSubsystem {
+
+	static double kP, kI, kD, kF;
 	private CANTalon shooterTalon;
-	
-	public ShooterSubsystem(){
+    // Initialize your subsystem here
+    public ShooterSubsystem() {
     
-	 shooterTalon = new CANTalon (RobotMap.SHOOTER_TALON);
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	
-	}
+        // Use these to get going:
+        // setSetpoint() -  Sets where the PID controller should move the system
+        //                  to
+        // enable() - Enables the PID controller.
+    	
+    	super("shooter", kP, kI, kD, kF);
+    	
+    	shooterTalon = new CANTalon (RobotMap.SHOOTER_TALON);
+    	
+    	
+    }
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ShooterCommand());
+    }
+
+    protected double returnPIDInput() {
+        // Return your input value for the PID loop
+        // e.g. a sensor, like a potentiometer:
+        // yourPot.getAverageVoltage() / kYourMaxVoltage;
+        return shooterTalon.getSpeed();
+    }
+
+    protected void usePIDOutput(double output) {
+        // Use output to drive your system, like a motor
+        // e.g. yourMotor.set(output);
+    	shooterTalon.pidWrite(output);
     }
     
-  
-    public void setTalonSpeed(int speed){
+    public void setTalonSpeed(double speed){
     	shooterTalon.set(speed);
     }
+    
 }
-

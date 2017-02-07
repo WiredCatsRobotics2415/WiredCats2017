@@ -46,8 +46,8 @@ public class TrajectoryCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//TODO: convert fps to rpm
-    	Robot.driveSubsystem.setMotors(left.removeFirst(), right.removeFirst());
+  
+    	Robot.driveSubsystem.setMotors(Robot.driveSubsystem.fPS2RPM(left.removeFirst()), Robot.driveSubsystem.fPS2RPM(right.removeFirst()));
     }
 
     // Make this return true when this Command no longer needs to run execute()
