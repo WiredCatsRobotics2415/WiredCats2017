@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2415.robot.commands;
 
+import java.io.BufferedWriter;
+
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.utilities.USBWritable;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -9,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class VelocityDriveCommand extends Command {
+public class VelocityDriveCommand extends Command implements USBWritable {
 
 	private double INTERPOLATION_FACTOR = 0;
 	private double DEADBAND = 0.05;
@@ -17,6 +20,7 @@ public class VelocityDriveCommand extends Command {
 	private double TURN_SPEED_BOOST = 1;
 	private double overPower = .1;
 	private boolean pointTurn;
+	private BufferedWriter writer;
 	
     public VelocityDriveCommand() {
         // Use requires() here to declare subsystem dependencies
