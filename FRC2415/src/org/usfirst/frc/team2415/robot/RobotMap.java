@@ -23,6 +23,6 @@ public class RobotMap {
 	public static final int RIGHT_TALON_FRONT = 4;
 	public static final int FEEDER_TALON = 8;
 	
-	//TODO: make the device ID for the feeder talon
+
 	
 }

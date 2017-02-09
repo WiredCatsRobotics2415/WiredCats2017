@@ -18,7 +18,6 @@ public class PixyCam implements PIDSource {
 	
 	/**
 	 * Constructor for the PixyCam object
-	 * TODO: set port values
 	 * @param AnalogPort the analog input port
 	 * @param DigitalPort the digital input port
 	 */

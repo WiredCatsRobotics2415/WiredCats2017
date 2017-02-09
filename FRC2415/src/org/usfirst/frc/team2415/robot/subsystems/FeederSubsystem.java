@@ -16,9 +16,9 @@ public class FeederSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	//TODO: 1 talon for feeder
 	
-	//TODO: make constructor and initialize feeder talon in it with the port coming from the robot map
+	
+	
     public FeederSubsystem() {
     	feederTalon = new CANTalon(RobotMap.FEEDER_TALON);
     }
@@ -29,7 +29,6 @@ public class FeederSubsystem extends Subsystem {
 
     }
     
-    //TODO: make a function to set the speed of the feeder talon
     public void setMotor(double speed){
     	feederTalon.set(speed);
     }

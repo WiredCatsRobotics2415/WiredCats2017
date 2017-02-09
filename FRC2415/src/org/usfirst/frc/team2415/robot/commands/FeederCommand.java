@@ -13,19 +13,17 @@ public class FeederCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.feederSubsystem);
-    	//TODO: make it require the feeder subsystem -- remember to initialize it in the robot class
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//TODO: stop feeder
+    
     	Robot.feederSubsystem.setMotor(0);
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//TODO: set the feeder to full power
     	Robot.feederSubsystem.setMotor(1);
     }
 
@@ -36,14 +34,13 @@ public class FeederCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	//TODO: stop feeder
+
     	Robot.feederSubsystem.setMotor(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	//TODO: stop feeder
     	Robot.feederSubsystem.setMotor(0);
     }
 }

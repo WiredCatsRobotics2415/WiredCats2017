@@ -25,7 +25,6 @@ public class Robot extends IterativeRobot {
 
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
-	//TODO: make a new feeder subsystem variable
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -40,15 +39,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//TODO: initialize the feeder subsystem
 		driveSubsystem = new DriveSubsystem();
 		feederSubsystem = new FeederSubsystem();
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
-		gamepad.b_button.whileHeld(new FeederCommand());
-
-		//TODO: run the feeder command while button 7 is held down on the joystick
+		operator.buttons[7].whileHeld(new FeederCommand());
+		
 		
 	}
 
