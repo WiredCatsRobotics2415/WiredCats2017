@@ -23,8 +23,10 @@ public class CarouselCommand extends Command {
     protected void initialize() {
     	//TODO: make the carousel stop and 3 second delay
     	long initTime = System.currentTimeMillis()/1000;
-    	while(initTime + 3 < System.currentTimeMillis()/1000){
-    		Robot.carouselSubsystem.setCarouselSpeed(0);
+    	for (int i = 0; i < 3 ; i++){
+    	if(initTime + 1 == System.currentTimeMillis()/1000){
+    		continue;
+    		}
     	}
     }
 
