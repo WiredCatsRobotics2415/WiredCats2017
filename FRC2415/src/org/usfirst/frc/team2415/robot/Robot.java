@@ -3,10 +3,13 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
-import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
+import org.usfirst.frc.team2415.robot.commands.FeederCommand;
 import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
-import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
+import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.PIDFeederSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
@@ -26,6 +29,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
 	public static ShooterSubsystem shooterSubsystem;
+	public static FeederSubsystem feederSubsystem;
+	public static PIDFeederSubsystem pIDFeederSubsystem;
+	public static CarouselSubsystem carouselSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	
 	public static WiredCatGamepad gamepad;
@@ -43,12 +49,18 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		
 		shooterSubsystem = new ShooterSubsystem();
+		carouselSubsystem = new CarouselSubsystem();
+		feederSubsystem = new FeederSubsystem();
+		pIDFeederSubsystem = new PIDFeederSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		
 		gamepad = new WiredCatGamepad(0); 
 		operator = new WiredCatJoystick(1); 
 
 		operator.buttons[1].whileHeld(new ShooterCommand());
+		gamepad.a_button.whileHeld(new CarouselCommand());
+		gamepad.leftBumper.whileHeld(new FeederCommand());
+		gamepad.rightBumper.whileHeld(new ShooterCommand());
 	}
 
 	/**
