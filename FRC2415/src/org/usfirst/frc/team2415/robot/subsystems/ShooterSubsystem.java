@@ -3,6 +3,7 @@ package org.usfirst.frc.team2415.robot.subsystems;
 import org.usfirst.frc.team2415.robot.RobotMap;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -11,7 +12,10 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class ShooterSubsystem extends PIDSubsystem {
 
-	static double kP, kI, kD, kF;
+	static double kP = 0.1,
+				  kI = 0,
+				  kD = 0,
+				  kF = 0;
 	private CANTalon shooterTalon;
     // Initialize your subsystem here
     public ShooterSubsystem() {
@@ -24,7 +28,7 @@ public class ShooterSubsystem extends PIDSubsystem {
     	super("shooter", kP, kI, kD, kF);
     	
     	shooterTalon = new CANTalon (RobotMap.SHOOTER_TALON);
-    	
+    	shooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     	
     }
 
