@@ -17,11 +17,13 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 	
+
 	public static final int LEFT_TALON_BACK = 1; 
 	public static final int LEFT_TALON_FRONT = 2; 
 	public static final int RIGHT_TALON_BACK = 3; 
 	public static final int RIGHT_TALON_FRONT = 4;
-	public static final int FEEDER_TALON = 8;
 	public static final int INTAKE_TALON = 5;
+  public static final int CAROUSEL_TALON = 7;
+	public static final int FEEDER_TALON = 8;
 	
 }
