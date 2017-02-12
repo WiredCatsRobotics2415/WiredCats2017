@@ -29,6 +29,7 @@ public class ShooterSubsystem extends PIDSubsystem {
     	
     	shooterTalon = new CANTalon (RobotMap.SHOOTER_TALON);
     	shooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	shooterTalon.reverseSensor(true);
     	
     }
 

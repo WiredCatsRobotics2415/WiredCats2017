@@ -22,13 +22,14 @@ public class CarouselCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		// TODO: make the carousel stop and 3 second delay
-//		long initTime = System.currentTimeMillis() / 1000;
-//		for (int i = 0; i < 3; i++) {
-//			if (initTime + 1 == System.currentTimeMillis() / 1000) {
-//				continue;
-//			}
-		}
+//		 TODO: make the carousel stop and 3 second delay
+		 long initTime = System.currentTimeMillis() / 1000;
+		 for (int i = 0; i < 3; i++) {
+		 if (initTime + 1 == System.currentTimeMillis() / 1000) {
+		 continue;
+		 }
+	}
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
