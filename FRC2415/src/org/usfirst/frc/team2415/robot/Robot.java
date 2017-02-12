@@ -4,12 +4,16 @@ package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
 import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
+import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
+import org.usfirst.frc.team2415.robot.subsystems.PIDFeederSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.commands.FeederCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
+
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 
@@ -28,11 +32,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
 
+	public static ShooterSubsystem shooterSubsystem;
+	public static PIDFeederSubsystem pIDFeederSubsystem;
 	public static CarouselSubsystem carouselSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
-
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -48,19 +53,23 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		
-		gamepad = new WiredCatGamepad(0); 
-		operator = new WiredCatJoystick(1);
-    
+
+		shooterSubsystem = new ShooterSubsystem();
+		feederSubsystem = new FeederSubsystem();
+		pIDFeederSubsystem = new PIDFeederSubsystem();    
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		feederSubsystem = new FeederSubsystem();
 		carouselSubsystem = new CarouselSubsystem();
 		
-		
-		gamepad.a_button.toggleWhenPressed(new IntakeCommand());
-    
-    operator.buttons[3].whileHeld(new CarouselCommand());
-		operator.buttons[7].whileHeld(new FeederCommand());
+		gamepad = new WiredCatGamepad(0); 
+		operator = new WiredCatJoystick(1); 
+
+		operator.buttons[1].whileHeld(new ShooterCommand());
+		gamepad.a_button.whileHeld(new CarouselCommand());
+		gamepad.leftBumper.whileHeld(new FeederCommand());
+		gamepad.rightBumper.whileHeld(new ShooterCommand());
+
 	}
 
 	/**

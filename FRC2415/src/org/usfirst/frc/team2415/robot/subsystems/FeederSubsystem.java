@@ -33,4 +33,3 @@ public class FeederSubsystem extends Subsystem {
     	feederTalon.set(speed);
     }
 }
-

@@ -46,8 +46,9 @@ public class TrajectoryCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+  
+    	Robot.driveSubsystem.setMotors(Robot.driveSubsystem.fPS2RPM(left.removeFirst()), Robot.driveSubsystem.fPS2RPM(right.removeFirst()));
 
-    	Robot.driveSubsystem.setMotors(fPS2RPM(left.removeFirst()), fPS2RPM(right.removeFirst()));
     }
 
     private double fPS2RPM(Double removeFirst) {
