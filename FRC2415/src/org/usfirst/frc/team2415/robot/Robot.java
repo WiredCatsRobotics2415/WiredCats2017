@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2415.robot;
 
 
+
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
 import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
 import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
@@ -16,9 +17,9 @@ import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
+import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -39,7 +40,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
 	
-	public static WiredCatGamepad gamepad;
+	public static XBoxOneGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
 	public static boolean singlePlayerMode = false;
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+
 		
 
 		shooterSubsystem = new ShooterSubsystem();
@@ -61,8 +63,8 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 		feederSubsystem = new FeederSubsystem();
 		carouselSubsystem = new CarouselSubsystem();
-		
-		gamepad = new WiredCatGamepad(0); 
+
+		gamepad = new XBoxOneGamepad(0); 
 		operator = new WiredCatJoystick(1); 
 
 		operator.buttons[1].whileHeld(new ShooterCommand());
@@ -110,8 +112,8 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		Command automousCommand = new TrajectoryCommand(Trajectories.CHEESY_PATH);
-		automousCommand.start();
+//		Command automousCommand = new TrajectoryCommand(Trajectories.CHEESY_PATH);
+//		automousCommand.start();
 
 	}
 

@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2415.robot.commands;
 
+import java.io.BufferedWriter;
+
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.utilities.USBWritable;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -9,21 +12,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class VelocityDriveCommand extends Command {
+public class VelocityDriveCommand extends Command implements USBWritable {
 
-	double velocity;
 	private double INTERPOLATION_FACTOR = 0;
 	private double DEADBAND = 0.05;
 	private double STRAIGHT_RESTRICTER = 1; 
 	private double TURN_SPEED_BOOST = 1;
 	private double overPower = .1;
 	private boolean pointTurn;
+	private BufferedWriter writer;
 	
-    public VelocityDriveCommand(double velocity) {
+    public VelocityDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveSubsystem);
-    	this.velocity = velocity;
     }
 
     // Called just before this Command runs the first time
@@ -71,16 +73,7 @@ public class VelocityDriveCommand extends Command {
 	        
 	    	Robot.driveSubsystem.setMotors(1079*left,1079*right);
 		}
-    	
-    	
-//    	System.out.println("Left: " + Robot.driveSubsystem.getVelocity()[0] + "\tRight: " + Robot.driveSubsystem.getVelocity()[1]);
-    	// 11/54*
-    	//10000 = 5930
-    	//15000 = 6700
-    	//8000 = 4700
-    	//5000 = 
-    	//1000 = 
-    	//max? 970
+		
     }
 
     // Make this return true when this Command no longer needs to run execute()
