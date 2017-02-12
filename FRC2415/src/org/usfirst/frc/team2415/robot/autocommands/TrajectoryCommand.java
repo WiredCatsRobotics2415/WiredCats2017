@@ -46,10 +46,17 @@ public class TrajectoryCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+
     	Robot.driveSubsystem.setMotors(left.removeFirst(), right.removeFirst());
+
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    private double fPS2RPM(Double removeFirst) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return left.size() == 0 && right.size() == 0;
     }
