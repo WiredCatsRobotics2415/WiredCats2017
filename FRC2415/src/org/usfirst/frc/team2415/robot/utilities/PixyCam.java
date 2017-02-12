@@ -16,7 +16,6 @@ public class PixyCam {
 	
 	/**
 	 * Constructor for the PixyCam object
-	 * TODO: set port values
 	 * @param AnalogPort the analog input port
 	 * @param DigitalPort the digital input port
 	 * @param goal the value that the pixy returns when it is perfectly lined up
