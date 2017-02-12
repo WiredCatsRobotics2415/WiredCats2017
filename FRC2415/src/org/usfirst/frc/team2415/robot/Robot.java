@@ -3,8 +3,11 @@ package org.usfirst.frc.team2415.robot;
 
 
 import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
-import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
+
+import org.usfirst.frc.team2415.robot.commands.FeederCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
+import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
@@ -25,6 +28,8 @@ public class Robot extends IterativeRobot {
 
 	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
+	public static FeederSubsystem feederSubsystem;
+	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
@@ -38,13 +43,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+    
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
+		feederSubsystem = new FeederSubsystem();
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1); 
 		
 		gamepad.a_button.toggleWhenPressed(new IntakeCommand());
+    
+		operator.buttons[7].whileHeld(new FeederCommand());
 	}
 
 	/**
