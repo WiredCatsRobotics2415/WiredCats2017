@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
@@ -42,4 +43,3 @@ public class CarouselSubsystem extends Subsystem {
     }
     
 }
-
