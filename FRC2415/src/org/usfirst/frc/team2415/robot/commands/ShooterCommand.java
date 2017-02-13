@@ -18,13 +18,15 @@ public class ShooterCommand extends Command{
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.shooterSubsystem.setTalonSpeed(0);
-    	Robot.shooterSubsystem.enable();
+//    	Robot.shooterSubsystem.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//I don't know what the maxspeed of a Talon is
-    	Robot.shooterSubsystem.setSetpoint(1000);
+//    	Robot.shooterSubsystem.setSetpoint(1000);
+//    	if(Robot.)
+    	Robot.shooterSubsystem.setTalonSpeed(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,13 +37,13 @@ public class ShooterCommand extends Command{
     // Called once after isFinished returns true
     protected void end() {
     	Robot.shooterSubsystem.setTalonSpeed(0);
-    	Robot.shooterSubsystem.disable();
+//    	Robot.shooterSubsystem.disable();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.shooterSubsystem.setTalonSpeed(0);
-    	Robot.shooterSubsystem.disable();
+//    	Robot.shooterSubsystem.disable();
     }
 }

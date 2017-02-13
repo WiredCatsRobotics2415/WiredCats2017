@@ -3,19 +3,14 @@ package org.usfirst.frc.team2415.robot;
 
 
 
-import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
 import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
-import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
-import org.usfirst.frc.team2415.robot.subsystems.PIDFeederSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.commands.FeederCommand;
+import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
+import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
-import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
-
-import org.usfirst.frc.team2415.robot.utilities.WiredCatGamepad;
+import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
@@ -34,7 +29,6 @@ public class Robot extends IterativeRobot {
 
 
 	public static ShooterSubsystem shooterSubsystem;
-	public static PIDFeederSubsystem pIDFeederSubsystem;
 	public static CarouselSubsystem carouselSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
@@ -57,8 +51,7 @@ public class Robot extends IterativeRobot {
 		
 
 		shooterSubsystem = new ShooterSubsystem();
-		feederSubsystem = new FeederSubsystem();
-		pIDFeederSubsystem = new PIDFeederSubsystem();    
+		feederSubsystem = new FeederSubsystem();  
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		feederSubsystem = new FeederSubsystem();

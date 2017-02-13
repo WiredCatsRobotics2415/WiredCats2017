@@ -41,7 +41,7 @@ public class CarouselCommand extends Command {
 		 * to go in reverse for a quarter of a second and then continue to go
 		 * forward
 		 */
-		voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 10);
+		voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 69);
 		if (voltageSpike) {
 			backTime = System.currentTimeMillis() / 1000;
 		}

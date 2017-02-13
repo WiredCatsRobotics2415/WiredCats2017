@@ -18,8 +18,8 @@ public class FeederCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    
-    	Robot.feederSubsystem.setMotor(0.5);
+    	System.out.println("FEED_INIT");
+    	Robot.feederSubsystem.setMotor(0);
     	
     }
 
