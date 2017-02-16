@@ -5,6 +5,7 @@ package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
 import org.usfirst.frc.team2415.robot.commands.FeederCommand;
+import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -34,6 +35,8 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
 	
+	public static DataSender dataSender;
+	
 	public static XBoxOneGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
@@ -56,6 +59,8 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 		feederSubsystem = new FeederSubsystem();
 		carouselSubsystem = new CarouselSubsystem();
+		
+		dataSender = new DataSender("10.80.8.168", 9102); //COMPETITION BOT
 
 		gamepad = new XBoxOneGamepad(0); 
 		operator = new WiredCatJoystick(1); 
@@ -64,6 +69,7 @@ public class Robot extends IterativeRobot {
 		gamepad.a_button.whileHeld(new CarouselCommand());
 		gamepad.leftBumper.whileHeld(new FeederCommand());
 		gamepad.rightBumper.whileHeld(new ShooterCommand());
+		gamepad.b_button.toggleWhenPressed(new IntakeCommand());
 
 	}
 

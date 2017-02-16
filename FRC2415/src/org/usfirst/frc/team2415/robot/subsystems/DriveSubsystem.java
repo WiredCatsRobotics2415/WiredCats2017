@@ -22,6 +22,8 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
 	private AHRS ahrs;
 	private PixyCam pixy;
+	
+	public boolean isMoving;
 
 	double WHEEL_DIAMETER = 3.25/12;
 

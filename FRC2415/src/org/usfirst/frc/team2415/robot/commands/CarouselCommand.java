@@ -48,7 +48,7 @@ public class CarouselCommand extends Command {
 		if (System.currentTimeMillis() / 1000 - backTime < 0.25) {
 			Robot.carouselSubsystem.setCarouselSpeed(-0.25);
 		} else {
-			Robot.carouselSubsystem.setCarouselSpeed(0.5);
+			Robot.carouselSubsystem.setCarouselSpeed(0.25);
 		}
 
 		/*

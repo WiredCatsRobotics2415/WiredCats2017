@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.StreamerPacket;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class FeederCommand extends Command {
 
+	double speedCap = 0.84;
+	
     public FeederCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -18,14 +21,20 @@ public class FeederCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("FEED_INIT");
-    	Robot.feederSubsystem.setMotor(0);
+    	Robot.feederSubsystem.setSetpoint(0);
+    	Robot.feederSubsystem.enable();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.feederSubsystem.setMotor(0.5);
+//    	if (Robot.feederSubsystem.getSpeed() > speedCap) 
+    	Robot.feederSubsystem.setSetpoint(3000);
+    	System.out.println("Feeder: " + Robot.feederSubsystem.getSpeed());
+    	
+    	StreamerPacket data = new StreamerPacket("feederData");
+    	data.addAttribute("feederSpeed", Robot.feederSubsystem.getSpeed());
+    	Robot.dataSender.send(data);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,13 +44,14 @@ public class FeederCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-
-    	Robot.feederSubsystem.setMotor(0);
+    	Robot.feederSubsystem.setSetpoint(0);
+    	Robot.feederSubsystem.getPIDController().reset();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.feederSubsystem.setMotor(0);
+    	Robot.feederSubsystem.setSetpoint(0);
+    	Robot.feederSubsystem.getPIDController().reset();
     }
 }
