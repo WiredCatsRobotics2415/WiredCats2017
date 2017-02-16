@@ -34,7 +34,7 @@ public class FeederCommand extends Command {
     		Robot.feederSubsystem.enable();
     	}
     	
-    	Robot.feederSubsystem.setSetpoint(4000);
+    	Robot.feederSubsystem.setSetpoint(3000);
     	
     	System.out.println("Feeder: " + Robot.feederSubsystem.getSpeed());
     	

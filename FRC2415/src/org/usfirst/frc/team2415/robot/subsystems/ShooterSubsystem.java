@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class ShooterSubsystem extends PIDSubsystem {
-
-	static double kP = 0.0015,
-				  kI = 0.0000175,
-				  kD = 0.001160,
+	static double kU = .875;
+	static double kP = 0.0016*kU,
+				  kI = 0.000018*kU,
+				  kD = 0.00150*kU,
 				  kF = 1/6000;
 	
 	

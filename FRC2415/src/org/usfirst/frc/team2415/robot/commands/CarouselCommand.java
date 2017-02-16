@@ -38,6 +38,8 @@ public class CarouselCommand extends Command {
     		if(!Robot.feederSubsystem.rampedUp()) return;
     		checked = true;
     	}
+		
+		System.out.println("Carousel Current: " + Robot.carouselSubsystem.getCurrent());
 		/*
 		 * TODO: so the carousel should always be moving forward at half speed
 		 * unless it senses that the voltage spikes to some arbitrary number
@@ -45,14 +47,14 @@ public class CarouselCommand extends Command {
 		 * to go in reverse for a quarter of a second and then continue to go
 		 * forward
 		 */
-		voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 69);
+		voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 4.20);
 		if (voltageSpike) {
 			backTime = System.currentTimeMillis() / 1000;
 		}
-		if (System.currentTimeMillis() / 1000 - backTime < 0.25) {
+		if (System.currentTimeMillis() / 1000 - backTime < 0.05) {
 			Robot.carouselSubsystem.setCarouselSpeed(-0.25);
 		} else {
-			Robot.carouselSubsystem.setCarouselSpeed(0.25);
+			Robot.carouselSubsystem.setCarouselSpeed(0.5);
 		}
 
 		/*
