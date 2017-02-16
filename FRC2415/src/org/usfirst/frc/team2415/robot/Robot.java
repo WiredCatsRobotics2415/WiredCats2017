@@ -1,11 +1,10 @@
 
 package org.usfirst.frc.team2415.robot;
 
-
-
-import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
-import org.usfirst.frc.team2415.robot.commands.FeederCommand;
+import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
@@ -28,20 +27,17 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
-
 	public static ShooterSubsystem shooterSubsystem;
 	public static CarouselSubsystem carouselSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
 	public static GearManipulatorSubsystem gearManipulatorSubsystem;
-	
+
 	public static XBoxOneGamepad gamepad;
 	public static WiredCatJoystick operator;
-	
+
 	public static boolean singlePlayerMode = false;
-	
-	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -50,22 +46,21 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
-		
-
-		shooterSubsystem = new ShooterSubsystem();  
+		shooterSubsystem = new ShooterSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		feederSubsystem = new FeederSubsystem();
 		carouselSubsystem = new CarouselSubsystem();
 		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 
-		gamepad = new XBoxOneGamepad(0); 
-		operator = new WiredCatJoystick(1); 
+		gamepad = new XBoxOneGamepad(0);
+		operator = new WiredCatJoystick(1);
 
 		operator.buttons[1].whileHeld(new ShooterCommand());
-		gamepad.a_button.whileHeld(new CarouselCommand());
-		gamepad.leftBumper.whileHeld(new FeederCommand());
-		gamepad.rightBumper.whileHeld(new ShooterCommand());
+		gamepad.a_button.whileHeld(new ToggleGearManipulatorFlapCommand());
+		gamepad.b_button.whileHeld(new ToggleGearPushingMechanismCommand());
+		gamepad.leftBumper.whileHeld(new ShooterCommand());
+		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 	}
 
@@ -98,7 +93,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
-
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -107,8 +101,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-//		Command automousCommand = new TrajectoryCommand(Trajectories.CHEESY_PATH);
-//		automousCommand.start();
+		// Command automousCommand = new
+		// TrajectoryCommand(Trajectories.CHEESY_PATH);
+		// automousCommand.start();
 
 	}
 
@@ -144,11 +139,12 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
-	
+
 	/**
-	 * a function to run all of the update status functions in each of the subsystems
+	 * a function to run all of the update status functions in each of the
+	 * subsystems
 	 */
 	public void updateStatus() {
-		
+
 	}
 }
