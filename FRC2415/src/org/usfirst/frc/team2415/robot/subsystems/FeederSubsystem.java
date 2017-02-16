@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class FeederSubsystem extends PIDSubsystem {
 
-	static double kP = 0.001,
-				  kI = 0,
-				  kD = 0.006,
-				  kF = 1/5000;
+	static double kP = 0.00003,
+				  kI = 0.000050,
+				  kD = 0.000075,
+				  kF = 1/6000;
 	
 	
 	private CANTalon feederTalon;
@@ -61,5 +61,9 @@ public class FeederSubsystem extends PIDSubsystem {
     
     public double getSpeed(){
     	return encoderDirection*feederTalon.getSpeed();
+    }
+    
+    public boolean rampedUp(){
+    	return getSpeed() >= 3000;
     }
 }

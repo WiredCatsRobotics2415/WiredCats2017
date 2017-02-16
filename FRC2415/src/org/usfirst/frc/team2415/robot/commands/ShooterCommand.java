@@ -24,7 +24,6 @@ public class ShooterCommand extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//I don't know what the maxspeed of a Talon is
 //    	Robot.shooterSubsystem.setSetpoint(1000);
 //    	if(Robot.shooterSubsystem.getSpeed() > 3000) Robot.shooterSubsystem.setTalonSpeed(0);
 //    	else Robot.shooterSubsystem.setTalonSpeed(0.6);
@@ -38,8 +37,6 @@ public class ShooterCommand extends Command{
     	Robot.dataSender.send(data);
     }
     
-    //0.55
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
@@ -47,14 +44,21 @@ public class ShooterCommand extends Command{
 
     // Called once after isFinished returns true
     protected void end() {
+//    	long overTime = System.currentTimeMillis()/1000;
+//    	while(System.currentTimeMillis()/1000 - overTime <= 0.25){
+//    	}
+//    	Robot.intakeSubsystem.setMotor(0);
     	Robot.shooterSubsystem.setTalonSpeed(0);
-    	Robot.shooterSubsystem.disable();
+    	Robot.shooterSubsystem.getPIDController().reset();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+//    	long overTime = System.currentTimeMillis()/1000;
+//    	while(System.currentTimeMillis()/1000 - overTime <= 0.25){
+//    	}
     	Robot.shooterSubsystem.setTalonSpeed(0);
-    	Robot.shooterSubsystem.disable();
+    	Robot.shooterSubsystem.getPIDController().reset();
     }
 }
