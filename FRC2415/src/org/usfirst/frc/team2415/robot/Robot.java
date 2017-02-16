@@ -9,6 +9,7 @@ import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.GearManipulatorSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
+	public static GearManipulatorSubsystem gearManipulatorSubsystem;
 	
 	public static XBoxOneGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -50,12 +52,12 @@ public class Robot extends IterativeRobot {
 
 		
 
-		shooterSubsystem = new ShooterSubsystem();
-		feederSubsystem = new FeederSubsystem();  
+		shooterSubsystem = new ShooterSubsystem();  
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		feederSubsystem = new FeederSubsystem();
 		carouselSubsystem = new CarouselSubsystem();
+		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 
 		gamepad = new XBoxOneGamepad(0); 
 		operator = new WiredCatJoystick(1); 

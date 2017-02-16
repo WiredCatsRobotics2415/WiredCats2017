@@ -29,6 +29,7 @@ public class IntakeCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//TODO: extend intake
+    	Robot.intakeSubsystem.setSolenoid(true);
     	startTime = System.currentTimeMillis()/1000;
     	Robot.intakeSubsystem.setMotor(0);
     	
@@ -58,6 +59,7 @@ public class IntakeCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	//TODO: retract intake
+    	Robot.intakeSubsystem.setSolenoid(false);
     	long overTime = System.currentTimeMillis()/1000;
     	while(System.currentTimeMillis()/1000 - overTime <= 0.5){
     		Robot.intakeSubsystem.setMotor(intakeSpeed);
@@ -69,6 +71,7 @@ public class IntakeCommand extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	//TODO: retract intake
+    	Robot.intakeSubsystem.setSolenoid(false);
     	long overTime = System.currentTimeMillis()/1000;
     	while(System.currentTimeMillis()/1000 - overTime <= afterTime){
     		Robot.intakeSubsystem.setMotor(intakeSpeed);
