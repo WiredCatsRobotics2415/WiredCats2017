@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FeederCommand extends Command {
 
 	double speedCap = 0.84;
+	boolean checked = false;
 	
     public FeederCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -22,14 +23,19 @@ public class FeederCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.feederSubsystem.setSetpoint(0);
-    	Robot.feederSubsystem.enable();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	if (Robot.feederSubsystem.getSpeed() > speedCap) 
-    	Robot.feederSubsystem.setSetpoint(3000);
+    	if(!checked){
+    		if(!Robot.shooterSubsystem.rampedUp()) return;
+    		checked = true;
+    		Robot.feederSubsystem.enable();
+    	}
+    	
+    	Robot.feederSubsystem.setSetpoint(4000);
+    	
     	System.out.println("Feeder: " + Robot.feederSubsystem.getSpeed());
     	
     	StreamerPacket data = new StreamerPacket("feederData");
@@ -45,6 +51,7 @@ public class FeederCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.feederSubsystem.setSetpoint(0);
+    	checked = false;
     	Robot.feederSubsystem.getPIDController().reset();
     }
 
@@ -52,6 +59,7 @@ public class FeederCommand extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.feederSubsystem.setSetpoint(0);
+    	checked = false;
     	Robot.feederSubsystem.getPIDController().reset();
     }
 }

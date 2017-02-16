@@ -62,4 +62,8 @@ public class ShooterSubsystem extends PIDSubsystem {
     public double getSpeed(){
     	return encoderDirection*shooterTalon.getSpeed();
     }
+    
+    public boolean rampedUp(){
+    	return getSpeed() >= 2500;
+    }
 }
