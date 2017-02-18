@@ -1,16 +1,17 @@
 
 package org.usfirst.frc.team2415.robot;
 
-
-
 import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
 import org.usfirst.frc.team2415.robot.commands.FeederCommand;
 import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
 import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.GearManipulatorSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
@@ -30,21 +31,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-
 	public static ShooterSubsystem shooterSubsystem;
 	public static CarouselSubsystem carouselSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
+	public static GearManipulatorSubsystem gearManipulatorSubsystem;
+
+
 	
 	public static DataSender dataSender;
-	
+  
 	public static XBoxOneGamepad gamepad;
 	public static WiredCatJoystick operator;
-	
+
 	public static boolean singlePlayerMode = false;
-	
-	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,26 +54,26 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
-		
-
 		shooterSubsystem = new ShooterSubsystem();
-		feederSubsystem = new FeederSubsystem();  
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		carouselSubsystem = new CarouselSubsystem();
+		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 		
 		dataSender = new DataSender("10.80.8.168", 9102); //COMPETITION BOT
 
-		gamepad = new XBoxOneGamepad(0); 
-		operator = new WiredCatJoystick(1); 
+
+		gamepad = new XBoxOneGamepad(0);
+		operator = new WiredCatJoystick(1);
+
+
+		gamepad.a_button.whileHeld(new ToggleGearManipulatorFlapCommand());
+		gamepad.b_button.whileHeld(new ToggleGearPushingMechanismCommand());
+		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
-		gamepad.a_button.whileHeld(new CarouselCommand());
-		gamepad.leftBumper.whileHeld(new FeederCommand());
-		gamepad.rightBumper.whileHeld(new ShooterCommand());
-		gamepad.b_button.toggleWhenPressed(new IntakeCommand());
 		
-		LiveWindow.addActuator("feeder", "FeederTalon", feederSubsystem.getPIDController());
+		LiveWindow.addActuator("feeder", "FeederTalon", feederSubsystem.getPIDController())
 
 	}
 
@@ -105,7 +106,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
-
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -114,8 +114,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-//		Command automousCommand = new TrajectoryCommand(Trajectories.CHEESY_PATH);
-//		automousCommand.start();
+		// Command automousCommand = new
+		// TrajectoryCommand(Trajectories.CHEESY_PATH);
+		// automousCommand.start();
 
 	}
 
@@ -152,11 +153,12 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Feeder Speed", feederSubsystem.getSpeed());
 		LiveWindow.run();
 	}
-	
+
 	/**
-	 * a function to run all of the update status functions in each of the subsystems
+	 * a function to run all of the update status functions in each of the
+	 * subsystems
 	 */
 	public void updateStatus() {
-		
+
 	}
 }
