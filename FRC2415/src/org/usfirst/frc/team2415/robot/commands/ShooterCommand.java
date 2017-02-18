@@ -29,7 +29,7 @@ public class ShooterCommand extends Command{
 //    	else Robot.shooterSubsystem.setTalonSpeed(0.6);
     	
     	
-    	Robot.shooterSubsystem.setSetpoint(3000);
+    	Robot.shooterSubsystem.setSetpoint(Robot.shooterSubsystem.shooterSpeed);
     	System.out.println("Speed: " + Robot.shooterSubsystem.getSpeed());
     	
     	StreamerPacket data = new StreamerPacket("shooterData");
