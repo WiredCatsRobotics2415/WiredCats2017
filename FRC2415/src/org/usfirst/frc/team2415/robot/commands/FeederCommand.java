@@ -28,11 +28,11 @@ public class FeederCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	if(!checked){
-//    		if(!Robot.shooterSubsystem.rampedUp()) return;
-//    		checked = true;
+    	if(!checked){
+    		if(!Robot.shooterSubsystem.rampedUp()) return;
+    		checked = true;
     		Robot.feederSubsystem.enable();
-//    	}
+    	}
     	
     	Robot.feederSubsystem.setSetpoint(Robot.feederSubsystem.feederSpeed);
     	
