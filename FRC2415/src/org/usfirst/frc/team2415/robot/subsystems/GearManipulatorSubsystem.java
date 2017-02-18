@@ -10,14 +10,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearManipulatorSubsystem extends Subsystem {
 
-	private Solenoid gearManipSolenoid;
-	private Solenoid gearPushSolenoid;
+	private Solenoid gearManipSolenoid1,gearManipSolenoid2;
+	private Solenoid gearPushSolenoid1,gearPushSolenoid2;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
 	public GearManipulatorSubsystem(){
-		gearManipSolenoid = new Solenoid(RobotMap.GEAR_MANIP_SOLENOID);
-		gearPushSolenoid = new Solenoid(RobotMap.GEAR_PUSH_SOLENOID);
+		gearManipSolenoid1 = new Solenoid(RobotMap.GEAR_MANIP_SOLENOID[0]);
+		gearManipSolenoid2 = new Solenoid(RobotMap.GEAR_MANIP_SOLENOID[1]);
+		gearPushSolenoid1 = new Solenoid(RobotMap.GEAR_PUSH_SOLENOID[0]);
+		gearPushSolenoid2 = new Solenoid(RobotMap.GEAR_PUSH_SOLENOID[1]);
 	}
 
     public void initDefaultCommand() {
@@ -26,11 +28,13 @@ public class GearManipulatorSubsystem extends Subsystem {
     }
     
     public void setManipSolenoid(boolean state){
-    	gearManipSolenoid.set(state);
+    	gearManipSolenoid1.set(state);
+    	gearManipSolenoid2.set(!state);
     }
     
     public void setPushSolenoid(boolean state){
-    	gearPushSolenoid.set(state);
+    	gearPushSolenoid1.set(state);
+    	gearPushSolenoid2.set(!state);
     }
 }
 
