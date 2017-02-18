@@ -22,6 +22,8 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
 	private AHRS ahrs;
 	private PixyCam pixy;
+	
+	public boolean isMoving;
 
 	double WHEEL_DIAMETER = 3.25/12;
 
@@ -32,7 +34,7 @@ public class DriveSubsystem extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new VelocityDriveCommand());
+//    	setDefaultCommand(new VelocityDriveCommand());
     }
     
     public DriveSubsystem() {

@@ -22,6 +22,7 @@ public class VelocityDriveCommand extends Command implements USBWritable {
 	private boolean pointTurn;
 	private BufferedWriter writer;
 	
+	
     public VelocityDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -74,6 +75,8 @@ public class VelocityDriveCommand extends Command implements USBWritable {
 	    	Robot.driveSubsystem.setMotors(1079*left,1079*right);
 		}
 		
+		//If the RPM is less than 50 then the robot is considered not moving
+		Robot.driveSubsystem.isMoving = Robot.driveSubsystem.getVelocity()[0] > 50 || Robot.driveSubsystem.getVelocity()[0] > 50;
     }
 
     // Make this return true when this Command no longer needs to run execute()

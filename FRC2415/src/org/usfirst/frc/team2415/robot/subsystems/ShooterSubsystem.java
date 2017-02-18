@@ -6,17 +6,29 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class ShooterSubsystem extends PIDSubsystem {
-
-	static double kP = 0.1,
-				  kI = 0,
-				  kD = 0,
-				  kF = 0;
+	static double kU = .875;
+	static double kP = 0.0016*kU,
+				  kI = 0.000018*kU,
+				  kD = 0.00190*kU,
+				  kF = 1/6000;
+	
+//	static double kU = .875;
+//	static double kP = 0.0016*kU,
+//				  kI = 0.000018*kU,
+//				  kD = 0.00150*kU,
+//				  kF = 1/6000;
+//	
+	
 	private CANTalon shooterTalon;
+	int encoderDirection = -1;
+	public double shooterSpeed = 3000;
+	
     // Initialize your subsystem here
     public ShooterSubsystem() {
     
@@ -29,7 +41,6 @@ public class ShooterSubsystem extends PIDSubsystem {
     	
     	shooterTalon = new CANTalon (RobotMap.SHOOTER_TALON);
     	shooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-    	shooterTalon.reverseSensor(true);
     	
     }
 
@@ -42,7 +53,7 @@ public class ShooterSubsystem extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return shooterTalon.getSpeed();
+        return getSpeed();
     }
 
     protected void usePIDOutput(double output) {
@@ -55,4 +66,11 @@ public class ShooterSubsystem extends PIDSubsystem {
     	shooterTalon.set(speed);
     }
     
+    public double getSpeed(){
+    	return encoderDirection*shooterTalon.getSpeed();
+    }
+    
+    public boolean rampedUp(){
+    	return getSpeed() >= shooterSpeed*.95;
+    }
 }

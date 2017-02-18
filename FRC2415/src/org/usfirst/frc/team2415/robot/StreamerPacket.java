@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot.utilities;
+package org.usfirst.frc.team2415.robot;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +13,6 @@ public class StreamerPacket implements Serializable{
 	public StreamerPacket(String type) {
 		this.setType(type);
 		created = new Date();
-		
 	}
 
 	public StreamerPacket() {
@@ -22,7 +21,6 @@ public class StreamerPacket implements Serializable{
 	
 	public void addAttribute(String name, Object value){
 		attributes.put(name, value);
-		
 	}
 
 	public String getType() {

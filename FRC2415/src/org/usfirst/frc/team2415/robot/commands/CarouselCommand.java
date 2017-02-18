@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class CarouselCommand extends Command {
 
 	long backTime;
-	boolean voltageSpike;
+	boolean voltageSpike, checked = false;
 
 	public CarouselCommand() {
 		// Use requires() here to declare subsystem dependencies
@@ -22,18 +22,18 @@ public class CarouselCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-//		 TODO: make the carousel stop and 3 second delay
-		 long initTime = System.currentTimeMillis() / 1000;
-		 for (int i = 0; i < 3; i++) {
-		 if (initTime + 1 == System.currentTimeMillis() / 1000) {
-		 continue;
-		 }
-	}
+		// TODO: make the carousel stop and 3 second delay
 
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		if(!checked){
+    		if(!Robot.feederSubsystem.rampedUp()) return;
+    		checked = true;
+    	}
+		
+		System.out.println("Carousel Current: " + Robot.carouselSubsystem.getCurrent());
 		/*
 		 * TODO: so the carousel should always be moving forward at half speed
 		 * unless it senses that the voltage spikes to some arbitrary number
@@ -41,11 +41,11 @@ public class CarouselCommand extends Command {
 		 * to go in reverse for a quarter of a second and then continue to go
 		 * forward
 		 */
-		voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 69);
+		voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 4.20);
 		if (voltageSpike) {
 			backTime = System.currentTimeMillis() / 1000;
 		}
-		if (System.currentTimeMillis() / 1000 - backTime < 0.25) {
+		if (System.currentTimeMillis() / 1000 - backTime < 0.05) {
 			Robot.carouselSubsystem.setCarouselSpeed(-0.25);
 		} else {
 			Robot.carouselSubsystem.setCarouselSpeed(0.5);
@@ -78,6 +78,7 @@ public class CarouselCommand extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.carouselSubsystem.setCarouselSpeed(0);
+		checked = false;
 	}
 
 	// Called when another command which requires one or more of the same
@@ -85,5 +86,6 @@ public class CarouselCommand extends Command {
 	protected void interrupted() {
 		// TODO: make the carousel stop
 		Robot.carouselSubsystem.setCarouselSpeed(0);
+		checked = false;
 	}
 }
