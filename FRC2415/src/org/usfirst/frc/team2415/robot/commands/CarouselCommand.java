@@ -23,12 +23,6 @@ public class CarouselCommand extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		// TODO: make the carousel stop and 3 second delay
-		long initTime = System.currentTimeMillis() / 1000;
-		for (int i = 0; i < 3; i++) {
-			if (initTime + 1 == System.currentTimeMillis() / 1000) {
-				continue;
-			}
-		}
 
 	}
 
@@ -84,6 +78,7 @@ public class CarouselCommand extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.carouselSubsystem.setCarouselSpeed(0);
+		checked = false;
 	}
 
 	// Called when another command which requires one or more of the same
@@ -91,5 +86,6 @@ public class CarouselCommand extends Command {
 	protected void interrupted() {
 		// TODO: make the carousel stop
 		Robot.carouselSubsystem.setCarouselSpeed(0);
+		checked = false;
 	}
 }

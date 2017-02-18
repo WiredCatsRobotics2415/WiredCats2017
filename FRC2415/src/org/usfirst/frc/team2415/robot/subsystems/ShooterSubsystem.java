@@ -15,12 +15,19 @@ public class ShooterSubsystem extends PIDSubsystem {
 	static double kU = .875;
 	static double kP = 0.0016*kU,
 				  kI = 0.000018*kU,
-				  kD = 0.00150*kU,
+				  kD = 0.00190*kU,
 				  kF = 1/6000;
 	
+//	static double kU = .875;
+//	static double kP = 0.0016*kU,
+//				  kI = 0.000018*kU,
+//				  kD = 0.00150*kU,
+//				  kF = 1/6000;
+//	
 	
 	private CANTalon shooterTalon;
 	int encoderDirection = -1;
+	public double shooterSpeed = 3000;
 	
     // Initialize your subsystem here
     public ShooterSubsystem() {
@@ -64,6 +71,6 @@ public class ShooterSubsystem extends PIDSubsystem {
     }
     
     public boolean rampedUp(){
-    	return getSpeed() >= 2500;
+    	return getSpeed() >= shooterSpeed*.95;
     }
 }
