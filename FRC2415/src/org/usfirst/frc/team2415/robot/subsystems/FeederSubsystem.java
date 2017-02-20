@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederSubsystem extends PIDSubsystem {
 
 	static double kP = 0.00003,
-				  kI = 0.000030,
+				  kI = 0.000010,
 				  kD = 0.0001420,
 				  kF = 1/6000;
 	

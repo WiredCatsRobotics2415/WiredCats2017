@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.StreamerPacket;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,8 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class CarouselCommand extends Command {
 
-	long backTime;
+	long backTime, startTime, jamTime;
 	boolean voltageSpike, checked = false;
+	double sign = 0;
+	double currentCap = 10.69, reverseTime = 0.05;
 
 	public CarouselCommand() {
 		// Use requires() here to declare subsystem dependencies
@@ -23,6 +26,8 @@ public class CarouselCommand extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		// TODO: make the carousel stop and 3 second delay
+
+    	startTime = System.currentTimeMillis()/1000;
 
 	}
 
@@ -41,16 +46,23 @@ public class CarouselCommand extends Command {
 		 * to go in reverse for a quarter of a second and then continue to go
 		 * forward
 		 */
-		voltageSpike = (Robot.carouselSubsystem.getCurrent() >= 4.20);
-		if (voltageSpike) {
-			backTime = System.currentTimeMillis() / 1000;
-		}
-		if (System.currentTimeMillis() / 1000 - backTime < 0.05) {
-			Robot.carouselSubsystem.setCarouselSpeed(-0.25);
-		} else {
-			Robot.carouselSubsystem.setCarouselSpeed(0.5);
-		}
+		
+//		if(Robot.intakeSubsystem.getCurrent() >= currentCap && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
+//    		jamTime = System.currentTimeMillis()/1000;
+//    	}
+//    	
+//    	if(System.currentTimeMillis()/1000 - jamTime <= reverseTime) {
+//    		Robot.carouselSubsystem.setCarouselSpeed(-0.25);
+//    	} else Robot.carouselSubsystem.setCarouselSpeed(1);
+//    	
+//    	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
 
+		Robot.carouselSubsystem.setCarouselSpeed(1);
+		
+		StreamerPacket data = new StreamerPacket("carouselData");
+    	data.addAttribute("carouselCurrent", Robot.carouselSubsystem.getCurrent());
+    	Robot.dataSender.send(data);
+		
 		/*
 		 * ok it is 2am not sure if this works either but it seems more logical
 		 * so even tho current goes back to normal when the talon goes backwards

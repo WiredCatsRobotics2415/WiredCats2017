@@ -24,10 +24,6 @@ public class ShooterCommand extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	Robot.shooterSubsystem.setSetpoint(1000);
-//    	if(Robot.shooterSubsystem.getSpeed() > 3000) Robot.shooterSubsystem.setTalonSpeed(0);
-//    	else Robot.shooterSubsystem.setTalonSpeed(0.6);
-    	
     	
     	Robot.shooterSubsystem.setSetpoint(Robot.shooterSubsystem.shooterSpeed);
     	System.out.println("Speed: " + Robot.shooterSubsystem.getSpeed());

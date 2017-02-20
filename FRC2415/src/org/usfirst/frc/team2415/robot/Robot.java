@@ -1,13 +1,9 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.commands.CarouselCommand;
-import org.usfirst.frc.team2415.robot.commands.FeederCommand;
 import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
 import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.commands.ShooterCommand;
 import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
-import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
@@ -17,10 +13,10 @@ import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static FeederSubsystem feederSubsystem;
 	public static GearManipulatorSubsystem gearManipulatorSubsystem;
 
-
+	private Compressor compressor;
 	
 	public static DataSender dataSender;
   
@@ -58,22 +54,24 @@ public class Robot extends IterativeRobot {
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 		carouselSubsystem = new CarouselSubsystem();
+		feederSubsystem = new FeederSubsystem();
 		gearManipulatorSubsystem = new GearManipulatorSubsystem();
+		
+		compressor = new Compressor(RobotMap.PCM_ID);
 		
 		dataSender = new DataSender("10.80.8.168", 9102); //COMPETITION BOT
 
 
+		
 		gamepad = new XBoxOneGamepad(0);
 		operator = new WiredCatJoystick(1);
 
-
-		gamepad.a_button.whileHeld(new ToggleGearManipulatorFlapCommand());
-		gamepad.b_button.whileHeld(new ToggleGearPushingMechanismCommand());
 		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
+		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
 		
-		LiveWindow.addActuator("feeder", "FeederTalon", feederSubsystem.getPIDController())
+//		LiveWindow.addActuator("feeder", "FeederTalon", feederSubsystem.getPIDController());
 
 	}
 

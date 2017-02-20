@@ -17,7 +17,7 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 	
-
+	public static final int PCM_ID = 20;
 
 	public static final int LEFT_TALON_BACK = 1; 
 	public static final int LEFT_TALON_FRONT = 2; 
@@ -29,9 +29,8 @@ public class RobotMap {
 	public static final int FEEDER_TALON = 7;
 	public static final int CAROUSEL_TALON = 8;
 	
-	public static final int[] GEAR_MANIP_SOLENOID = {0,1};
-	public static final int[] GEAR_PUSH_SOLENOID = {2,3};
-	public static final int[] INTAKE_SOLENOID = {4,5};
+	public static final int[] GEAR_MANIP_SOLENOID = {0,5};
+	public static final int[] INTAKE_SOLENOID = {1,4};
 	
 	
 }

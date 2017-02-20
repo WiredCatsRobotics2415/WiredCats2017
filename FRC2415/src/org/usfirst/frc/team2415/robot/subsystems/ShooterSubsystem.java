@@ -27,7 +27,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 	
 	private CANTalon shooterTalon;
 	int encoderDirection = -1;
-	public double shooterSpeed = 3000;
+	public double shooterSpeed = 3150;
 	
     // Initialize your subsystem here
     public ShooterSubsystem() {
