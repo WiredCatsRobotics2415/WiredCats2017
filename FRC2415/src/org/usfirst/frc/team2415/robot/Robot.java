@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
 import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
 import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
@@ -15,6 +16,7 @@ import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -71,6 +73,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
 		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
 		
+//		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
+		
 //		LiveWindow.addActuator("feeder", "FeederTalon", feederSubsystem.getPIDController());
 
 	}
@@ -112,9 +116,8 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		// Command automousCommand = new
-		// TrajectoryCommand(Trajectories.CHEESY_PATH);
-		// automousCommand.start();
+//		 Command automousCommand = new TrajectoryCommand(Trajectories.STRAIGHT_PATH);
+//		 automousCommand.start();
 
 	}
 

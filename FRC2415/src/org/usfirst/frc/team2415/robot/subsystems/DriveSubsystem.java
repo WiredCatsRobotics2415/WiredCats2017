@@ -53,16 +53,16 @@ public class DriveSubsystem extends Subsystem {
     	rightTalBack = new CANTalon(RobotMap.RIGHT_TALON_BACK);
     	rightTalFront = new CANTalon(RobotMap.RIGHT_TALON_FRONT);
 
-    	leftTalFront.changeControlMode(TalonControlMode.Follower);
-    	leftTalFront.set(leftTalBack.getDeviceID());
-    	rightTalFront.changeControlMode(TalonControlMode.Follower);
-    	rightTalFront.set(rightTalBack.getDeviceID());
+    	leftTalBack.changeControlMode(TalonControlMode.Follower);
+    	leftTalBack.set(leftTalFront.getDeviceID());
+    	rightTalBack.changeControlMode(TalonControlMode.Follower);
+    	rightTalBack.set(rightTalFront.getDeviceID());
     	
-    	leftTalBack.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-    	rightTalBack.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	leftTalFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	rightTalFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     	
-    	leftTalBack.setStatusFrameRateMs(StatusFrameRate.Feedback, 20);
-    	rightTalBack.setStatusFrameRateMs(StatusFrameRate.Feedback, 20);
+    	leftTalFront.setStatusFrameRateMs(StatusFrameRate.Feedback, 1);
+    	rightTalFront.setStatusFrameRateMs(StatusFrameRate.Feedback, 1);
     	
     	
     	
@@ -70,29 +70,29 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void stopMotors() {
-    	leftTalBack.set(0);
-    	rightTalBack.set(0);
+    	leftTalFront.set(0);
+    	rightTalFront.set(0);
     }
     
     public void setMotors(double left, double right) {
-     	leftTalBack.set(-left);
-     	rightTalBack.set(right);
+     	leftTalFront.set(-left);
+     	rightTalFront.set(right);
     }
     
     public void changeControlMode(TalonControlMode mode){
-    	leftTalBack.changeControlMode(mode);
-    	rightTalBack.changeControlMode(mode);
+    	leftTalFront.changeControlMode(mode);
+    	rightTalFront.changeControlMode(mode);
     	
     	if(mode == TalonControlMode.Speed){
     		//TODO: see 12.4
-    		leftTalBack.configNominalOutputVoltage(0, 0);
-    		leftTalBack.configPeakOutputVoltage(12, -12);
+    		leftTalFront.configNominalOutputVoltage(0, 0);
+    		leftTalFront.configPeakOutputVoltage(12, -12);
 
-    		setPIDF(leftTalBack, .1696969696, 0, 0, .149853516420);
+    		setPIDF(leftTalFront, .1696969696, 0, 0, 2/1000);
 
-    		rightTalBack.configNominalOutputVoltage(0, 0);
-    		rightTalBack.configPeakOutputVoltage(12, -12);
-    		setPIDF(rightTalBack, .1696969696, 0, 0, .149853516420);
+    		rightTalFront.configNominalOutputVoltage(0, 0);
+    		rightTalFront.configPeakOutputVoltage(12, -12);
+    		setPIDF(rightTalFront, .1696969696, 0, 0, 2/1000);
 
     	}
     }
@@ -128,11 +128,24 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double[] getVelocity(){
-    	return new double[]{leftTalBack.getSpeed(), rightTalBack.getSpeed()};
+    	return new double[]{leftTalFront.getSpeed(), rightTalFront.getSpeed()};
     }
     
     public double[] getError(){
-    	return new double[]{leftTalBack.getClosedLoopError(), rightTalBack.getClosedLoopError()};
+    	return new double[]{leftTalFront.getClosedLoopError(), rightTalFront.getClosedLoopError()};
+    }
+    
+    //no slip @ 27.4285714286
+    public void setLeftRampRate(double rate){
+		leftTalFront.setVoltageRampRate(rate);
+    }
+    
+    public void setRightRampRate(double rate){
+		rightTalFront.setVoltageRampRate(rate);
+    }
+    
+    public double getVoltage(){
+    	return  leftTalFront.getOutputVoltage()/leftTalFront.getBusVoltage();
     }
     
     public void updateStatus() {

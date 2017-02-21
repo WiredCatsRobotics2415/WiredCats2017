@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
@@ -11,8 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class FeederCommand extends Command {
 
-	double speedCap = 0.84;
-	boolean checked = false;
+	private boolean checked = false;
 	
     public FeederCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -22,8 +20,7 @@ public class FeederCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.feederSubsystem.setSetpoint(0);
-    	
+    	Robot.feederSubsystem.setSpeed(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,12 +28,17 @@ public class FeederCommand extends Command {
     	if(!checked){
     		if(!Robot.shooterSubsystem.rampedUp()) return;
     		checked = true;
-    		Robot.feederSubsystem.enable();
     	}
     	
-    	Robot.feederSubsystem.setSetpoint(Robot.feederSubsystem.feederSpeed);
+    	if(Robot.carouselSubsystem.isMoving()) {
+    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.rampProfile);
+    	} else {
+    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.rampProfile);
+    	}
     	
-    	System.out.println("Feeder: " + Robot.feederSubsystem.getSpeed());
+    	Robot.feederSubsystem.setSpeed(Robot.feederSubsystem.feederSpeed);
+    	
+    	System.out.println("Feeder Speed: " + Robot.feederSubsystem.getSpeed());
     	
     	StreamerPacket data = new StreamerPacket("feederData");
     	data.addAttribute("feederSpeed", Robot.feederSubsystem.getSpeed());
@@ -50,16 +52,14 @@ public class FeederCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.feederSubsystem.setSetpoint(0);
+    	Robot.feederSubsystem.setSpeed(0);
     	checked = false;
-    	Robot.feederSubsystem.getPIDController().reset();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.feederSubsystem.setSetpoint(0);
+    	Robot.feederSubsystem.setSpeed(0);
     	checked = false;
-    	Robot.feederSubsystem.getPIDController().reset();
     }
 }

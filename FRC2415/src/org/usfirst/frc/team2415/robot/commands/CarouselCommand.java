@@ -57,7 +57,7 @@ public class CarouselCommand extends Command {
 //    	
 //    	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
 
-		Robot.carouselSubsystem.setCarouselSpeed(1);
+		Robot.carouselSubsystem.setCarouselSpeed(0.420);
 		
 		StreamerPacket data = new StreamerPacket("carouselData");
     	data.addAttribute("carouselCurrent", Robot.carouselSubsystem.getCurrent());
