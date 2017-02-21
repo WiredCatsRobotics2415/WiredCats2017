@@ -64,6 +64,8 @@ public class DriveSubsystem extends Subsystem {
     	leftTalFront.setStatusFrameRateMs(StatusFrameRate.Feedback, 1);
     	rightTalFront.setStatusFrameRateMs(StatusFrameRate.Feedback, 1);
     	
+    	leftTalFront.enableBrakeMode(false);
+    	rightTalFront.enableBrakeMode(false);
     	
     	
     	

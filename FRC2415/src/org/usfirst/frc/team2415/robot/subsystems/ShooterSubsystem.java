@@ -17,14 +17,20 @@ public class ShooterSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	static double kU = 2;
-	static double kP = 0.0032*30*kU,
-				  kI = 0.0*1.2*kU,
-				  kD = 5.0*kP*kU,
-				  kF = .023;
+	static double kU0 = 2,
+				  kP0 = 0.0032*30*kU0,
+				  kI0 = 0.0*1.2*kU0,
+				  kD0 = 5.0*kP0*kU0,
+				  kF0 = .023;
+	
+	static double kU1 = 2,
+				  kP1 = 0.0032*30*kU1,
+				  kI1 = 0.0*1.2*kU1,
+				  kD1 = 100.0*kP1*kU1,
+				  kF1 = .023;
 	
 	private CANTalon shooterTalon;
-	public int rampProfile = 0, maintainProfile = 1;
+	public byte rampProfile = 0, maintainProfile = 1;
 	public double shooterSpeed = 2900;
 
     public void initDefaultCommand() {
@@ -38,9 +44,7 @@ public class ShooterSubsystem extends Subsystem {
     	shooterTalon.reverseSensor(true);
     	shooterTalon.changeControlMode(TalonControlMode.Speed);
     	shooterTalon.setStatusFrameRateMs(StatusFrameRate.Feedback, 1);
-//		shooterTalon.configPeakOutputVoltage(12, 0);
-		shooterTalon.setPID(kP, kI, kD);
-		shooterTalon.setF(kF);
+		shooterTalon.configPeakOutputVoltage(12, 0);
     }
     
     public void setSpeed(double speed){
@@ -55,8 +59,14 @@ public class ShooterSubsystem extends Subsystem {
     	return shooterTalon.getSpeed() >= shooterSpeed*1;
     }
     
-    public void changeProfile(int profile){
-    	shooterTalon.setProfile(profile);
+    public void changeProfile(byte profile){
+    	if(profile == rampProfile){
+    		shooterTalon.setPID(kP0, kI0, kD0);
+    		shooterTalon.setF(kF0);
+    	} else if(profile == maintainProfile){
+    		shooterTalon.setPID(kP1, kI1, kD1);
+    		shooterTalon.setF(kF1);
+    	}
     }
     
     

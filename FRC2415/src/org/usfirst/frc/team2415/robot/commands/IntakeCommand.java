@@ -17,7 +17,6 @@ public class IntakeCommand extends Command {
 	double outtakeSpeed = -0.5;
 	double currentCap = 26;
 	double reverseTime = 0.05;
-	double afterTime = 0.25;
 	
 
     public IntakeCommand() {
@@ -31,8 +30,7 @@ public class IntakeCommand extends Command {
     	//TODO: extend intake
     	Robot.intakeSubsystem.setSolenoid(true);
     	startTime = System.currentTimeMillis()/1000;
-    	Robot.intakeSubsystem.setMotor(0);
-    	
+    	Robot.intakeSubsystem.setMotor(0);	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -60,10 +58,6 @@ public class IntakeCommand extends Command {
     protected void end() {
     	//TODO: retract intake
     	Robot.intakeSubsystem.setSolenoid(false);
-    	long overTime = System.currentTimeMillis()/1000;
-    	while(System.currentTimeMillis()/1000 - overTime <= 0.5){
-    		Robot.intakeSubsystem.setMotor(intakeSpeed);
-    	}
     	Robot.intakeSubsystem.setMotor(0);
     }
 
@@ -72,10 +66,6 @@ public class IntakeCommand extends Command {
     protected void interrupted() {
     	//TODO: retract intake
     	Robot.intakeSubsystem.setSolenoid(false);
-    	long overTime = System.currentTimeMillis()/1000;
-    	while(System.currentTimeMillis()/1000 - overTime <= afterTime){
-    		Robot.intakeSubsystem.setMotor(intakeSpeed);
-    	}
     	Robot.intakeSubsystem.setMotor(0);
     }
 }

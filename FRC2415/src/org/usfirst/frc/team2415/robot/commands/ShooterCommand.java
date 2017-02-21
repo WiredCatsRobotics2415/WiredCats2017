@@ -25,15 +25,13 @@ public class ShooterCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-//    	if(Robot.carouselSubsystem.isMoving()) {
-//    		Robot.shooterSubsystem.changeProfile(Robot.shooterSubsystem.maintainProfile);
-//    	} else {
-//    		Robot.shooterSubsystem.changeProfile(Robot.shooterSubsystem.rampProfile);
-//    	}
+    	if(Robot.carouselSubsystem.isMoving) {
+    		Robot.shooterSubsystem.changeProfile(Robot.shooterSubsystem.maintainProfile);
+    	} else {
+    		Robot.shooterSubsystem.changeProfile(Robot.shooterSubsystem.rampProfile);
+    	}
     	
     	Robot.shooterSubsystem.setSpeed(Robot.shooterSubsystem.shooterSpeed);
-    	
-    	System.out.println("Speed: " + Robot.shooterSubsystem.getSpeed());
     	
     	StreamerPacket data = new StreamerPacket("shooterData");
     	data.addAttribute("ShooterSpeed", Robot.shooterSubsystem.getSpeed());
