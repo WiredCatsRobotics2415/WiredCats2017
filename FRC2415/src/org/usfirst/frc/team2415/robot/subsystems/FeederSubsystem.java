@@ -4,72 +4,60 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.StatusFrameRate;
+import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class FeederSubsystem extends PIDSubsystem {
+public class FeederSubsystem extends Subsystem {
 
-	static double kP = 0.00003,
-				  kI = 0.000010,
-				  kD = 0.0001420,
-				  kF = 1/6000;
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 	
-//	static double kP = 0.00003,
-//			  kI = 0.0000420,
-//			  kD = 0.000075,
-//			  kF = 1/6000;
-	
+	static double kU = 1, 
+			  kP = kU*0.00003*.20*3,
+			  kI = kU*0.000010*25,
+			  kD = kU*0.0001420/25,
+			  kF = 1/6000;
 	
 	private CANTalon feederTalon;
-	int encoderDirection = -1;
-	public double feederSpeed = 4000;
-	
-    // Initialize your subsystem here
-    public FeederSubsystem() {
-    
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
-    	
-    	super("feeder", kP, kI, kD, kF);
-    	
-    	feederTalon = new CANTalon (RobotMap.FEEDER_TALON);
-    	feederTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-    	
-    }
+	public int rampProfile = 0, maintainProfile = 1;
+	public double feederSpeed = 5000;
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-
-    protected double returnPIDInput() {
-        // Return your input value for the PID loop
-        // e.g. a sensor, like a potentiometer:
-        // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return getSpeed();
-    }
-
-    protected void usePIDOutput(double output) {
-        // Use output to drive your system, like a motor
-        // e.g. yourMotor.set(output);
-    	feederTalon.pidWrite(output);
+    
+    public FeederSubsystem(){
+    	feederTalon = new CANTalon(RobotMap.FEEDER_TALON);
+    	feederTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	feederTalon.reverseSensor(true);
+    	feederTalon.changeControlMode(TalonControlMode.Speed);
+    	feederTalon.setStatusFrameRateMs(StatusFrameRate.Feedback, 1);
+    	feederTalon.setPID(kP, kI, kD);
+    	feederTalon.setF(kF);
     }
     
-    public void setTalonSpeed(double speed){
+    public void setSpeed(double speed){
     	feederTalon.set(speed);
     }
     
     public double getSpeed(){
-    	return encoderDirection*feederTalon.getSpeed();
+    	return feederTalon.getSpeed();
     }
     
     public boolean rampedUp(){
-    	return getSpeed() >= feederSpeed*.95;
+    	return feederTalon.getSpeed() >= feederSpeed*0.98;
     }
+    
+    public void changeProfile(int profile){
+    	feederTalon.setProfile(profile);
+    }
+    
+    
 }
+

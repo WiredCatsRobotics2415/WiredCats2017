@@ -42,8 +42,8 @@ public class CarouselSubsystem extends Subsystem {
     	return carouselTal.getOutputCurrent();
     }
     
-    public boolean isStopped(){
-    	return carouselTal.get() < 0.3;
+    public boolean isMoving(){
+    	return carouselTal.get() > 0.1;
     }
     
 }
