@@ -34,8 +34,13 @@ public class CarouselCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if(!checked){
-    		if(!Robot.feederSubsystem.rampedUp()) return;
-    		checked = true;
+    		if(!Robot.feederSubsystem.rampedUp()) {
+    			startTime = System.currentTimeMillis()/1000;
+    			return;
+    		}
+    		if(startTime < 0.25){
+    			checked = true;
+    		}
     	}
 		
 		System.out.println("Carousel Current: " + Robot.carouselSubsystem.getCurrent());
@@ -53,7 +58,7 @@ public class CarouselCommand extends Command {
     	
     	if(System.currentTimeMillis()/1000 - jamTime <= reverseTime) {
     		Robot.carouselSubsystem.setCarouselSpeed(-0.25);
-    	} else Robot.carouselSubsystem.setCarouselSpeed(0.420);
+    	} else Robot.carouselSubsystem.setCarouselSpeed(.25);
     	
     	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
 

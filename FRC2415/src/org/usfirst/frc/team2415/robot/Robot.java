@@ -1,10 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
 import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
-import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
@@ -16,7 +13,6 @@ import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -53,29 +49,29 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 		shooterSubsystem = new ShooterSubsystem();
-		intakeSubsystem = new IntakeSubsystem();
-		driveSubsystem = new DriveSubsystem();
-		carouselSubsystem = new CarouselSubsystem();
+//		intakeSubsystem = new IntakeSubsystem();
+//		driveSubsystem = new DriveSubsystem();
+//		carouselSubsystem = new CarouselSubsystem();
 		feederSubsystem = new FeederSubsystem();
-		gearManipulatorSubsystem = new GearManipulatorSubsystem();
+//		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 		
 		compressor = new Compressor(RobotMap.PCM_ID);
 		
-		dataSender = new DataSender("10.80.8.168", 9102); //COMPETITION BOT
+//		dataSender = new DataSender("10.80.8.168", 9102); //COMPETITION BOT
+		dataSender = new DataSender("10.0.69.40", 9102); //MULE BOT
 
 
 		
 		gamepad = new XBoxOneGamepad(0);
 		operator = new WiredCatJoystick(1);
 
-		gamepad.rightBumper.whileHeld(new IntakeCommand());
+//		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
-		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
+//		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
 		
 //		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
 		
-//		LiveWindow.addActuator("feeder", "FeederTalon", feederSubsystem.getPIDController());
 
 	}
 

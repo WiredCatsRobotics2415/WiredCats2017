@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShooterCommand extends Command {
 
+	boolean checked = false;
 	
     public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -19,22 +20,27 @@ public class ShooterCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	checked = false;
     	Robot.shooterSubsystem.setSpeed(0);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if(Robot.carouselSubsystem.isMoving) {
-    		Robot.shooterSubsystem.changeProfile(Robot.shooterSubsystem.maintainProfile);
-    	} else {
+    	if(!checked){
     		Robot.shooterSubsystem.changeProfile(Robot.shooterSubsystem.rampProfile);
+    		checked = Robot.shooterSubsystem.getSpeed() >= Robot.shooterSubsystem.shooterSpeed;
+    	} else {
+    		Robot.shooterSubsystem.changeProfile(Robot.shooterSubsystem.maintainProfile);
     	}
     	
     	Robot.shooterSubsystem.setSpeed(Robot.shooterSubsystem.shooterSpeed);
     	
     	StreamerPacket data = new StreamerPacket("shooterData");
-    	data.addAttribute("ShooterSpeed", Robot.shooterSubsystem.getSpeed());
+    	data.addAttribute("shooterSpeed", Robot.shooterSubsystem.getSpeed());
+//    	data.addAttribute("shooterSetpoint", Robot.shooterSubsystem.getSetpoint());
+//    	data.addAttribute("iError", Robot.shooterSubsystem.getIError());
     	Robot.dataSender.send(data);
     }
 
