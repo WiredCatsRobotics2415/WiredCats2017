@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
+import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
+import org.usfirst.frc.team2415.robot.autocommands.TurnToCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -48,17 +50,21 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
-		shooterSubsystem = new ShooterSubsystem();
+//		shooterSubsystem = new ShooterSubsystem();
 //		intakeSubsystem = new IntakeSubsystem();
-//		driveSubsystem = new DriveSubsystem();
+		driveSubsystem = new DriveSubsystem();
 //		carouselSubsystem = new CarouselSubsystem();
-		feederSubsystem = new FeederSubsystem();
+//		feederSubsystem = new FeederSubsystem();
 //		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 		
 		compressor = new Compressor(RobotMap.PCM_ID);
 		
 //		dataSender = new DataSender("10.80.8.168", 9102); //COMPETITION BOT
-		dataSender = new DataSender("10.0.69.40", 9102); //MULE BOT
+//		dataSender = new DataSender("10.0.69.40", 9102); //MULE BOT
+		dataSender = new DataSender("10.4.20.40", 9102); //PRACTICE BOT
+		
+
+		SmartDashboard.putData(Scheduler.getInstance());
 
 
 		
@@ -67,10 +73,13 @@ public class Robot extends IterativeRobot {
 
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
-		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
+//		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
 //		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
 		
 //		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
+		
+		gamepad.a_button.whenPressed(new TrajectoryCommand(Trajectories.STRAIGHT_PATH));
+		gamepad.b_button.whenPressed(new TurnToCommand(90));
 		
 
 	}
@@ -88,6 +97,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+    	System.out.println("Left: " + Robot.driveSubsystem.getDistance()[0] + "\tRight: " + Robot.driveSubsystem.getDistance()[1] + "\tYaw: " + Robot.driveSubsystem.getYaw());
 	}
 
 	/**

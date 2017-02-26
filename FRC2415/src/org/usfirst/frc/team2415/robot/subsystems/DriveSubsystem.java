@@ -20,13 +20,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveSubsystem extends Subsystem {
 	
 	private CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
-	private AHRS ahrs;
+	public AHRS ahrs;
 	private PixyCam pixy;
 	
 	public boolean isMoving;
 
 	final double WHEEL_CIRCUMFERENCE = 0.2708333 * Math.PI; // 3.25 inch diameter wheel
-	final double GEAR_RATIO = 4.909090909; // Reduction from encoder shaft and output shaft
+	final double GEAR_RATIO = 1/4.909090909; // Reduction from encoder shaft and output shaft
 	final double PULSES_PER_REVOLUTION = 4096.0; // Number of encoder counts per revolution
 
     // Put methods for controlling this subsystem
@@ -85,6 +85,18 @@ public class DriveSubsystem extends Subsystem {
     	rightTalFront.set(speed);
     }
     
+    public void setBreakMode(boolean mode){
+    	leftTalFront.enableBrakeMode(mode);
+    	rightTalFront.enableBrakeMode(mode);
+    	leftTalBack.enableBrakeMode(mode);
+    	rightTalBack.enableBrakeMode(mode);
+    }
+    
+    public void setTalonLimits(double max){
+    	leftTalBack.configPeakOutputVoltage(max, -max);
+    	rightTalBack.configPeakOutputVoltage(max, -max);
+    }
+    
     public void changeControlMode(TalonControlMode mode){
     	leftTalFront.changeControlMode(mode);
     	rightTalFront.changeControlMode(mode);
@@ -99,6 +111,14 @@ public class DriveSubsystem extends Subsystem {
     		rightTalFront.configPeakOutputVoltage(12, -12);
     		setPIDF(rightTalFront, .1696969696, 0, 0, 2/1000);
 
+    	} else if(mode == TalonControlMode.Position){
+    		leftTalFront.configNominalOutputVoltage(0, 0);
+    		leftTalFront.configPeakOutputVoltage(12, -12);
+    		setPIDF(leftTalFront, 1.125, 0, 0, 0);
+
+    		rightTalFront.configNominalOutputVoltage(0, 0);
+    		rightTalFront.configPeakOutputVoltage(12, -12);
+    		setPIDF(rightTalFront, 1.125, 0, 0, 0);
     	}
     }
     
@@ -116,6 +136,10 @@ public class DriveSubsystem extends Subsystem {
     	return ahrs.getYaw();
     }
     
+    public void zeroYaw(){
+    	ahrs.zeroYaw();
+    }
+    
     public double getRoll(){
     	return ahrs.getRoll();
     }
@@ -129,8 +153,8 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double[] getDistance(){
-    	return new double[]{WHEEL_CIRCUMFERENCE*GEAR_RATIO*(leftTalFront.getPosition()/PULSES_PER_REVOLUTION),
-    						WHEEL_CIRCUMFERENCE*GEAR_RATIO*(rightTalFront.getPosition()/PULSES_PER_REVOLUTION)};
+    	return new double[]{leftTalFront.getPosition()*WHEEL_CIRCUMFERENCE,
+							rightTalFront.getPosition()*WHEEL_CIRCUMFERENCE};
     }
     
     public void zeroEncoders(){

@@ -30,6 +30,7 @@ public class VelocityDriveCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.driveSubsystem.setBreakMode(true);
 		Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
 	}
 

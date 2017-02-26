@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TrajectoryCommand extends Command {
 	
 	double[][] waypoints;
-	double totalTime = 2; //max seconds we want to drive the path
+	double totalTime = 1; //max seconds we want to drive the path
 	double timeStep = 0.02; //period of control loop on Rio, seconds
 	double robotTrackWidth = 2.083333333; //distance between left and right wheels, feet
 	FalconPathPlanner path;
