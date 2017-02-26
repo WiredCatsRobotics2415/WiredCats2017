@@ -153,6 +153,8 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double[] getDistance(){
+//    	return new double[]{WHEEL_CIRCUMFERENCE*GEAR_RATIO*(leftTalFront.getPosition()/PULSES_PER_REVOLUTION),
+//    						WHEEL_CIRCUMFERENCE*GEAR_RATIO*(rightTalFront.getPosition()/PULSES_PER_REVOLUTION)};
     	return new double[]{leftTalFront.getPosition()*WHEEL_CIRCUMFERENCE,
 							rightTalFront.getPosition()*WHEEL_CIRCUMFERENCE};
     }

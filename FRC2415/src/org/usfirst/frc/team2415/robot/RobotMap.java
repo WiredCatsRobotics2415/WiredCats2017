@@ -25,8 +25,8 @@ public class RobotMap {
 	public static final int RIGHT_TALON_FRONT = 4;
   
 	public static final int INTAKE_TALON = 5;
-	public static final int SHOOTER_TALON = 10;
-	public static final int FEEDER_TALON = 6;
+	public static final int SHOOTER_TALON = 6; 
+	public static final int FEEDER_TALON = 7;
 	public static final int CAROUSEL_TALON = 8;
 	
 	public static final int[] GEAR_MANIP_SOLENOID = {0,5};
