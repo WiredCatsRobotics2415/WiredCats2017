@@ -10,8 +10,7 @@ public class Trajectories {
 												  {19, 12}};
 	
 	public static final double[][] STRAIGHT_PATH = {{0,0},
-													{10,0},
-													{0,10}};
+													{5,0}};
 	
 
 

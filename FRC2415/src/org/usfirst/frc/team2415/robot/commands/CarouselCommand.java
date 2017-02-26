@@ -34,8 +34,13 @@ public class CarouselCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if(!checked){
-    		if(!Robot.feederSubsystem.rampedUp()) return;
-    		checked = true;
+    		if(!Robot.feederSubsystem.rampedUp()) {
+    			startTime = System.currentTimeMillis()/1000;
+    			return;
+    		}
+    		if(startTime < 0.25){
+    			checked = true;
+    		}
     	}
 		
 		System.out.println("Carousel Current: " + Robot.carouselSubsystem.getCurrent());
@@ -47,17 +52,17 @@ public class CarouselCommand extends Command {
 		 * forward
 		 */
 		
-//		if(Robot.intakeSubsystem.getCurrent() >= currentCap && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
-//    		jamTime = System.currentTimeMillis()/1000;
-//    	}
-//    	
-//    	if(System.currentTimeMillis()/1000 - jamTime <= reverseTime) {
-//    		Robot.carouselSubsystem.setCarouselSpeed(-0.25);
-//    	} else Robot.carouselSubsystem.setCarouselSpeed(1);
-//    	
-//    	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
+		if(Robot.intakeSubsystem.getCurrent() >= currentCap && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
+    		jamTime = System.currentTimeMillis()/1000;
+    	}
+    	
+    	if(System.currentTimeMillis()/1000 - jamTime <= reverseTime) {
+    		Robot.carouselSubsystem.setCarouselSpeed(-0.25);
+    	} else Robot.carouselSubsystem.setCarouselSpeed(.25);
+    	
+    	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
 
-		Robot.carouselSubsystem.setCarouselSpeed(0.420);
+    	Robot.carouselSubsystem.isMoving = true;
 		
 		StreamerPacket data = new StreamerPacket("carouselData");
     	data.addAttribute("carouselCurrent", Robot.carouselSubsystem.getCurrent());
@@ -91,6 +96,7 @@ public class CarouselCommand extends Command {
 	protected void end() {
 		Robot.carouselSubsystem.setCarouselSpeed(0);
 		checked = false;
+    	Robot.carouselSubsystem.isMoving = false;
 	}
 
 	// Called when another command which requires one or more of the same
@@ -99,5 +105,6 @@ public class CarouselCommand extends Command {
 		// TODO: make the carousel stop
 		Robot.carouselSubsystem.setCarouselSpeed(0);
 		checked = false;
+    	Robot.carouselSubsystem.isMoving = false;
 	}
 }

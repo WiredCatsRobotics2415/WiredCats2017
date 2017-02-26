@@ -30,11 +30,11 @@ public class FeederCommand extends Command {
     		checked = true;
     	}
     	
-    	if(Robot.carouselSubsystem.isMoving()) {
-    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.rampProfile);
-    	} else {
-    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.rampProfile);
-    	}
+//    	if(Robot.carouselSubsystem.isMoving()) {
+//    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.rampProfile);
+//    	} else {
+//    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.maintainProfile);
+//    	}
     	
     	Robot.feederSubsystem.setSpeed(Robot.feederSubsystem.feederSpeed);
     	

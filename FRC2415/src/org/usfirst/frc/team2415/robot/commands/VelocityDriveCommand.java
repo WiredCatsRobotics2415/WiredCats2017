@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 
 import org.usfirst.frc.team2415.robot.Robot;
 import org.usfirst.frc.team2415.robot.StreamerPacket;
-import org.usfirst.frc.team2415.robot.utilities.USBWritable;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -13,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class VelocityDriveCommand extends Command implements USBWritable {
+public class VelocityDriveCommand extends Command {
 
 	private double INTERPOLATION_FACTOR = 0;
 	private double DEADBAND = 0.1;
@@ -31,6 +30,7 @@ public class VelocityDriveCommand extends Command implements USBWritable {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.driveSubsystem.setBreakMode(true);
 		Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
 	}
 
@@ -81,9 +81,12 @@ public class VelocityDriveCommand extends Command implements USBWritable {
 			
 			Robot.driveSubsystem.setMotors(2 * 1079 * left, 2 * 1079 * right);
 
-			// StreamerPacket data = new StreamerPacket("driveData");
-			// data.addAttribute("leftSpeed", Robot.feederSubsystem.getSpeed());
-			// Robot.dataSender.send(data);
+			 StreamerPacket data = new StreamerPacket("driveData");
+			 data.addAttribute("leftSpeed", Robot.driveSubsystem.getVelocity()[0]);
+			 data.addAttribute("rightSpeed", Robot.driveSubsystem.getVelocity()[1]);
+			 data.addAttribute("leftPosition", Robot.driveSubsystem.getDistance()[0]);
+			 data.addAttribute("rightPosition", Robot.driveSubsystem.getDistance()[1]);
+			 Robot.dataSender.send(data);
 
 			// If the RPM is less than 50 then the robot is considered not
 			// moving
