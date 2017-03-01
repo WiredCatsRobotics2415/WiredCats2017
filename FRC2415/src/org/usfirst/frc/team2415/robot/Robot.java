@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.TrajectoryCommand;
+import org.usfirst.frc.team2415.robot.autocommands.ChainAutoTest;
+import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
 import org.usfirst.frc.team2415.robot.autocommands.TurnToCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -78,8 +79,9 @@ public class Robot extends IterativeRobot {
 		
 //		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
 		
-		gamepad.a_button.whenPressed(new TrajectoryCommand(Trajectories.STRAIGHT_PATH));
+		gamepad.a_button.whenPressed(new DriveStraightToCommand(10));
 		gamepad.b_button.whenPressed(new TurnToCommand(90));
+		gamepad.y_button.whenPressed(new ChainAutoTest());
 		
 
 	}

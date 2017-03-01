@@ -24,8 +24,8 @@ public class DriveSubsystem extends Subsystem {
 	private PixyCam pixy;
 	
 	public boolean isMoving;
-
-	final double WHEEL_CIRCUMFERENCE = 0.2708333 * Math.PI; // 3.25 inch diameter wheel
+	
+	public final double WHEEL_CIRCUMFERENCE = 0.25 * Math.PI; // 3.25 inch
 	final double GEAR_RATIO = 1/4.909090909; // Reduction from encoder shaft and output shaft
 	final double PULSES_PER_REVOLUTION = 4096.0; // Number of encoder counts per revolution
 
@@ -153,8 +153,6 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double[] getDistance(){
-//    	return new double[]{WHEEL_CIRCUMFERENCE*GEAR_RATIO*(leftTalFront.getPosition()/PULSES_PER_REVOLUTION),
-//    						WHEEL_CIRCUMFERENCE*GEAR_RATIO*(rightTalFront.getPosition()/PULSES_PER_REVOLUTION)};
     	return new double[]{leftTalFront.getPosition()*WHEEL_CIRCUMFERENCE,
 							rightTalFront.getPosition()*WHEEL_CIRCUMFERENCE};
     }

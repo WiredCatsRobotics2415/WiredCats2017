@@ -17,7 +17,7 @@ public class DriveToCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveSubsystem);
-    	this.distance = distance;
+    	this.distance = distance/Robot.driveSubsystem.WHEEL_CIRCUMFERENCE;
     }
 
     // Called just before this Command runs the first time
