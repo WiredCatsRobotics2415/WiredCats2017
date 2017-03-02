@@ -30,15 +30,15 @@ public class ChainAutoTest extends CommandGroup {
     	
     	requires(Robot.driveSubsystem);
     	
-    	addSequential(new DriveToCommand(10));
+    	addSequential(new DriveStraightToCommand(10));
     	addSequential(new WaitCommand(1));
     	addSequential(new TurnToCommand(90));
     	addSequential(new WaitCommand(1));
-    	addSequential(new DriveToCommand(10));
+    	addSequential(new DriveStraightToCommand(10));
     	addSequential(new WaitCommand(1));
     	addSequential(new TurnToCommand(90));
     	addSequential(new WaitCommand(1));
-    	addSequential(new DriveToCommand(10));
+    	addSequential(new DriveStraightToCommand(10));
     	addSequential(new WaitCommand(1));
     	addSequential(new TurnToCommand(90));
     	

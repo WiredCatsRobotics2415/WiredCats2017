@@ -44,11 +44,6 @@ public class TurnToCommand extends Command implements PIDOutput {
     	
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	
-    	if(!checked){
-    		if((System.currentTimeMillis() - startTime) < 750) return;
-    		checked = true;
-    	}
-    	
     	Robot.driveSubsystem.zeroYaw();
     	Robot.driveSubsystem.setMotors(0, 0);
 

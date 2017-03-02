@@ -38,7 +38,7 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.driveSubsystem);
-		this.distance = distance;///Robot.driveSubsystem.WHEEL_CIRCUMFERENCE;
+		this.distance = distance;
     }
 
     // Called just before this Command runs the first time
@@ -61,7 +61,6 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     	System.out.println("Yaw: " + Robot.driveSubsystem.ahrs.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
     	System.out.println("Encoder: " + Robot.driveSubsystem.getDistance()[1] + "\tsetpoint: " + distance);
     	Robot.driveSubsystem.setMotors(rotateToAngleRate + .5, -rotateToAngleRate + .5);
-//    	Robot.driveSubsystem.setMotors(.75, .75);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -72,14 +71,14 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.driveSubsystem.setMotors(0, 0);
-    	turnController.disable();
+    	turnController.reset();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.driveSubsystem.setMotors(0, 0);
-    	turnController.disable();
+    	turnController.reset();
     }
 
 	@Override

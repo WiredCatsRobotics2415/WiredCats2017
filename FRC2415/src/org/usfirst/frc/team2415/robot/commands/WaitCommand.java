@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2415.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
@@ -8,11 +10,12 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
  */
 public class WaitCommand extends TimedCommand {
 
-    public WaitCommand(Subsystem subsystem, double timeout) {
+	
+    public WaitCommand(double timeout) {
         super(timeout);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(subsystem);
+        requires(Robot.driveSubsystem);
     }
 
     // Called just before this Command runs the first time

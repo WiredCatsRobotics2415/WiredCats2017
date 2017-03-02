@@ -4,6 +4,8 @@ package org.usfirst.frc.team2415.robot;
 import org.usfirst.frc.team2415.robot.autocommands.ChainAutoTest;
 import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
 import org.usfirst.frc.team2415.robot.autocommands.TurnToCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
@@ -75,7 +77,8 @@ public class Robot extends IterativeRobot {
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 //		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
-//		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
+		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
+		operator.buttons[7].toggleWhenPressed(new ToggleGearPushingMechanismCommand());
 		
 //		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
 		
