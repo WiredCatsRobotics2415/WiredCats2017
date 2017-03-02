@@ -25,7 +25,7 @@ public class DriveSubsystem extends Subsystem {
 	
 	public boolean isMoving;
 	
-	public final double WHEEL_CIRCUMFERENCE = 0.25 * Math.PI; // 3.25 inch
+	public final double WHEEL_CIRCUMFERENCE = 0.25 * Math.PI; // 3 inch
 	final double GEAR_RATIO = 1/4.909090909; // Reduction from encoder shaft and output shaft
 	final double PULSES_PER_REVOLUTION = 4096.0; // Number of encoder counts per revolution
 
@@ -109,7 +109,7 @@ public class DriveSubsystem extends Subsystem {
 
     		rightTalFront.configNominalOutputVoltage(0, 0);
     		rightTalFront.configPeakOutputVoltage(12, -12);
-    		setPIDF(rightTalFront, .1696969696, 0, 0, 2/1000);
+    		setPIDF(rightTalFront, .175, 0, 0, 2/1000);
 
     	} else if(mode == TalonControlMode.Position){
     		leftTalFront.configNominalOutputVoltage(0, 0);

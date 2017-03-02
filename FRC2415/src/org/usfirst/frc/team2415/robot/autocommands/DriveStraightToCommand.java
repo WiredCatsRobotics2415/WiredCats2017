@@ -53,6 +53,8 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     	turnController.setContinuous(true);
     	turnController.enable();
     	turnController.setSetpoint(Robot.driveSubsystem.ahrs.getYaw());
+    	Robot.driveSubsystem.setBreakMode(true);
+    	
     	
     }
 
@@ -60,12 +62,13 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     protected void execute() {
     	System.out.println("Yaw: " + Robot.driveSubsystem.ahrs.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
     	System.out.println("Encoder: " + Robot.driveSubsystem.getDistance()[1] + "\tsetpoint: " + distance);
-    	Robot.driveSubsystem.setMotors(rotateToAngleRate + .5, -rotateToAngleRate + .5);
+    	if(distance > 0) Robot.driveSubsystem.setMotors(rotateToAngleRate + .5, -rotateToAngleRate + .5);
+    	else Robot.driveSubsystem.setMotors(-(rotateToAngleRate + .5), -(-rotateToAngleRate + .5));
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return distance <= (Math.abs(Robot.driveSubsystem.getDistance()[1]) + Math.abs(Robot.driveSubsystem.getDistance()[0]))/2;
+    	return Math.abs(distance) <= (Math.abs(Robot.driveSubsystem.getDistance()[1]) + Math.abs(Robot.driveSubsystem.getDistance()[0]))/2;
     }
 
     // Called once after isFinished returns true
