@@ -1,12 +1,11 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.ChainAutoTest;
-import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
-import org.usfirst.frc.team2415.robot.autocommands.TurnToCommand;
+import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
 import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.GearManipulatorSubsystem;
@@ -32,6 +31,7 @@ public class Robot extends IterativeRobot {
 
 	public static ShooterSubsystem shooterSubsystem;
 	public static CarouselSubsystem carouselSubsystem;
+	public static ClimberSubsystem climberSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
@@ -54,11 +54,12 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 //		shooterSubsystem = new ShooterSubsystem();
-//		intakeSubsystem = new IntakeSubsystem();
+		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
-//		carouselSubsystem = new CarouselSubsystem();
+		carouselSubsystem = new CarouselSubsystem();
+		climberSubsystem = new ClimberSubsystem();
 //		feederSubsystem = new FeederSubsystem();
-//		gearManipulatorSubsystem = new GearManipulatorSubsystem();
+		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 		
 		compressor = new Compressor(RobotMap.PCM_ID);
 		
@@ -79,12 +80,13 @@ public class Robot extends IterativeRobot {
 //		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
 		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
 		operator.buttons[7].toggleWhenPressed(new ToggleGearPushingMechanismCommand());
+		operator.buttons[3].whileHeld(new ClimberCommand());
 		
 //		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
 		
-		gamepad.a_button.whenPressed(new DriveStraightToCommand(10));
-		gamepad.b_button.whenPressed(new TurnToCommand(90));
-		gamepad.y_button.whenPressed(new ChainAutoTest());
+//		gamepad.a_button.whenPressed(new DriveStraightToCommand(10));
+//		gamepad.b_button.whenPressed(new TurnToCommand(90));
+//		gamepad.y_button.whenPressed(new ChainAutoTest());
 		
 
 	}
