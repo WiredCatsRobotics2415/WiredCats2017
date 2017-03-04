@@ -3,7 +3,7 @@ package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
-import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
+//import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -78,6 +78,16 @@ public class Robot extends IterativeRobot {
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 //		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
+
+//		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
+//		operator.buttons[7].toggleWhenPressed(new ToggleGearPushingMechanismCommand());
+		
+//		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
+		
+		gamepad.a_button.whenPressed(new DriveStraightToCommand(6.5));
+		gamepad.b_button.whenPressed(new TurnToCommand(90));
+		gamepad.y_button.whenPressed(new ChainAutoTest());
+
 		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
 		operator.buttons[7].toggleWhenPressed(new ToggleGearPushingMechanismCommand());
 		operator.buttons[3].whileHeld(new ClimberCommand());
@@ -87,6 +97,7 @@ public class Robot extends IterativeRobot {
 //		gamepad.a_button.whenPressed(new DriveStraightToCommand(10));
 //		gamepad.b_button.whenPressed(new TurnToCommand(90));
 //		gamepad.y_button.whenPressed(new ChainAutoTest());
+
 		
 
 	}
@@ -157,6 +168,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("Distance: " + Robot.driveSubsystem.getDistance()[1]);
 	}
 
 	/**

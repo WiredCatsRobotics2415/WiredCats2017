@@ -43,8 +43,8 @@ public class VelocityDriveCommand extends Command {
 		pointTurn = Math.abs(leftY) <= DEADBAND;
 
 		if (pointTurn) {
-
-			Robot.driveSubsystem.setMotors(.5 * 1079 * rightX, -.5 * 1079 * rightX);
+			if(Robot.gamepad.leftBumper.get()) Robot.driveSubsystem.setMotors(.8 * 1079 * rightX *0.5, -.8 * 1079 * rightX * 0.5);
+			else Robot.driveSubsystem.setMotors(.8 * 1079 * rightX, -.8 * 1079 * rightX);
 
 		} else {
 
@@ -73,14 +73,16 @@ public class VelocityDriveCommand extends Command {
 			// right = -1.0;
 			// }
 
-			double leftRate = Robot.driveSubsystem.getVelocity()[0]/(1079*left) <= 0 ? 0 : 27.4285714286;
+			double leftRate = Robot.driveSubsystem.getVelocity()[0]/(1079*left) <= 0 && (rightX < 0.5) ? 0 : 27.4285714286;
 			Robot.driveSubsystem.setLeftRampRate(leftRate);
 			
-			double rightRate = -(Robot.driveSubsystem.getVelocity()[1]/(1079*right)) <= 0 ? 0 : 27.4285714286;
+			double rightRate = -(Robot.driveSubsystem.getVelocity()[1]/(1079*right)) <= 0 && (rightX < 0.5) ? 0 : 27.4285714286;
 			Robot.driveSubsystem.setRightRampRate(rightRate);
 			
-			Robot.driveSubsystem.setMotors(2 * 1079 * left, 2 * 1079 * right);
+			if(Robot.gamepad.leftBumper.get()) Robot.driveSubsystem.setMotors(0.65* 1079 * left, 0.65* 1079 * right);
+			else Robot.driveSubsystem.setMotors(2 * 1079 * left, 2 * 1079 * right);
 
+			
 			 StreamerPacket data = new StreamerPacket("driveData");
 			 data.addAttribute("leftSpeed", Robot.driveSubsystem.getVelocity()[0]);
 			 data.addAttribute("rightSpeed", Robot.driveSubsystem.getVelocity()[1]);
