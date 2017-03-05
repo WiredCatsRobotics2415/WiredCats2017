@@ -11,69 +11,70 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveStraightToCommand extends Command implements PIDOutput {
+public class TurnByCommand extends Command implements PIDOutput {
 
 
 	PIDController turnController;
 	double rotateToAngleRate;
 	double angle;
+	boolean finisher, checked = false;
+	long finisherTime, startTime;
 	
-	double kP = .025;
-	double kI = 0.0025;
-	double kD = .0;
+	double kP = 0.025;
+	double kI = 0.0000;//0.00018
+	double kD = 0.071;
 	double kF = 0;
 	
-	double kTolerance = 2.0;
+	double kTolerance = 1;
 	
 	long zeroWaitTime;
 	
-	long startTime;
-	boolean finisher;
-	
-	double distance;
-	double speed;
 
 	
-	public DriveStraightToCommand(double distance, double speed) {
+	public TurnByCommand(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.driveSubsystem);
-		this.distance = distance;
-		this.speed = speed;
+		this.angle = angle;
+		startTime = System.currentTimeMillis();
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {	
+    protected void initialize() {
+    	
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
-    	Robot.driveSubsystem.zeroEncoders();
+    	
+    	Robot.driveSubsystem.zeroYaw();
     	Robot.driveSubsystem.setMotors(0, 0);
+
+    	Robot.driveSubsystem.setBreakMode(true);
+    	
     	turnController = new PIDController(kP, kI, kD, kF, Robot.driveSubsystem.ahrs, this);
     	turnController.setInputRange(-180.0f,  180.0f);
     	turnController.setOutputRange(-1.0, 1.0);
     	turnController.setAbsoluteTolerance(kTolerance);
     	turnController.setContinuous(true);
     	turnController.enable();
-    	turnController.setSetpoint(Robot.driveSubsystem.ahrs.getYaw());
-    	Robot.driveSubsystem.setBreakMode(true);
-    	
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("Yaw: " + Robot.driveSubsystem.ahrs.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
-    	System.out.println("Encoder: " + Robot.driveSubsystem.getDistance()[1] + "\tsetpoint: " + distance);
-    	if(distance > 0) Robot.driveSubsystem.setMotors(rotateToAngleRate + speed, -rotateToAngleRate + speed);
-    	else Robot.driveSubsystem.setMotors(-(-rotateToAngleRate + speed), -(rotateToAngleRate + speed));
+    	turnController.setSetpoint(angle);
+    	System.out.println("Yaw: " + Robot.driveSubsystem.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
+    	Robot.driveSubsystem.setMotors(rotateToAngleRate, -rotateToAngleRate);
+//    	finisher = (Math.abs(turnController.getError()) <= kTolerance);
+//    	if (finisher == false) finisherTime = System.currentTimeMillis();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(distance) <= (Math.abs(Robot.driveSubsystem.getDistance()[1]) + Math.abs(Robot.driveSubsystem.getDistance()[0]))/2;
+//    	return System.currentTimeMillis() - finisherTime >= 3;
+    	return turnController.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }
@@ -81,6 +82,7 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }

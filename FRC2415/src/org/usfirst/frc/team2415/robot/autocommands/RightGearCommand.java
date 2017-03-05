@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2415.robot.autocommands;
 
-import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -8,9 +9,22 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class ChainAutoTest extends CommandGroup {
+public class RightGearCommand extends CommandGroup {
 
-    public ChainAutoTest() {
+	double  leftLength = 0,
+			fieldLength = 27,
+			a1 = 0;
+	
+    public RightGearCommand() {
+    	
+    	addSequential(new DriveStraightToCommand(1, 0.5));
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new TurnByCommand(90));
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new ToggleGearManipulatorFlapCommand());
+    	addSequential(new WaitCommand(3));
+    	addSequential(new ToggleGearPushingMechanismCommand());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,14 +41,5 @@ public class ChainAutoTest extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	requires(Robot.driveSubsystem);
-    	
-    	addSequential(new DriveStraightToCommand(1.5));
-    	addSequential(new WaitCommand(0.5));
-    	addSequential(new TurnToCommand(180));
-    	addSequential(new WaitCommand(0.5));
-    	addSequential(new DriveStraightToCommand(-4.5));
-    	
     }
 }

@@ -32,9 +32,17 @@ public class GearManipulatorSubsystem extends Subsystem {
     	gearManipSolenoidExtend.set(state);
     	gearManipSolenoidRetract.set(!state);
     }
+    
+    public void toggleManipSolenoid(){
+    	setManipSolenoid(gearManipSolenoidRetract.get());
+    }
 
 	public void setPushSolenoid(boolean state) {
 		gearPushingMechanism.set(state);
+	}
+	
+	public void togglePushSolenoid(){
+		gearPushingMechanism.set(!gearPushingMechanism.get());
 	}
 }
 

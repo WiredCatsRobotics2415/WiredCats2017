@@ -12,25 +12,24 @@ public class ClimberCommand extends Command {
     public ClimberCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.intakeSubsystem);
     	requires(Robot.climberSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.intakeSubsystem.setSolenoid(true);
     	Robot.climberSubsystem.setMotor(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("Voltage: " + Robot.climberSubsystem.getVoltage());
-    	if(Robot.climberSubsystem.getVoltage() >= 690){
-    		Robot.climberSubsystem.setMotor(0);
-    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.climberSubsystem.getMotor() == 0;
+        return false;
     }
 
     // Called once after isFinished returns true

@@ -20,8 +20,8 @@ public class IntakeSubsystem extends Subsystem {
 	
 	public IntakeSubsystem(){
 		intakeTalon = new CANTalon(RobotMap.INTAKE_TALON);
-		intakeSolenoidRetract = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[0]);
-		intakeSolenoidExtend = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[1]);
+		intakeSolenoidRetract = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[1]);
+		intakeSolenoidExtend = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[0]);
 	}
 
     public void initDefaultCommand() {
@@ -35,7 +35,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void setMotor(double speed){
-    	intakeTalon.set(-speed);
+    	intakeTalon.set(speed);
     }
     
     public double getCurrent(){

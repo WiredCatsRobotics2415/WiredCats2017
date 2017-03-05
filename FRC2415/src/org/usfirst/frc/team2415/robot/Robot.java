@@ -1,8 +1,15 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
+import org.usfirst.frc.team2415.robot.autocommands.LeftGearCommand;
+import org.usfirst.frc.team2415.robot.autocommands.RightGearCommand;
+import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
+import org.usfirst.frc.team2415.robot.autocommands.TurnByCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
+import org.usfirst.frc.team2415.robot.commands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
+import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 //import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
@@ -16,8 +23,10 @@ import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -29,6 +38,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
+	Command autoCommand;
+	SendableChooser autoChooser;
+	
 	public static ShooterSubsystem shooterSubsystem;
 	public static CarouselSubsystem carouselSubsystem;
 	public static ClimberSubsystem climberSubsystem;
@@ -53,10 +65,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
+		
+		
 //		shooterSubsystem = new ShooterSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
-		carouselSubsystem = new CarouselSubsystem();
+//		carouselSubsystem = new CarouselSubsystem();
 		climberSubsystem = new ClimberSubsystem();
 //		feederSubsystem = new FeederSubsystem();
 		gearManipulatorSubsystem = new GearManipulatorSubsystem();
@@ -67,6 +81,11 @@ public class Robot extends IterativeRobot {
 //		dataSender = new DataSender("10.0.69.40", 9102); //MULE BOT
 		dataSender = new DataSender("10.4.20.40", 9102); //PRACTICE BOT
 		
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Straight Middle Gear", new StraightMiddleGearCommand());
+		autoChooser.addObject("Right gear", new RightGearCommand());
+		autoChooser.addObject("Left gear", new LeftGearCommand());
+		SmartDashboard.putData("Auto command chooser", autoChooser);
 
 		SmartDashboard.putData(Scheduler.getInstance());
 
@@ -75,7 +94,7 @@ public class Robot extends IterativeRobot {
 		gamepad = new XBoxOneGamepad(0);
 		operator = new WiredCatJoystick(1);
 
-//		gamepad.rightBumper.whileHeld(new IntakeCommand());
+		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 //		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
 
@@ -84,12 +103,12 @@ public class Robot extends IterativeRobot {
 		
 //		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
 		
-		gamepad.a_button.whenPressed(new DriveStraightToCommand(6.5));
-		gamepad.b_button.whenPressed(new TurnToCommand(90));
-		gamepad.y_button.whenPressed(new ChainAutoTest());
+		gamepad.a_button.whenPressed(new DriveStraightToCommand(-6.5, 0.5));
+		gamepad.b_button.whenPressed(new TurnByCommand(90));
+		gamepad.y_button.whenPressed(new StraightMiddleGearCommand());
 
-		operator.buttons[6].toggleWhenPressed(new ToggleGearManipulatorFlapCommand());
-		operator.buttons[7].toggleWhenPressed(new ToggleGearPushingMechanismCommand());
+		operator.buttons[6].whenPressed(new ToggleGearManipulatorFlapCommand());
+		operator.buttons[7].whenPressed(new ToggleGearPushingMechanismCommand());
 		operator.buttons[3].whileHeld(new ClimberCommand());
 		
 //		gamepad.leftBumper.whenPressed(new TrajectoryCommand(Trajectories.CHEESY_PATH));
@@ -132,12 +151,19 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
+		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
+		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
+		
+		autoCommand = (Command) autoChooser.getSelected();
+		autoCommand.start();
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
+		
 
 		// schedule the autonomous command (example)
 //		 Command automousCommand = new TrajectoryCommand(Trajectories.STRAIGHT_PATH);
@@ -160,6 +186,9 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 
+		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
+		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
+
 	}
 
 	/**
@@ -168,7 +197,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println("Distance: " + Robot.driveSubsystem.getDistance()[1]);
+//		System.out.println("Distance: " + Robot.driveSubsystem.getDistance()[1]);
 	}
 
 	/**

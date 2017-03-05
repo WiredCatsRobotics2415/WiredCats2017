@@ -25,7 +25,7 @@ public class TurnToCommand extends Command implements PIDOutput {
 	double kD = 0.071;
 	double kF = 0;
 	
-	double kTolerance = 1;
+	double kTolerance = 2.222222;
 	
 	long zeroWaitTime;
 	
@@ -44,7 +44,6 @@ public class TurnToCommand extends Command implements PIDOutput {
     	
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	
-    	Robot.driveSubsystem.zeroYaw();
     	Robot.driveSubsystem.setMotors(0, 0);
 
     	Robot.driveSubsystem.setBreakMode(true);
