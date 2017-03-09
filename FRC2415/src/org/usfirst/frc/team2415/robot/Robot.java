@@ -151,6 +151,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
+		
 		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
 		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
 		
@@ -205,7 +206,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-//		SmartDashboard.putNumber("Feeder Speed", feederSubsystem.getSpeed());
 		LiveWindow.run();
 	}
 
