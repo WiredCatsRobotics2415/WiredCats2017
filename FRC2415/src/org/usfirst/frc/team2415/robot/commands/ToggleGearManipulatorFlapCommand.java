@@ -18,7 +18,12 @@ public class ToggleGearManipulatorFlapCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearManipulatorSubsystem.toggleManipSolenoid();
+    	if(!Robot.intakeSubsystem.isExtended){
+        	if(Robot.gearManipulatorSubsystem.getManipSolenoid() == false)
+        		Robot.gearManipulatorSubsystem.setPushSolenoid(false);
+        	Robot.gearManipulatorSubsystem.toggleManipSolenoid();
+        	Robot.gearManipulatorSubsystem.isExtended = !Robot.gearManipulatorSubsystem.getManipSolenoid();
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run

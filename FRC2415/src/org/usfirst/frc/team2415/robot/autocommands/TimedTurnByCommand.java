@@ -42,7 +42,6 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
     protected void initialize() {
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	
-    	Robot.driveSubsystem.zeroYaw();
     	Robot.driveSubsystem.setMotors(0, 0);
 
     	Robot.driveSubsystem.setBreakMode(true);
@@ -53,17 +52,18 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
     	turnController.setAbsoluteTolerance(kTolerance);
     	turnController.setContinuous(true);
     	turnController.enable();
+    	turnController.setSetpoint(Robot.driveSubsystem.getYaw() + angle);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	turnController.setSetpoint(angle);
-    	System.out.println("Yaw: " + Robot.driveSubsystem.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
+    	System.out.println(System.currentTimeMillis());
     	Robot.driveSubsystem.setMotors(rotateToAngleRate, -rotateToAngleRate);
     }
 
     // Called once after timeout
     protected void end() {
+    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }
@@ -71,6 +71,7 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }

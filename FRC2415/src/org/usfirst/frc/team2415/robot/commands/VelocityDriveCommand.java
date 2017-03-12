@@ -17,7 +17,7 @@ public class VelocityDriveCommand extends Command {
 	private double INTERPOLATION_FACTOR = 0;
 	private double DEADBAND = 0.1;
 	private double STRAIGHT_RESTRICTER = 1;
-	private double TURN_SPEED_BOOST = 1;
+	private double TURN_SPEED_BOOST = 0.8;
 	private double overPower = .1;
 	private boolean pointTurn;
 	private BufferedWriter writer;
@@ -83,12 +83,12 @@ public class VelocityDriveCommand extends Command {
 			else Robot.driveSubsystem.setMotors(2 * 1079 * left, 2 * 1079 * right);
 
 			
-			 StreamerPacket data = new StreamerPacket("driveData");
-			 data.addAttribute("leftSpeed", Robot.driveSubsystem.getVelocity()[0]);
-			 data.addAttribute("rightSpeed", Robot.driveSubsystem.getVelocity()[1]);
-			 data.addAttribute("leftPosition", Robot.driveSubsystem.getDistance()[0]);
-			 data.addAttribute("rightPosition", Robot.driveSubsystem.getDistance()[1]);
-			 Robot.dataSender.send(data);
+//			 StreamerPacket data = new StreamerPacket("driveData");
+//			 data.addAttribute("leftSpeed", Robot.driveSubsystem.getVelocity()[0]);
+//			 data.addAttribute("rightSpeed", Robot.driveSubsystem.getVelocity()[1]);
+//			 data.addAttribute("leftPosition", Robot.driveSubsystem.getDistance()[0]);
+//			 data.addAttribute("rightPosition", Robot.driveSubsystem.getDistance()[1]);
+//			 Robot.dataSender.send(data);
 
 			// If the RPM is less than 50 then the robot is considered not
 			// moving

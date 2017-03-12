@@ -28,11 +28,11 @@ public class FullAutoShooterCommand extends CommandGroup {
         // arm.
     	
     	requires(Robot.shooterSubsystem);
-//    	requires(Robot.carouselSubsystem);
+    	requires(Robot.carouselSubsystem);
     	requires(Robot.feederSubsystem);
     	
     	addParallel(new ShooterCommand());
     	addParallel(new FeederCommand());
-//    	addParallel(new CarouselCommand());
+    	addParallel(new CarouselCommand());
     }
 }

@@ -43,7 +43,6 @@ public class CarouselCommand extends Command {
     		}
     	}
 		
-		System.out.println("Carousel Current: " + Robot.carouselSubsystem.getCurrent());
 		/*
 		 * TODO: so the carousel should always be moving forward at half speed
 		 * unless it senses that the voltage spikes to some arbitrary number
@@ -64,27 +63,10 @@ public class CarouselCommand extends Command {
 
     	Robot.carouselSubsystem.isMoving = true;
 		
-		StreamerPacket data = new StreamerPacket("carouselData");
-    	data.addAttribute("carouselCurrent", Robot.carouselSubsystem.getCurrent());
-    	Robot.dataSender.send(data);
+//		StreamerPacket data = new StreamerPacket("carouselData");
+//    	data.addAttribute("carouselCurrent", Robot.carouselSubsystem.getCurrent());
+//    	Robot.dataSender.send(data);
 		
-		/*
-		 * ok it is 2am not sure if this works either but it seems more logical
-		 * so even tho current goes back to normal when the talon goes backwards
-		 * shouldnt it not reset backTime so that it will complete the 0.25sec
-		 * of -0.25 speed? and if voltage never spikes it will always set to
-		 * 0.5? maybe im missing something again
-		 */
-
-		/*
-		 * KAMI: so this won't work. in understand where your logic is going but
-		 * there are 2 tiny problems. a few hints: 1 so when a ball gets stuck
-		 * in the intake and the intake starts to go in reverse, the current
-		 * goes back down to normal levels 2 a while loop in this situation
-		 * isn't really optimal because it doesn't let you choose between two
-		 * options like an if statement does 3 you're missing an else -- find
-		 * out where
-		 */
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

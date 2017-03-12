@@ -38,11 +38,10 @@ public class FeederCommand extends Command {
     	
     	Robot.feederSubsystem.setSpeed(Robot.feederSubsystem.feederSpeed);
     	
-    	System.out.println("Feeder Speed: " + Robot.feederSubsystem.getSpeed());
     	
-    	StreamerPacket data = new StreamerPacket("feederData");
-    	data.addAttribute("feederSpeed", Robot.feederSubsystem.getSpeed());
-    	Robot.dataSender.send(data);
+//    	StreamerPacket data = new StreamerPacket("feederData");
+//    	data.addAttribute("feederSpeed", Robot.feederSubsystem.getSpeed());
+//    	Robot.dataSender.send(data);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -37,11 +37,11 @@ public class ShooterCommand extends Command {
     	
     	Robot.shooterSubsystem.setSpeed(Robot.shooterSubsystem.shooterSpeed);
     	
-    	StreamerPacket data = new StreamerPacket("shooterData");
-    	data.addAttribute("shooterSpeed", Robot.shooterSubsystem.getSpeed());
-//    	data.addAttribute("shooterSetpoint", Robot.shooterSubsystem.getSetpoint());
-//    	data.addAttribute("iError", Robot.shooterSubsystem.getIError());
-    	Robot.dataSender.send(data);
+//    	StreamerPacket data = new StreamerPacket("shooterData");
+//    	data.addAttribute("shooterSpeed", Robot.shooterSubsystem.getSpeed());
+////    	data.addAttribute("shooterSetpoint", Robot.shooterSubsystem.getSetpoint());
+////    	data.addAttribute("iError", Robot.shooterSubsystem.getIError());
+//    	Robot.dataSender.send(data);
     }
 
     // Make this return true when this Command no longer needs to run execute()

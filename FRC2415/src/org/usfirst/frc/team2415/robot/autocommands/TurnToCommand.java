@@ -59,7 +59,6 @@ public class TurnToCommand extends Command implements PIDOutput {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	turnController.setSetpoint(angle);
-    	System.out.println("Yaw: " + Robot.driveSubsystem.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
     	Robot.driveSubsystem.setMotors(rotateToAngleRate, -rotateToAngleRate);
 //    	finisher = (Math.abs(turnController.getError()) <= kTolerance);
 //    	if (finisher == false) finisherTime = System.currentTimeMillis();
@@ -73,7 +72,6 @@ public class TurnToCommand extends Command implements PIDOutput {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }
@@ -81,7 +79,6 @@ public class TurnToCommand extends Command implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearManipulatorSubsystem extends Subsystem {
 
+	public boolean isExtended;
 	private Solenoid gearManipSolenoidExtend,
 					 gearManipSolenoidRetract,
 					 gearPushingMechanism;
@@ -36,6 +37,10 @@ public class GearManipulatorSubsystem extends Subsystem {
     public void toggleManipSolenoid(){
     	setManipSolenoid(gearManipSolenoidRetract.get());
     }
+    
+    public boolean getManipSolenoid(){
+    	return gearManipSolenoidExtend.get();
+    }
 
 	public void setPushSolenoid(boolean state) {
 		gearPushingMechanism.set(state);
@@ -43,6 +48,10 @@ public class GearManipulatorSubsystem extends Subsystem {
 	
 	public void togglePushSolenoid(){
 		gearPushingMechanism.set(!gearPushingMechanism.get());
+	}
+	
+	public boolean getPushSolenoid(){
+		return gearPushingMechanism.get();
 	}
 }
 

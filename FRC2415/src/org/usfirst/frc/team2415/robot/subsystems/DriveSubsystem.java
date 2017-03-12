@@ -25,7 +25,7 @@ public class DriveSubsystem extends Subsystem {
 	
 	public boolean isMoving;
 	
-	public final double WHEEL_CIRCUMFERENCE = 0.25 * Math.PI; // 3 inch
+	public final double WHEEL_CIRCUMFERENCE = .270833333 * Math.PI; // 3.25 inch
 	final double GEAR_RATIO = 1/4.909090909; // Reduction from encoder shaft and output shaft
 	final double PULSES_PER_REVOLUTION = 4096.0; // Number of encoder counts per revolution
 

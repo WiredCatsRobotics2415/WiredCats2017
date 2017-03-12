@@ -44,7 +44,6 @@ public class TurnByCommand extends Command implements PIDOutput {
     	
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	
-    	Robot.driveSubsystem.zeroYaw();
     	Robot.driveSubsystem.setMotors(0, 0);
 
     	Robot.driveSubsystem.setBreakMode(true);
@@ -55,12 +54,11 @@ public class TurnByCommand extends Command implements PIDOutput {
     	turnController.setAbsoluteTolerance(kTolerance);
     	turnController.setContinuous(true);
     	turnController.enable();
+    	turnController.setSetpoint(Robot.driveSubsystem.getYaw() + angle);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	turnController.setSetpoint(angle);
-    	System.out.println("Yaw: " + Robot.driveSubsystem.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
     	Robot.driveSubsystem.setMotors(rotateToAngleRate, -rotateToAngleRate);
 //    	finisher = (Math.abs(turnController.getError()) <= kTolerance);
 //    	if (finisher == false) finisherTime = System.currentTimeMillis();

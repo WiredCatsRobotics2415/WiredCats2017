@@ -18,16 +18,16 @@ public class ShooterSubsystem extends Subsystem {
 	// here. Call these from Commands.
 
 	static double kU0 = 2, 
-				  kP0 = 0.0032 * 30 * kU0, 
-				  kI0 = 0.0 * 1.2 * kU0, 
-				  kD0 = 5.0 * kP0 * kU0, 
-				  kF0 = .023;
+				  kP0 = 0.192,
+				  kI0 = 0, 
+				  kD0 = 1.92, 
+				  kF0 = 0.023;
 
 	static double kU1 = 1, 
-				  kP1 = 0.01 * 40 * kU1, 
-				  kI1 = 0.0000 * kU1, 
-				  kD1 = 1.0 * kP1 * kU1, 
-				  kF1 = .023;
+				  kP1 = 0.4, 
+				  kI1 = 0, 
+				  kD1 = 0.4, 
+				  kF1 = 0.023;
 
 	private CANTalon shooterTalon;
 	public byte rampProfile = 0, maintainProfile = 1;
@@ -44,6 +44,14 @@ public class ShooterSubsystem extends Subsystem {
 		shooterTalon.reverseSensor(true);
 		shooterTalon.changeControlMode(TalonControlMode.Speed);
 		shooterTalon.configPeakOutputVoltage(12, 0);
+		
+		shooterTalon.setProfile(rampProfile);
+		shooterTalon.setPID(kP0, kI0, kD0);
+		shooterTalon.setF(kF0);
+
+		shooterTalon.setProfile(maintainProfile);
+		shooterTalon.setPID(kP1, kI1, kD1);
+		shooterTalon.setF(kF1);
 
 	}
 

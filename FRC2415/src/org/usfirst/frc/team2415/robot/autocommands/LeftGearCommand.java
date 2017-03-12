@@ -17,11 +17,11 @@ public class LeftGearCommand extends CommandGroup {
 			
 	
     public LeftGearCommand() {
-    	
-    	addSequential(new DriveStraightToCommand(-6.9, 0.5));
+    	addSequential(new DriveStraightToCommand(-8, 0.5));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new TurnToCommand(-81.6));
-    	addSequential(new DriveStraightToCommand(-3.8, 0.3));
+    	addSequential(new TimedTurnByCommand(3, -45));
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new DriveStraightToCommand(-4, 0.5));
 //    	addSequential(new TurnByCommand(Math.atan((lineHeight-1)/(dLeft-leftLength))));
 //    	addSequential(new WaitCommand(0.5));
 //    	addSequential(new DriveStraightToCommand(Math.sqrt(Math.pow(dLeft-leftLength, 2) + Math.pow(lineHeight-1, 2)), 0.25));

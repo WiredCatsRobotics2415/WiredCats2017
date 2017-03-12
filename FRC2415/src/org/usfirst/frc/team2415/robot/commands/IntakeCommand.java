@@ -28,24 +28,27 @@ public class IntakeCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//TODO: extend intake
-    	Robot.intakeSubsystem.setSolenoid(true);
-    	startTime = System.currentTimeMillis()/1000;
-    	Robot.intakeSubsystem.setMotor(0);	
+    	if(Robot.gearManipulatorSubsystem.isExtended){
+        	Robot.intakeSubsystem.setSolenoid(true);
+        	startTime = System.currentTimeMillis()/1000;
+        	Robot.intakeSubsystem.setMotor(0);	
+        	Robot.intakeSubsystem.isExtended = true;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	System.out.println("Current: " + Robot.intakeSubsystem.getCurrent());
-    	if(Robot.intakeSubsystem.getCurrent() >= currentCap && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
-    		jamTime = System.currentTimeMillis()/1000;
+    	if(Robot.gearManipulatorSubsystem.isExtended){
+    		if(Robot.intakeSubsystem.getCurrent() >= currentCap && System.currentTimeMillis()/1000 - startTime >= 0.25 && Math.signum(Robot.intakeSubsystem.getMotor()) == sign){
+        		jamTime = System.currentTimeMillis()/1000;
+        	}
+        	
+        	if(System.currentTimeMillis()/1000 - jamTime <= reverseTime) {
+        		Robot.intakeSubsystem.setMotor(outtakeSpeed);
+        	} else Robot.intakeSubsystem.setMotor(intakeSpeed);
+        	
+        	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
     	}
-    	
-    	if(System.currentTimeMillis()/1000 - jamTime <= reverseTime) {
-    		Robot.intakeSubsystem.setMotor(outtakeSpeed);
-    	} else Robot.intakeSubsystem.setMotor(intakeSpeed);
-    	
-    	sign = Robot.intakeSubsystem.getMotor()/(Math.abs(Robot.intakeSubsystem.getMotor()));
     	
     }
 
@@ -59,6 +62,7 @@ public class IntakeCommand extends Command {
     	//TODO: retract intake
     	Robot.intakeSubsystem.setSolenoid(false);
     	Robot.intakeSubsystem.setMotor(0);
+    	Robot.intakeSubsystem.isExtended = false;
     }
 
     // Called when another command which requires one or more of the same
@@ -67,5 +71,6 @@ public class IntakeCommand extends Command {
     	//TODO: retract intake
     	Robot.intakeSubsystem.setSolenoid(false);
     	Robot.intakeSubsystem.setMotor(0);
+    	Robot.intakeSubsystem.isExtended = false;
     }
 }
