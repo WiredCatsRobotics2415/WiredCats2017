@@ -19,9 +19,9 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
 	boolean finisher, checked = false;
 	long finisherTime, startTime;
 	
-	double kP = 0.025;
+	double kP = 0.025 * 0.85;
 	double kI = 0.0000;//0.00018
-	double kD = 0.071;
+	double kD = 0.071 * 0.85;
 	double kF = 0;
 	
 	double kTolerance = 1;
@@ -40,6 +40,7 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveSubsystem.zeroYaw();
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	
     	Robot.driveSubsystem.setMotors(0, 0);
@@ -52,7 +53,7 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
     	turnController.setAbsoluteTolerance(kTolerance);
     	turnController.setContinuous(true);
     	turnController.enable();
-    	turnController.setSetpoint(Robot.driveSubsystem.getYaw() + angle);
+    	turnController.setSetpoint(angle);
     }
 
     // Called repeatedly when this Command is scheduled to run

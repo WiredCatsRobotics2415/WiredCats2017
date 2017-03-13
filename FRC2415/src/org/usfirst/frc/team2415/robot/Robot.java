@@ -104,7 +104,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[3].whileHeld(new ClimberCommand());
 		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
 		
-		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, -45));
+		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, 66));
 		gamepad.b_button.whileHeld(new TurnToCommand(60));
 		gamepad.y_button.whenPressed(new LeftGearCommand());
 		
@@ -157,7 +157,7 @@ public class Robot extends IterativeRobot {
 		
 
 		// schedule the autonomous command (example)
-		 Command automousCommand = new StraightMiddleGearCommand();
+		 Command automousCommand = new LeftGearCommand();
 		 automousCommand.start();
 
 	}
@@ -168,6 +168,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("Yaw: " + Robot.driveSubsystem.getYaw() + "/t Left: " + Robot.driveSubsystem.getDistance()[0] + "/t Right: " + Robot.driveSubsystem.getDistance()[1]);
 	}
 
 	@Override
@@ -188,6 +189,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("Yaw: " + Robot.driveSubsystem.getYaw());
 	}
 
 	/**
