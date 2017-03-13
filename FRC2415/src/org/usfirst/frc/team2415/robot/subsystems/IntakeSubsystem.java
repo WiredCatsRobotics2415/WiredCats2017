@@ -4,6 +4,7 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -14,11 +15,14 @@ public class IntakeSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
+	public boolean isExtended;
 	private CANTalon intakeTalon;
-	//make solenoids
+	private Solenoid intakeSolenoidRetract, intakeSolenoidExtend;
 	
 	public IntakeSubsystem(){
 		intakeTalon = new CANTalon(RobotMap.INTAKE_TALON);
+		intakeSolenoidRetract = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[1]);
+		intakeSolenoidExtend = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[0]);
 	}
 
     public void initDefaultCommand() {
@@ -26,8 +30,13 @@ public class IntakeSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
+    public void setSolenoid(boolean state){
+    	intakeSolenoidRetract.set(!state);
+    	intakeSolenoidExtend.set(state);
+    }
+    
     public void setMotor(double speed){
-    	intakeTalon.set(-speed);
+    	intakeTalon.set(speed);
     }
     
     public double getCurrent(){

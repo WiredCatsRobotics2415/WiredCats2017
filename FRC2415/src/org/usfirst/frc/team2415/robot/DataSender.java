@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot.utilities;
+package org.usfirst.frc.team2415.robot;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

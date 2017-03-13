@@ -66,7 +66,6 @@ public class ArcadeDriveCommand extends Command {
             right = -1.0;
         }
     	
-//    	Robot.driveSubsystem.setMotors(Robot.gamepad.leftY(), Robot.gamepad.rightY());
     	Robot.driveSubsystem.setMotors(left, right);
     }
 

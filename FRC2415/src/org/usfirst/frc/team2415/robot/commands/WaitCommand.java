@@ -1,35 +1,32 @@
 package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
  */
-public class ToggleGearPushingMechanismCommand extends Command {
+public class WaitCommand extends TimedCommand {
 
-    public ToggleGearPushingMechanismCommand() {
-    	requires(Robot.gearManipulatorSubsystem);
+	
+    public WaitCommand(double timeout) {
+        super(timeout);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(Robot.driveSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearManipulatorSubsystem.togglePushSolenoid();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     }
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
-
-    // Called once after isFinished returns true
+    // Called once after timeout
     protected void end() {
     }
 

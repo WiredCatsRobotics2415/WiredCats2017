@@ -4,55 +4,83 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.StatusFrameRate;
+import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class ShooterSubsystem extends PIDSubsystem {
+public class ShooterSubsystem extends Subsystem {
 
-	static double kP = 0.1,
-				  kI = 0,
-				  kD = 0,
-				  kF = 0;
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+
+	static double kU0 = 2, 
+				  kP0 = 0.192,
+				  kI0 = 0, 
+				  kD0 = 1.92, 
+				  kF0 = 0.023;
+
+	static double kU1 = 1, 
+				  kP1 = 0.4, 
+				  kI1 = 0, 
+				  kD1 = 0.4, 
+				  kF1 = 0.023;
+
 	private CANTalon shooterTalon;
-    // Initialize your subsystem here
-    public ShooterSubsystem() {
-    
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
-    	
-    	super("shooter", kP, kI, kD, kF);
-    	
-    	shooterTalon = new CANTalon (RobotMap.SHOOTER_TALON);
-    	shooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-    	shooterTalon.reverseSensor(true);
-    	
-    }
+	public byte rampProfile = 0, maintainProfile = 1;
+	public double shooterSpeed = 3000;
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
 
-    protected double returnPIDInput() {
-        // Return your input value for the PID loop
-        // e.g. a sensor, like a potentiometer:
-        // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return shooterTalon.getSpeed();
-    }
+	public ShooterSubsystem() {
+		shooterTalon = new CANTalon(RobotMap.SHOOTER_TALON, 1);
+		shooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		shooterTalon.reverseSensor(true);
+		shooterTalon.changeControlMode(TalonControlMode.Speed);
+		shooterTalon.configPeakOutputVoltage(12, 0);
+		
+		shooterTalon.setProfile(rampProfile);
+		shooterTalon.setPID(kP0, kI0, kD0);
+		shooterTalon.setF(kF0);
 
-    protected void usePIDOutput(double output) {
-        // Use output to drive your system, like a motor
-        // e.g. yourMotor.set(output);
-    	shooterTalon.pidWrite(output);
-    }
-    
-    public void setTalonSpeed(double speed){
-    	shooterTalon.set(speed);
-    }
-    
+		shooterTalon.setProfile(maintainProfile);
+		shooterTalon.setPID(kP1, kI1, kD1);
+		shooterTalon.setF(kF1);
+
+	}
+
+	public void setSpeed(double speed) {
+		shooterTalon.set(speed);
+	}
+
+	public double getSpeed() {
+		return shooterTalon.getSpeed();
+	}
+
+	public boolean rampedUp() {
+		return shooterTalon.getSpeed() >= shooterSpeed * 1;
+	}
+
+	public void changeProfile(byte profile) {
+		if (profile == rampProfile) {
+			shooterTalon.setProfile(rampProfile);
+		} else if (profile == maintainProfile) {
+			shooterTalon.setProfile(maintainProfile);
+		}
+	}
+
+	public double getSetpoint() {
+		return shooterTalon.getSetpoint();
+	}
+
+	public long getIError() {
+		return shooterTalon.GetIaccum();
+	}
+
 }

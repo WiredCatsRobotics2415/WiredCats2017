@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CarouselSubsystem extends Subsystem {
 
 	private CANTalon carouselTal;
+	public boolean isMoving;
 	
     // Initialize your subsystem here
     public CarouselSubsystem() {
