@@ -36,6 +36,7 @@ public class ShooterCommand extends Command {
     	}
     	
     	Robot.shooterSubsystem.setSpeed(Robot.shooterSubsystem.shooterSpeed);
+    	System.out.println("Shooter Speed: " + Robot.shooterSubsystem.getSpeed());
     	
 //    	StreamerPacket data = new StreamerPacket("shooterData");
 //    	data.addAttribute("shooterSpeed", Robot.shooterSubsystem.getSpeed());

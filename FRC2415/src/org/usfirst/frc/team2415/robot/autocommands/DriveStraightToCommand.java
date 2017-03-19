@@ -32,7 +32,8 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
 	
 	double distance;
 	double speed;
-
+//	double setpoint;
+	
 	
 	public DriveStraightToCommand(double distance, double speed) {
         // Use requires() here to declare subsystem dependencies
@@ -45,22 +46,32 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     // Called just before this Command runs the first time
     protected void initialize() {	
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
-    	Robot.driveSubsystem.zeroEncoders();
+    	Robot.driveSubsystem.zeroEncoders( );
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController = new PIDController(kP, kI, kD, kF, Robot.driveSubsystem.ahrs, this);
     	turnController.setInputRange(-180.0f,  180.0f);
     	turnController.setOutputRange(-1.0, 1.0);
     	turnController.setAbsoluteTolerance(kTolerance);
     	turnController.setContinuous(true);
-    	turnController.enable();
+//    	setpoint = Robot.driveSubsystem.ahrs.getYaw();
     	turnController.setSetpoint(Robot.driveSubsystem.ahrs.getYaw());
+//    	int count = 0;
+//    	for(int i = 0; i < 30; i++){	
+//    		if(turnController.getError() > .5 && count < 30){
+//	        	turnController.setSetpoint(Robot.driveSubsystem.ahrs.getYaw());
+//	        	count++;
+//    		}
+//    	}
+    	turnController.enable();
     	Robot.driveSubsystem.setBreakMode(true);
     	
-    	
+//    	Robot.driveSubsystem.setLeftRampRate(27.4285714286/2);
+//    	Robot.driveSubsystem.setRightRampRate(27.4285714286/2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+//    	System.out.println("Yaw: " + Robot.driveSubsystem.ahrs.getYaw() + "/t Setpoint: " + setpoint);
 //    	System.out.println("Left: " + Robot.driveSubsystem.getDistance()[0] + "\tRight: " + Robot.driveSubsystem.getDistance()[1]);
 //    	System.out.println("AVG Dist: " + Math.abs(Robot.driveSubsystem.getDistance()[0]) + Math.abs(Robot.driveSubsystem.getDistance()[1])/2 + "\tSetpoint: " + distance);
     	if(distance > 0) Robot.driveSubsystem.setMotors(rotateToAngleRate + speed, -rotateToAngleRate + speed);
@@ -74,6 +85,8 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
 
     // Called once after isFinished returns true
     protected void end() {
+//    	Robot.driveSubsystem.setLeftRampRate(0);
+//    	Robot.driveSubsystem.setRightRampRate(0);
     	Robot.driveSubsystem.setMotors(0, 0);
     	Robot.driveSubsystem.zeroEncoders();
     	turnController.reset();
@@ -82,6 +95,8 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+//    	Robot.driveSubsystem.setLeftRampRate(0);
+//    	Robot.driveSubsystem.setRightRampRate(0);
     	Robot.driveSubsystem.setMotors(0, 0);
     	Robot.driveSubsystem.zeroEncoders();
     	turnController.reset();

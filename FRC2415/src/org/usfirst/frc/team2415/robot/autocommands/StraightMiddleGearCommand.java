@@ -32,7 +32,7 @@ public class StraightMiddleGearCommand extends CommandGroup {
     	
     	requires(Robot.driveSubsystem);
     	
-    	addSequential(new DriveStraightToCommand(5.5, 0.5));
+    	addSequential(new DriveStraightToCommand(5.5, 0.35));
     	addSequential(new WaitCommand(0.5));
     	addSequential(new DriveStraightToCommand(2.2, 0.25));
     	
