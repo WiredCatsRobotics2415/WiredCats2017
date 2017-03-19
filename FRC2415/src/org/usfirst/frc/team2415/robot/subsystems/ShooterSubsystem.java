@@ -17,17 +17,17 @@ public class ShooterSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	static double kU0 = 2, 
-				  kP0 = 0.192,
+	static double kU0 = 2,  
+				  kP0 = 0,//0.162
 				  kI0 = 0, 
-				  kD0 = 1.92, 
-				  kF0 = 0.023;
+				  kD0 = 0, //1.92
+				  kF0 = 1;
 
 	static double kU1 = 1, 
 				  kP1 = 0.4, 
 				  kI1 = 0, 
 				  kD1 = 0.4, 
-				  kF1 = 0.023;
+				  kF1 = 0.000154345;
 
 	private CANTalon shooterTalon;
 	public byte rampProfile = 0, maintainProfile = 1;
@@ -40,7 +40,7 @@ public class ShooterSubsystem extends Subsystem {
 
 	public ShooterSubsystem() {
 		shooterTalon = new CANTalon(RobotMap.SHOOTER_TALON, 1);
-		shooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		shooterTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooterTalon.reverseSensor(true);
 		shooterTalon.changeControlMode(TalonControlMode.Speed);
 		shooterTalon.configPeakOutputVoltage(12, 0);
@@ -64,7 +64,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public boolean rampedUp() {
-		return shooterTalon.getSpeed() >= shooterSpeed * 1;
+		return Math.abs(shooterTalon.getSpeed()) >= shooterSpeed*.98;
 	}
 
 	public void changeProfile(byte profile) {

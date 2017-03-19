@@ -14,13 +14,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class VelocityDriveCommand extends Command {
 
-	private double INTERPOLATION_FACTOR = 0;
-	private double DEADBAND = 0.1;
+	private double INTERPOLATION_FACTOR = 0.65;
+	private double DEADBAND = 0.05;
 	private double STRAIGHT_RESTRICTER = 1;
-	private double TURN_SPEED_BOOST = 0.8;
+	private double TURN_SPEED_BOOST = 0.50;
 	private double overPower = .1;
 	private boolean pointTurn;
-	private BufferedWriter writer;
 
 	public VelocityDriveCommand() {
 		// Use requires() here to declare subsystem dependencies
@@ -40,14 +39,17 @@ public class VelocityDriveCommand extends Command {
 		double leftY = Robot.gamepad.leftY();
 		double rightX = Robot.gamepad.rightX();
 
-		pointTurn = Math.abs(leftY) <= DEADBAND;
+		pointTurn = Math.abs(leftY) <= .1;
+		//Hailey changed from Deadband
 
 		if (pointTurn) {
-			if(Robot.gamepad.leftBumper.get()) Robot.driveSubsystem.setMotors(.8 * 1079 * rightX *0.5, -.8 * 1079 * rightX * 0.5);
-			else Robot.driveSubsystem.setMotors(.8 * 1079 * rightX, -.8 * 1079 * rightX);
+			Robot.driveSubsystem.setMotors(.6 * 1079 * rightX, -.6 * 1079 * rightX);
+			Robot.driveSubsystem.setBreakMode(true);
 
 		} else {
 
+			Robot.driveSubsystem.setBreakMode(false);
+			
 			if (Math.abs(leftY) < DEADBAND)
 				leftY = 0;
 			if (Math.abs(rightX) < DEADBAND)

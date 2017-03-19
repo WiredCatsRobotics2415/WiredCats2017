@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class LeftGearCommand extends CommandGroup {
+public class RedLoadingLeftCommand extends CommandGroup {
 
 	//start: left edge of robot 5 feet away from left side of field
 	
@@ -16,14 +16,14 @@ public class LeftGearCommand extends CommandGroup {
 			dLeft = 8.55;
 			
 	
-    public LeftGearCommand() {
-    	addSequential(new DriveStraightToCommand(8.9, 0.420));
+    public RedLoadingLeftCommand() {
+    	addSequential(new DriveStraightToCommand(120/12, 0.420));
     	addSequential(new WaitCommand(0.5));
     	addSequential(new TimedTurnByCommand(1.5, 65));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new DriveStraightToCommand(1.5, 0.420/1.25));
+    	addSequential(new DriveStraightToCommand(33.875/12, 0.420/1.25));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new DriveStraightToCommand(0.55, 0.420/2));
+    	addSequential(new DriveStraightToCommand(2, 0.420/2));
 //    	addSequential(new TurnByCommand(Math.atan((lineHeight-1)/(dLeft-leftLength))));
 //    	addSequential(new WaitCommand(0.5));
 //    	addSequential(new DriveStraightToCommand(Math.sqrt(Math.pow(dLeft-leftLength, 2) + Math.pow(lineHeight-1, 2)), 0.25));

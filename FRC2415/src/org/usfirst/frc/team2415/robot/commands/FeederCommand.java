@@ -31,7 +31,7 @@ public class FeederCommand extends Command {
     	}
     	
 //    	if(Robot.carouselSubsystem.isMoving()) {
-//    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.rampProfile);
+    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.rampProfile);
 //    	} else {
 //    		Robot.feederSubsystem.changeProfile(Robot.feederSubsystem.maintainProfile);
 //    	}
