@@ -14,10 +14,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class VelocityDriveCommand extends Command {
 
-	private double INTERPOLATION_FACTOR = 0.65;
+	private double STRAIGHT_INTERPOLATION_FACTOR = 0.65;
+	private double TURNING_INTERPOLATION_FACTOR = 0; //needs to be decided on by Nathan
 	private double DEADBAND = 0.05;
-	private double STRAIGHT_RESTRICTER = 1;
-	private double TURN_SPEED_BOOST = 0.50;
+	private double FORWARD_STRAIGHT_RESTRICTER = 1;
+	private double FORWARD_TURN_SPEED_BOOST = 0.50;
+	private double BACKWARD_STRAIGHT_RESTRICTER = 1;
+	private double BACKWARD_TURN_SPEED_BOOST = 0.50;
 	private double overPower = .1;
 	private boolean pointTurn;
 
@@ -55,11 +58,19 @@ public class VelocityDriveCommand extends Command {
 			if (Math.abs(rightX) < DEADBAND)
 				rightX = 0;
 
-			leftY = INTERPOLATION_FACTOR * Math.pow(leftY, 3) + (1 - INTERPOLATION_FACTOR) * leftY;
-			rightX = 0 * Math.pow(rightX, 3) + (1) * rightX;
+			leftY = STRAIGHT_INTERPOLATION_FACTOR * Math.pow(leftY, 3) + (1 - STRAIGHT_INTERPOLATION_FACTOR) * leftY;
+			rightX = TURNING_INTERPOLATION_FACTOR * Math.pow(rightX, 3) + (1-TURNING_INTERPOLATION_FACTOR) * rightX;
 
-			double left = STRAIGHT_RESTRICTER * leftY + TURN_SPEED_BOOST * rightX;
-			double right = STRAIGHT_RESTRICTER * leftY - TURN_SPEED_BOOST * rightX;
+			double left;
+			double right;
+			
+			if (leftY >= 0) {
+				left = FORWARD_STRAIGHT_RESTRICTER * leftY + FORWARD_TURN_SPEED_BOOST * rightX;
+				right = FORWARD_STRAIGHT_RESTRICTER * leftY - FORWARD_TURN_SPEED_BOOST * rightX;
+			}else {
+				left = BACKWARD_STRAIGHT_RESTRICTER * leftY + BACKWARD_TURN_SPEED_BOOST * rightX;
+				right = BACKWARD_STRAIGHT_RESTRICTER * leftY - BACKWARD_TURN_SPEED_BOOST * rightX;
+			}
 
 			// if (left > 1.0) {
 			// right -= overPower * (left - 1.0);
@@ -81,8 +92,8 @@ public class VelocityDriveCommand extends Command {
 			double rightRate = -(Robot.driveSubsystem.getVelocity()[1]/(1079*right)) <= 0 && (rightX < 0.5) ? 0 : 27.4285714286;
 			Robot.driveSubsystem.setRightRampRate(rightRate);
 			
-			if(Robot.gamepad.leftBumper.get()) Robot.driveSubsystem.setMotors(0.65* 1079 * left, 0.65* 1079 * right);
-			else Robot.driveSubsystem.setMotors(2 * 1079 * left, 2 * 1079 * right);
+			if(Robot.gamepad.leftBumper.get()) Robot.driveSubsystem.setMotors(-0.65* 1079 * left, -0.65* 1079 * right);
+			else Robot.driveSubsystem.setMotors(-2 * 1079 * left, -2 * 1079 * right);
 
 			
 //			 StreamerPacket data = new StreamerPacket("driveData");
