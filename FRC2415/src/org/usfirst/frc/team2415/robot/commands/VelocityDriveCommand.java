@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class VelocityDriveCommand extends Command {
 
 	private double STRAIGHT_INTERPOLATION_FACTOR = 0.65;
-	private double TURNING_INTERPOLATION_FACTOR = 0; //needs to be decided on by Nathan
+	private double TURNING_INTERPOLATION_FACTOR = .2; //needs to be decided on by Nathan
 	private double DEADBAND = 0.05;
 	private double FORWARD_STRAIGHT_RESTRICTER = 1;
-	private double FORWARD_TURN_SPEED_BOOST = 0.50;
+	private double FORWARD_TURN_SPEED_BOOST = 0.30;
 	private double BACKWARD_STRAIGHT_RESTRICTER = 1;
 	private double BACKWARD_TURN_SPEED_BOOST = 0.50;
-	private double overPower = .1;
+	private double overPower = .5;
 	private boolean pointTurn;
 
 	public VelocityDriveCommand() {
@@ -65,26 +65,26 @@ public class VelocityDriveCommand extends Command {
 			double right;
 			
 			if (leftY >= 0) {
-				left = FORWARD_STRAIGHT_RESTRICTER * leftY + FORWARD_TURN_SPEED_BOOST * rightX;
-				right = FORWARD_STRAIGHT_RESTRICTER * leftY - FORWARD_TURN_SPEED_BOOST * rightX;
+				left = FORWARD_STRAIGHT_RESTRICTER * leftY - FORWARD_TURN_SPEED_BOOST * rightX;
+				right = FORWARD_STRAIGHT_RESTRICTER * leftY + FORWARD_TURN_SPEED_BOOST * rightX;
 			}else {
-				left = BACKWARD_STRAIGHT_RESTRICTER * leftY + BACKWARD_TURN_SPEED_BOOST * rightX;
-				right = BACKWARD_STRAIGHT_RESTRICTER * leftY - BACKWARD_TURN_SPEED_BOOST * rightX;
+				left = BACKWARD_STRAIGHT_RESTRICTER * leftY - BACKWARD_TURN_SPEED_BOOST * rightX;
+				right = BACKWARD_STRAIGHT_RESTRICTER * leftY + BACKWARD_TURN_SPEED_BOOST * rightX;
 			}
 
-			// if (left > 1.0) {
-			// right -= overPower * (left - 1.0);
-			// left = 1.0;
-			// } else if (right > 1.0) {
-			// left -= overPower * (right - 1.0);
-			// right = 1.0;
-			// } else if (left < -1.0) {
-			// right += overPower * (-1.0 - left);
-			// left = -1.0;
-			// } else if (right < -1.0) {
-			// left += overPower * (-1.0 - right);
-			// right = -1.0;
-			// }
+			 if (left > 1.0) {
+			 right -= overPower * (left - 1.0);
+			 left = 1.0;
+			 } else if (right > 1.0) {
+			 left -= overPower * (right - 1.0);
+			 right = 1.0;
+			 } else if (left < -1.0) {
+			 right += overPower * (-1.0 - left);
+			 left = -1.0;
+			 } else if (right < -1.0) {
+			 left += overPower * (-1.0 - right);
+			 right = -1.0;
+			 }
 
 			double leftRate = Robot.driveSubsystem.getVelocity()[0]/(1079*left) <= 0 && (rightX < 0.5) ? 0 : 27.4285714286;
 			Robot.driveSubsystem.setLeftRampRate(leftRate);

@@ -105,11 +105,11 @@ public class DriveSubsystem extends Subsystem {
     		//TODO: see 12.4
     		leftTalFront.configNominalOutputVoltage(0, 0);
     		leftTalFront.configPeakOutputVoltage(12, -12);
-    		setPIDF(leftTalFront, .1696969696, 0, 0, 2/1000);
+    		setPIDF(leftTalFront, .1696969, 0, 0, 2/1000);
 
     		rightTalFront.configNominalOutputVoltage(0, 0);
     		rightTalFront.configPeakOutputVoltage(12, -12);
-    		setPIDF(rightTalFront, .175, 0, 0, 2/1000);
+    		setPIDF(rightTalFront, .1696969, 0, 0, 2/1000);
 
     	} else if(mode == TalonControlMode.Position){
     		leftTalFront.configNominalOutputVoltage(0, 0);
