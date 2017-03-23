@@ -18,7 +18,7 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
 	double rotateToAngleRate;
 	double angle;
 	
-	double kP = .025;
+	double kP = .015;
 	double kI = 0.0025;
 	double kD = .0;
 	double kF = 0;
@@ -45,6 +45,9 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
 
     // Called just before this Command runs the first time
     protected void initialize() {	
+    	for(int i = 0; i < 10; i++){
+    		System.out.println();
+    	}
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	Robot.driveSubsystem.zeroEncoders( );
     	Robot.driveSubsystem.setMotors(0, 0);
@@ -53,7 +56,6 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     	turnController.setOutputRange(-1.0, 1.0);
     	turnController.setAbsoluteTolerance(kTolerance);
     	turnController.setContinuous(true);
-//    	setpoint = Robot.driveSubsystem.ahrs.getYaw();
     	turnController.setSetpoint(Robot.driveSubsystem.ahrs.getYaw());
 //    	int count = 0;
 //    	for(int i = 0; i < 30; i++){	
@@ -71,9 +73,9 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	System.out.println("Yaw: " + Robot.driveSubsystem.ahrs.getYaw() + "/t Setpoint: " + setpoint);
+    	System.out.println("Yaw: " + Robot.driveSubsystem.ahrs.getYaw() + "\t TurnSetpoint: " + turnController.getSetpoint());
 //    	System.out.println("Left: " + Robot.driveSubsystem.getDistance()[0] + "\tRight: " + Robot.driveSubsystem.getDistance()[1]);
-//    	System.out.println("AVG Dist: " + Math.abs(Robot.driveSubsystem.getDistance()[0]) + Math.abs(Robot.driveSubsystem.getDistance()[1])/2 + "\tSetpoint: " + distance);
+    	System.out.println("AVG Dist: " + (Math.abs(Robot.driveSubsystem.getDistance()[0]) + Math.abs(Robot.driveSubsystem.getDistance()[1]))/2 + "\t DriveSetpoint: " + distance);
     	if(distance > 0) Robot.driveSubsystem.setMotors(rotateToAngleRate + speed, -rotateToAngleRate + speed);
     	else Robot.driveSubsystem.setMotors(-(-rotateToAngleRate + speed), -(rotateToAngleRate + speed));
     }

@@ -1,11 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
-import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
-import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
-import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
-import org.usfirst.frc.team2415.robot.commands.HoldGearManipulatorFlapCommand;
+import org.usfirst.frc.team2415.robot.autocommands.BlueBoilerLeftCommand;
 //import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
@@ -94,13 +90,13 @@ public class Robot extends IterativeRobot {
 		driveSubsystem.zeroEncoders();
 		
 		gamepad = new XBoxOneGamepad(0);
-		operator = new WiredCatJoystick(1);
+//		operator = new WiredCatJoystick(1);
 
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
-		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
-		operator.buttons[3].whileHeld(new ClimberCommand());
-		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
+//		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
+//		operator.buttons[3].whileHeld(new ClimberCommand());
+//		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
 		
 //		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, 66));
 //		gamepad.b_button.whileHeld(new TurnByCommand(65));
@@ -138,7 +134,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
-		Robot.driveSubsystem.zeroYaw();
 		Robot.driveSubsystem.zeroEncoders();
 		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
 		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
@@ -157,7 +152,7 @@ public class Robot extends IterativeRobot {
 		
 
 		// schedule the autonomous command (example)
-		Command auto = new StraightMiddleGearCommand();
+		Command auto = new BlueBoilerLeftCommand();
 //		Robot.driveSubsystem.zeroYaw();
 //		Robot.driveSubsystem.zeroEncoders();
 		auto.start();
