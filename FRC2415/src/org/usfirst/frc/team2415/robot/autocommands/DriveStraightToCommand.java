@@ -18,8 +18,8 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
 	double rotateToAngleRate;
 	double angle;
 	
-	double kP = .015;
-	double kI = 0.0025;
+	double kP = .015; // .06
+	double kI = 0.0025; //0.0025
 	double kD = .0;
 	double kF = 0;
 	

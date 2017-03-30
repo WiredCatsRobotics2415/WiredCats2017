@@ -21,7 +21,7 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
 	
 	double kP = 0.025 * 0.69;
 	double kI = 0.0000;//0.00018
-	double kD = 0.071 * 0.85;
+	double kD = 0.071 * 0.75;
 	double kF = 0;
 	
 	double kTolerance = 1;

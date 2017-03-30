@@ -1,8 +1,5 @@
 package org.usfirst.frc.team2415.robot.autocommands;
 
-import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
-import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
@@ -11,21 +8,32 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class RightGearCommand extends CommandGroup {
 
-	double  leftLength = 0,
+	//start: left edge of robot 5 feet away from left side of field
+	
+	double leftLength = 8.55,
 			fieldLength = 27,
-			a1 = 0;
+			lineHeight = 10-2.25,
+			dLeft = 8.55;
+			
 	
     public RightGearCommand() {
-    	
-    	addSequential(new DriveStraightToCommand(1, 0.5));
+    	addSequential(new ZeroEncodersCommand());
+    	addSequential(new DriveStraightToCommand(109/12, 0.420));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new TurnByCommand(90));
+    	addSequential(new TimedTurnByCommand(1.5, -63));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new ToggleGearManipulatorFlapCommand());
-    	addSequential(new WaitCommand(3));
-    	addSequential(new ToggleGearPushingMechanismCommand());
-    	
-        // Add Commands here:
+    	addSequential(new ZeroEncodersCommand());
+    	addSequential(new DriveStraightToCommand(1.1, 0.420/1.25));
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new ZeroEncodersCommand());
+    	addSequential(new DriveStraightToCommand(.5, 0.420/2));
+//    	addSequential(new TurnByCommand(Math.atan((lineHeight-1)/(dLeft-leftLength))));
+//    	addSequential(new WaitCommand(0.5));
+//    	addSequential(new DriveStraightToCommand(Math.sqrt(Math.pow(dLeft-leftLength, 2) + Math.pow(lineHeight-1, 2)), 0.25));
+//        addSequential(new TurnByCommand(-120));
+//        addSequential(new WaitCommand(0.5));
+//        addSequential(new DriveStraightToCommand(-1, 0.25));
+    	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.

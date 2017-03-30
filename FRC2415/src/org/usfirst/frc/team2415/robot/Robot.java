@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.BlueBoilerLeftCommand;
+import org.usfirst.frc.team2415.robot.autocommands.RightGearCommand;
 //import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
@@ -152,7 +152,7 @@ public class Robot extends IterativeRobot {
 		
 
 		// schedule the autonomous command (example)
-		Command auto = new BlueBoilerLeftCommand();
+		Command auto = new RightGearCommand();
 //		Robot.driveSubsystem.zeroYaw();
 //		Robot.driveSubsystem.zeroEncoders();
 		auto.start();

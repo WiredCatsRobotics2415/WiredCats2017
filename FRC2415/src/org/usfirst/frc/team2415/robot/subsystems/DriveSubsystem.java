@@ -21,7 +21,7 @@ public class DriveSubsystem extends Subsystem {
 	
 	private CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
 	public AHRS ahrs;
-	private PixyCam pixy;
+//	public PixyCam pixy;
 	
 	public boolean isMoving;
 	
@@ -109,7 +109,7 @@ public class DriveSubsystem extends Subsystem {
 
     		rightTalFront.configNominalOutputVoltage(0, 0);
     		rightTalFront.configPeakOutputVoltage(12, -12);
-    		setPIDF(rightTalFront, .1696969, 0, 0, 2/1000);
+    		setPIDF(rightTalFront, .177, 0, 0, 2/1000);
 
     	} else if(mode == TalonControlMode.Position){
     		leftTalFront.configNominalOutputVoltage(0, 0);
