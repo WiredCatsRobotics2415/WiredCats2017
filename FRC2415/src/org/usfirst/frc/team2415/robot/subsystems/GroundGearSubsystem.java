@@ -25,13 +25,12 @@ public class GroundGearSubsystem extends Subsystem {
 	public byte GROUND = 0,
 				CARRY = 1;
 	
-	private DoubleSolenoid left, right;
+	private DoubleSolenoid gearManip;
 	private CANTalon intakeTalon;
 
     public GroundGearSubsystem(){
     	//someone change these ports
-    	left = new DoubleSolenoid(RobotMap.PCM_ID, RobotMap.LEFT_GME, RobotMap.LEFT_GMR);
-    	right = new DoubleSolenoid(RobotMap.PCM_ID, RobotMap.RIGHT_GME, RobotMap.RIGHT_GMR);
+    	gearManip = new DoubleSolenoid(RobotMap.PCM_ID, RobotMap.GEAR_MANIP_SOLENOID[0], RobotMap.GEAR_MANIP_SOLENOID[1]);
     	
     	intakeTalon = new CANTalon(RobotMap.GM_INTAKE);
     }
@@ -42,18 +41,15 @@ public class GroundGearSubsystem extends Subsystem {
     }
     
 	public void dropIntake(){
-		left.set(Value.kForward);
-		right.set(Value.kForward);
+		gearManip.set(Value.kForward);
 	}
 	
 	public void raiseIntake(){
-		left.set(Value.kReverse);
-		right.set(Value.kReverse);
+		gearManip.set(Value.kReverse);
 	}
 	
 	public void limpDick(){
-		left.set(Value.kOff);
-		right.set(Value.kOff);
+		gearManip.set(Value.kOff);
 	}
 	
 	public void setMotor(double speed){

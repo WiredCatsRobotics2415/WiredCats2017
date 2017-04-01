@@ -40,13 +40,13 @@ public class Robot extends IterativeRobot {
 	SendableChooser autoChooser;
 	DriverStation driverStation;
 	
-	public static ShooterSubsystem shooterSubsystem;
-	public static CarouselSubsystem carouselSubsystem;
+//	public static ShooterSubsystem shooterSubsystem;
+//	public static CarouselSubsystem carouselSubsystem;
 	public static ClimberSubsystem climberSubsystem;
-	public static IntakeSubsystem intakeSubsystem;
+//	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
-	public static FeederSubsystem feederSubsystem;
-	public static GearManipulatorSubsystem gearManipulatorSubsystem;
+//	public static FeederSubsystem feederSubsystem;
+//	public static GearManipulatorSubsystem gearManipulatorSubsystem;
 	public static GroundGearSubsystem groundGearSubsystem;
 
 	private Compressor compressor;
@@ -67,13 +67,13 @@ public class Robot extends IterativeRobot {
 
 		
 		
-		shooterSubsystem = new ShooterSubsystem();
+//		shooterSubsystem = new ShooterSubsystem();
 //		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 //		carouselSubsystem = new CarouselSubsystem();
 		climberSubsystem = new ClimberSubsystem();
-		feederSubsystem = new FeederSubsystem();
-		gearManipulatorSubsystem = new GearManipulatorSubsystem();
+//		feederSubsystem = new FeederSubsystem();
+//		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 		groundGearSubsystem = new GroundGearSubsystem();
 		
 		compressor = new Compressor(RobotMap.PCM_ID);
@@ -148,8 +148,8 @@ public class Robot extends IterativeRobot {
 
 		Robot.driveSubsystem.zeroYaw();
 		Robot.driveSubsystem.zeroEncoders();
-		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
-		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
+//		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
+//		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
 		
 //		autoCommand = (Command) autoChooser.getSelected();
 //		Robot.driveSubsystem.zeroYaw();
@@ -187,8 +187,8 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 
-		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
-		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
+//		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
+//		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
 
 	}
 
