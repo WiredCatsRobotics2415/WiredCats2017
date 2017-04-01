@@ -40,13 +40,13 @@ public class Robot extends IterativeRobot {
 	SendableChooser autoChooser;
 	DriverStation driverStation;
 	
-//	public static ShooterSubsystem shooterSubsystem;
-//	public static CarouselSubsystem carouselSubsystem;
+	public static ShooterSubsystem shooterSubsystem;
+	public static CarouselSubsystem carouselSubsystem;
 	public static ClimberSubsystem climberSubsystem;
-//	public static IntakeSubsystem intakeSubsystem;
+	public static IntakeSubsystem intakeSubsystem;
 	public static DriveSubsystem driveSubsystem;
-//	public static FeederSubsystem feederSubsystem;
-//	public static GearManipulatorSubsystem gearManipulatorSubsystem;
+	public static FeederSubsystem feederSubsystem;
+	public static GearManipulatorSubsystem gearManipulatorSubsystem;
 	public static GroundGearSubsystem groundGearSubsystem;
 
 	private Compressor compressor;
