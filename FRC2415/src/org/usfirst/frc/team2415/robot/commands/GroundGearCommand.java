@@ -11,41 +11,61 @@ public class GroundGearCommand extends Command {
 
 	byte state;
 	double speed;
-	
-    public GroundGearCommand(byte state, double speed) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.groundGearSubsystem);
-    	this.state = state;
-    	this.speed = speed;
-    }
+	double currentCap = 11;
+	long gearTime, startTime;
+	boolean hasGear;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	if(state == Robot.groundGearSubsystem.GROUND) Robot.groundGearSubsystem.dropIntake();
-    	else Robot.groundGearSubsystem.raiseIntake();
-    	
-    	Robot.groundGearSubsystem.setMotor(speed);
-    }
+	public GroundGearCommand(byte state, double speed) {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.groundGearSubsystem);
+		this.state = state;
+		this.speed = speed;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		if (state == Robot.groundGearSubsystem.GROUND) {
+			Robot.groundGearSubsystem.dropIntake();
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+		} else {
+			Robot.groundGearSubsystem.raiseIntake();
+		}
+		Robot.groundGearSubsystem.setMotor(speed);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	Robot.groundGearSubsystem.setMotor(0);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	Robot.groundGearSubsystem.setMotor(0);
-    }
+		if (Robot.groundGearSubsystem.getCurrent() > currentCap) {
+			hasGear = true;
+		} else {
+			hasGear = false;
+		}
+			if (!hasGear){
+			startTime = System.currentTimeMillis() / 1000;
+			}
+			if (System.currentTimeMillis() / 1000 - startTime >= 0.5
+					&& Robot.groundGearSubsystem.getCurrent() > currentCap) {
+				Robot.groundGearSubsystem.raiseIntake();
+				Robot.groundGearSubsystem.setMotor(-0.1);
+		}
+
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.groundGearSubsystem.setMotor(0);
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		Robot.groundGearSubsystem.setMotor(0);
+	}
 }

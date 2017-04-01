@@ -198,6 +198,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("Current: " + Robot.groundGearSubsystem.getCurrent());
 //		SmartDashboard.putBoolean("less than 30", driverStation.getMatchTime() <= 30);
 		
 	}

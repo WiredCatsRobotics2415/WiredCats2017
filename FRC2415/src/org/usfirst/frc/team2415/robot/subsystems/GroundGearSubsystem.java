@@ -55,5 +55,9 @@ public class GroundGearSubsystem extends Subsystem {
 	public void setMotor(double speed){
 		intakeTalon.set(speed);
 	}
+	
+	public double getCurrent(){
+		return intakeTalon.getOutputCurrent();
+	}
 }
 
