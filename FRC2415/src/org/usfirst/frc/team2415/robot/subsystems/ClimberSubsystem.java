@@ -28,8 +28,8 @@ public class ClimberSubsystem extends Subsystem {
     }
     
     public void setMotor(double speed){
-    	climberTalon1.set(speed);
-    	climberTalon2.set(-speed);
+    	climberTalon1.set(-speed);
+    	climberTalon2.set(speed);
     }
     
     public double getVoltage(){
