@@ -65,13 +65,13 @@ public class Robot extends IterativeRobot {
 
 		
 		
-		shooterSubsystem = new ShooterSubsystem();
+//		shooterSubsystem = new ShooterSubsystem();
 //		intakeSubsystem = new IntakeSubsystem();
 		driveSubsystem = new DriveSubsystem();
 //		carouselSubsystem = new CarouselSubsystem();
 		climberSubsystem = new ClimberSubsystem();
-		feederSubsystem = new FeederSubsystem();
-		gearManipulatorSubsystem = new GearManipulatorSubsystem();
+//		feederSubsystem = new FeederSubsystem();
+//		gearManipulatorSubsystem = new GearManipulatorSubsystem();
 		
 		compressor = new Compressor(RobotMap.PCM_ID);
 		
@@ -98,9 +98,9 @@ public class Robot extends IterativeRobot {
 
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
-		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
+//		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
 		operator.buttons[3].whileHeld(new ClimberCommand());
-		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
+//		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
 		
 //		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, 66));
 //		gamepad.b_button.whileHeld(new TurnByCommand(65));
@@ -140,8 +140,8 @@ public class Robot extends IterativeRobot {
 
 		Robot.driveSubsystem.zeroYaw();
 		Robot.driveSubsystem.zeroEncoders();
-		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
-		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
+//		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
+//		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
 		
 //		autoCommand = (Command) autoChooser.getSelected();
 //		Robot.driveSubsystem.zeroYaw();
@@ -179,8 +179,8 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 
-		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
-		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
+//		Robot.gearManipulatorSubsystem.setPushSolenoid(false); //backwards
+//		Robot.gearManipulatorSubsystem.setManipSolenoid(true); //backwards
 
 	}
 
