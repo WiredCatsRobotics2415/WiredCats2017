@@ -1,10 +1,10 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
 import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
+import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
 import org.usfirst.frc.team2415.robot.commands.HoldGearManipulatorFlapCommand;
 //import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
@@ -12,6 +12,7 @@ import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.GearManipulatorSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.GroundGearSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
@@ -46,6 +47,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static FeederSubsystem feederSubsystem;
 	public static GearManipulatorSubsystem gearManipulatorSubsystem;
+	public static GroundGearSubsystem groundGearSubsystem;
 
 	private Compressor compressor;
 	
@@ -72,6 +74,7 @@ public class Robot extends IterativeRobot {
 		climberSubsystem = new ClimberSubsystem();
 //		feederSubsystem = new FeederSubsystem();
 //		gearManipulatorSubsystem = new GearManipulatorSubsystem();
+		groundGearSubsystem = new GroundGearSubsystem();
 		
 		compressor = new Compressor(RobotMap.PCM_ID);
 		
@@ -92,6 +95,7 @@ public class Robot extends IterativeRobot {
 
 		driveSubsystem.zeroYaw();
 		driveSubsystem.zeroEncoders();
+		groundGearSubsystem.limpDick();
 		
 		gamepad = new XBoxOneGamepad(0);
 		operator = new WiredCatJoystick(1);
@@ -99,8 +103,13 @@ public class Robot extends IterativeRobot {
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 //		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
-		operator.buttons[3].whileHeld(new ClimberCommand());
+//		operator.buttons[3].whileHeld(new ClimberCommand());
 //		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
+		
+		operator.buttons[7].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.1));
+		operator.buttons[6].whileHeld(new  GroundGearCommand(groundGearSubsystem.GROUND, 1));
+		operator.buttons[3].whileHeld(new ClimberCommand());
 		
 //		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, 66));
 //		gamepad.b_button.whileHeld(new TurnByCommand(65));
@@ -190,6 +199,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("Current: " + Robot.groundGearSubsystem.getCurrent());
 //		SmartDashboard.putBoolean("less than 30", driverStation.getMatchTime() <= 30);
 		
 	}

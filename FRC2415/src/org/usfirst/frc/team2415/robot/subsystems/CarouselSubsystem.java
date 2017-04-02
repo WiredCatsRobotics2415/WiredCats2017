@@ -18,7 +18,7 @@ public class CarouselSubsystem extends Subsystem {
 	
     // Initialize your subsystem here
     public CarouselSubsystem() {
-    	carouselTal = new CANTalon(RobotMap.CAROUSEL_TALON);
+    	carouselTal = new CANTalon(69);
 
     }
 
