@@ -109,6 +109,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
 		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.1));
 		operator.buttons[6].whileHeld(new  GroundGearCommand(groundGearSubsystem.GROUND, 1));
+		operator.buttons[3].whileHeld(new ClimberCommand());
 		
 //		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, 66));
 //		gamepad.b_button.whileHeld(new TurnByCommand(65));

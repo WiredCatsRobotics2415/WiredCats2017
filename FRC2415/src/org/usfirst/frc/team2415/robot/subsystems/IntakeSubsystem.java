@@ -20,7 +20,7 @@ public class IntakeSubsystem extends Subsystem {
 	private Solenoid intakeSolenoidRetract, intakeSolenoidExtend;
 	
 	public IntakeSubsystem(){
-		intakeTalon = new CANTalon(RobotMap.INTAKE_TALON);
+		intakeTalon = new CANTalon(69);
 		intakeSolenoidRetract = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[1]);
 		intakeSolenoidExtend = new Solenoid(RobotMap.PCM_ID, RobotMap.INTAKE_SOLENOID[0]);
 	}

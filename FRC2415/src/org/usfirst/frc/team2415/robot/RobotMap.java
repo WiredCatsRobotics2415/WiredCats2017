@@ -24,11 +24,11 @@ public class RobotMap {
 	public static final int RIGHT_TALON_BACK = 3; 
 	public static final int RIGHT_TALON_FRONT = 4;
   
-	public static final int INTAKE_TALON = 5;
 	public static final int SHOOTER_TALON = 6; 
 	public static final int FEEDER_TALON = 7;
 	public static final int CLIMBER_TALON = 9;
 	public static final int GM_INTAKE = 8;
+	public static final int CLIMBER_TALON2 = 5;
 	
 	public static final int[] GEAR_MANIP_SOLENOID = {5,4};
 	public static final int GEAR_POKE_SOLENOID = 0;
