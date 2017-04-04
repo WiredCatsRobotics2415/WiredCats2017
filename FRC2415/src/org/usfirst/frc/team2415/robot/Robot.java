@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
+import org.usfirst.frc.team2415.buttons.GearButton;
 import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
@@ -55,6 +55,7 @@ public class Robot extends IterativeRobot {
   
 	public static XBoxOneGamepad gamepad;
 	public static WiredCatJoystick operator;
+	public static GearButton gearButton;
 
 	public static boolean singlePlayerMode = false;
 
@@ -99,6 +100,7 @@ public class Robot extends IterativeRobot {
 		
 		gamepad = new XBoxOneGamepad(0);
 		operator = new WiredCatJoystick(1);
+		gearButton = new GearButton();
 
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
@@ -109,6 +111,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[11].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
 		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.25));
 		operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
+		//TODO: Attempt #1
+		gearButton.whenActive(new ScoreSequenceCommand());
 		
 //		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, 66));
 //		gamepad.b_button.whileHeld(new TurnByCommand(65));
@@ -198,13 +202,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		//try this first (if works delete state thing):
+		//TODO: Attempt #2 (if work delete state stuff)
 		if(groundGearSubsystem.getButton()){
 			Command blueBanner = new ScoreSequenceCommand();
 			blueBanner.start();
 		}
 		
-//		//if that breaks (make sure you uncomment default command):
+//		//TODO: Attempt #3 (make sure you uncomment default command):
 //		if(groundGearSubsystem.getButton()){
 //			groundGearSubsystem.intakeState = groundGearSubsystem.GROUND;
 //			Command blueBanner = new DriveStraightToCommand(-0.5, .2);
@@ -221,11 +225,5 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 
-	/**
-	 * a function to run all of the update status functions in each of the
-	 * subsystems
-	 */
-	public void updateStatus() {
-
-	}
+	
 }
