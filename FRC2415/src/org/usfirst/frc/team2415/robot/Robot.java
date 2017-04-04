@@ -1,13 +1,11 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
 import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
-import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
 import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
-import org.usfirst.frc.team2415.robot.commands.HoldGearManipulatorFlapCommand;
-import org.usfirst.frc.team2415.robot.commands.ScoreCommand;
-import org.usfirst.frc.team2415.robot.commands.ScoreSequence;
+import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
 //import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
@@ -105,9 +103,9 @@ public class Robot extends IterativeRobot {
 //		gamepad.rightBumper.whileHeld(new IntakeCommand());
 
 //		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
-//		operator.buttons[3].whileHeld(new ClimberCommand());
 //		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
 		
+		operator.buttons[3].whileHeld(new ClimberCommand());
 		operator.buttons[11].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
 		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.25));
 		operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
@@ -199,9 +197,19 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
 		Scheduler.getInstance().run();
-//		SmartDashboard.putBoolean("less than 30", driverStation.getMatchTime() <= 30);
+		//try this first (if works delete state thing):
+		if(groundGearSubsystem.getButton()){
+			Command blueBanner = new ScoreSequenceCommand();
+			blueBanner.start();
+		}
+		
+//		//if that breaks (make sure you uncomment default command):
+//		if(groundGearSubsystem.getButton()){
+//			groundGearSubsystem.intakeState = groundGearSubsystem.GROUND;
+//			Command blueBanner = new DriveStraightToCommand(-0.5, .2);
+//			blueBanner.start();
+//		}
 		
 	}
 

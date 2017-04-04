@@ -47,10 +47,10 @@ public class VelocityDriveCommand extends Command {
 		// Hailey changed from Deadband
 
 
-		if(Robot.operator.buttons[10].get()) {
-			Robot.driveSubsystem.setMotors(300, 300);
-			return;
-		}
+//		if(Robot.operator.buttons[10].get()) {
+//			Robot.driveSubsystem.setMotors(300, 300);
+//			return;
+//		}
 		
 		if (pointTurn) {
 			Robot.driveSubsystem.setMotors(.8 * 1079 * rightX, -.8 * 1079 * rightX);
