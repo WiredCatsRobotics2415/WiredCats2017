@@ -99,18 +99,18 @@ public class Robot extends IterativeRobot {
 		groundGearSubsystem.limpDick();
 		
 		gamepad = new XBoxOneGamepad(0);
-		operator = new WiredCatJoystick(1);
+		if(!singlePlayerMode) operator = new WiredCatJoystick(1);
 		gearButton = new GearButton();
 
-//		gamepad.rightBumper.whileHeld(new IntakeCommand());
-
-//		operator.buttons[1].whileHeld(new FullAutoShooterCommand());
-//		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
-		
-		operator.buttons[3].whileHeld(new ClimberCommand());
-		operator.buttons[11].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
-		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.25));
-		operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
+		if(singlePlayerMode){
+			gamepad.rightBumper.whileHeld(new ClimberCommand());
+			gamepad.leftBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+		} else {
+			operator.buttons[3].whileHeld(new ClimberCommand());
+			operator.buttons[11].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+			operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.25));
+			operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
+		}
 		//TODO: Attempt #1
 		gearButton.whenActive(new ScoreSequenceCommand());
 		
