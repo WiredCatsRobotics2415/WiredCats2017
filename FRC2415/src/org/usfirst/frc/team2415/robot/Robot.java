@@ -6,6 +6,8 @@ import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.FullAutoShooterCommand;
 import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
 import org.usfirst.frc.team2415.robot.commands.HoldGearManipulatorFlapCommand;
+import org.usfirst.frc.team2415.robot.commands.ScoreCommand;
+import org.usfirst.frc.team2415.robot.commands.ScoreSequence;
 //import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CarouselSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
@@ -106,9 +108,9 @@ public class Robot extends IterativeRobot {
 //		operator.buttons[3].whileHeld(new ClimberCommand());
 //		operator.buttons[6].whileHeld(new HoldGearManipulatorFlapCommand());
 		
-		operator.buttons[7].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
-		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.1));
-		operator.buttons[6].whileHeld(new  GroundGearCommand(groundGearSubsystem.GROUND, 1));
+		operator.buttons[11].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.25));
+		operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
 		
 //		gamepad.a_button.whenPressed(new TimedTurnByCommand(3, 66));
 //		gamepad.b_button.whileHeld(new TurnByCommand(65));
@@ -197,8 +199,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
 		Scheduler.getInstance().run();
-		System.out.println("Current: " + Robot.groundGearSubsystem.getCurrent());
 //		SmartDashboard.putBoolean("less than 30", driverStation.getMatchTime() <= 30);
 		
 	}

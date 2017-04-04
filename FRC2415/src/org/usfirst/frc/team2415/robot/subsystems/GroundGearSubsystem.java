@@ -4,6 +4,7 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -27,12 +28,14 @@ public class GroundGearSubsystem extends Subsystem {
 	
 	private DoubleSolenoid gearManip;
 	private CANTalon intakeTalon;
+	private DigitalInput button;
 
     public GroundGearSubsystem(){
     	//someone change these ports
     	gearManip = new DoubleSolenoid(RobotMap.PCM_ID, RobotMap.GEAR_MANIP_SOLENOID[0], RobotMap.GEAR_MANIP_SOLENOID[1]);
     	
     	intakeTalon = new CANTalon(RobotMap.GM_INTAKE);
+    	button = new DigitalInput(1);
     }
 	
 	public void initDefaultCommand() {
@@ -58,6 +61,10 @@ public class GroundGearSubsystem extends Subsystem {
 	
 	public double getCurrent(){
 		return intakeTalon.getOutputCurrent();
+	}
+	
+	public boolean buttonPress(){
+		return button.get();
 	}
 }
 
