@@ -18,10 +18,10 @@ public class VelocityDriveCommand extends Command {
 														// by Nathan
 	private double DEADBAND = 0.05;
 	private double FORWARD_STRAIGHT_RESTRICTER = 1;
-	private double FORWARD_TURN_SPEED_BOOST = 0.30;
+	private double FORWARD_TURN_SPEED_BOOST = 0.20;
 	private double BACKWARD_STRAIGHT_RESTRICTER = 1;
-	private double BACKWARD_TURN_SPEED_BOOST = 0.40;
-	private double overPower = .5;
+	private double BACKWARD_TURN_SPEED_BOOST = 0.30;
+	private double overPower = 1;
 	private boolean pointTurn;
 
 
@@ -46,6 +46,12 @@ public class VelocityDriveCommand extends Command {
 		pointTurn = Math.abs(leftY) <= .1;
 		// Hailey changed from Deadband
 
+
+//		if(Robot.operator.buttons[10].get()) {
+//			Robot.driveSubsystem.setMotors(300, 300);
+//			return;
+//		}
+		
 		if (pointTurn) {
 			Robot.driveSubsystem.setMotors(.8 * 1079 * rightX, -.8 * 1079 * rightX);
 			Robot.driveSubsystem.setBreakMode(true);

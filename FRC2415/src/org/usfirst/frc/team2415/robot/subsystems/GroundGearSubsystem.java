@@ -1,9 +1,11 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
+import org.usfirst.frc.team2415.robot.commands.GroundGearStateCommand;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,40 +18,42 @@ public class GroundGearSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	/*idk if this is a solenoid or a double solenoid or how this
-	 *subsytem is supposed to work but hey you guys can figure
-	 *it out :) also yolo trying out double solenoids if it doesn't
-	 *work just change them to two solenoids per double solenoid
-	 */
-	
-	public byte GROUND = 0,
-				CARRY = 1;
+	public final byte GROUND = 0,
+				      CARRY = 1,
+				      LIMP = 2;
 	
 	private DoubleSolenoid gearManip;
 	private CANTalon intakeTalon;
+	private DigitalInput button;
+	public byte intakeState;
 
     public GroundGearSubsystem(){
-    	//someone change these ports
     	gearManip = new DoubleSolenoid(RobotMap.PCM_ID, RobotMap.GEAR_MANIP_SOLENOID[0], RobotMap.GEAR_MANIP_SOLENOID[1]);
-    	
     	intakeTalon = new CANTalon(RobotMap.GM_INTAKE);
+    	button = new DigitalInput(1);
+    	
+    	limpDick();
+    	intakeState = LIMP;
     }
 	
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+//        setDefaultCommand(new GroundGearStateCommand());
     }
     
 	public void dropIntake(){
 		gearManip.set(Value.kForward);
+		intakeState = GROUND;
 	}
 	
 	public void raiseIntake(){
 		gearManip.set(Value.kReverse);
+		intakeState = CARRY;
 	}
 	
 	public void limpDick(){
 		gearManip.set(Value.kOff);
+		intakeState = LIMP;
 	}
 	
 	public void setMotor(double speed){
@@ -58,6 +62,10 @@ public class GroundGearSubsystem extends Subsystem {
 	
 	public double getCurrent(){
 		return intakeTalon.getOutputCurrent();
+	}
+	
+	public boolean getButton(){
+		return !button.get();
 	}
 }
 
