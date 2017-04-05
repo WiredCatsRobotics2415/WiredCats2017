@@ -42,19 +42,14 @@ public class GroundGearCommand extends Command {
 		} else {
 			hasGear = false;
 		}
-		if (!hasGear) {
+			if (!hasGear){
 			startTime = System.currentTimeMillis() / 1000;
-		}
-		if (System.currentTimeMillis() / 1000 - startTime >= 0.5
-				&& Robot.groundGearSubsystem.getCurrent() > currentCap) {
-			Robot.groundGearSubsystem.raiseIntake();
-			if (System.currentTimeMillis()/1000 - startTime <= 1) {
-			Robot.groundGearSubsystem.setMotor(-1);
-			} else {
-			Robot.groundGearSubsystem.setMotor(-0.25);
 			}
+			if (System.currentTimeMillis() / 1000 - startTime >= 0.5
+					&& Robot.groundGearSubsystem.getCurrent() > currentCap) {
+				Robot.groundGearSubsystem.raiseIntake();
+				Robot.groundGearSubsystem.setMotor(-0.1);
 		}
-		
 
 	}
 
