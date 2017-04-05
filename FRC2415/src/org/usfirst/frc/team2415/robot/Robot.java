@@ -1,9 +1,12 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.buttons.GearButton;
 import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
+
+import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.GroundGearSubsystem;
@@ -35,6 +38,7 @@ public class Robot extends IterativeRobot {
   
 	public static XBoxOneGamepad gamepad;
 	public static WiredCatJoystick operator;
+	public static GearButton gearButton;
 
 	public static boolean singlePlayerMode = false;
 
@@ -61,12 +65,21 @@ public class Robot extends IterativeRobot {
 		groundGearSubsystem.limpDick();
 		
 		gamepad = new XBoxOneGamepad(0);
-		operator = new WiredCatJoystick(1);
-		
-		operator.buttons[7].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
-		operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.1));
-		operator.buttons[6].whileHeld(new  GroundGearCommand(groundGearSubsystem.GROUND, 1));
-		operator.buttons[3].whileHeld(new ClimberCommand());
+
+		if(!singlePlayerMode) operator = new WiredCatJoystick(1);
+		gearButton = new GearButton();
+
+		if(singlePlayerMode){
+			gamepad.rightBumper.whileHeld(new ClimberCommand());
+			gamepad.leftBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+		} else {
+			operator.buttons[3].whileHeld(new ClimberCommand());
+			operator.buttons[11].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+			operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.25));
+			operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
+		}
+		//TODO: Attempt #1
+		gearButton.whenActive(new ScoreSequenceCommand());
 		
 
 	}
@@ -127,6 +140,19 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+// 		//TODO: Attempt #2 (if work delete state stuff)
+// 		if(groundGearSubsystem.getButton()){
+// 			Command blueBanner = new ScoreSequenceCommand();
+// 			blueBanner.start();
+// 		}
+		
+//		//TODO: Attempt #3 (make sure you uncomment default command):
+//		if(groundGearSubsystem.getButton()){
+//			groundGearSubsystem.intakeState = groundGearSubsystem.GROUND;
+//			Command blueBanner = new DriveStraightToCommand(-0.5, .2);
+//			blueBanner.start();
+//		}
 		
 	}
 
