@@ -99,6 +99,7 @@ public class Robot extends IterativeRobot {
 		groundGearSubsystem.limpDick();
 		
 		gamepad = new XBoxOneGamepad(0);
+
 		if(!singlePlayerMode) operator = new WiredCatJoystick(1);
 		gearButton = new GearButton();
 
