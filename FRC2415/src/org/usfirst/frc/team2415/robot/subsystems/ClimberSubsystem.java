@@ -24,6 +24,9 @@ public class ClimberSubsystem extends Subsystem {
 		
 		climberTalon1.changeControlMode(TalonControlMode.Voltage);
 		climberTalon2.changeControlMode(TalonControlMode.Voltage);
+		
+		climberTalon1.configMaxOutputVoltage(10);
+		climberTalon2.configMaxOutputVoltage(10);
 	}
 
     public void initDefaultCommand() {
