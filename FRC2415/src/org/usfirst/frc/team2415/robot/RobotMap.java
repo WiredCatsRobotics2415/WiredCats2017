@@ -30,6 +30,8 @@ public class RobotMap {
 	public static final int GM_INTAKE = 8;
 	public static final int CLIMBER_TALON2 = 5;
 	
+	public static final int[] GEAR_MANIP_SOLENOID = {5,4};
+	
 	
 }
 

@@ -1,36 +1,27 @@
 package org.usfirst.frc.team2415.robot.autocommands;
 
+import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
  */
-public class RedLoadingLeftCommand extends CommandGroup {
+public class LeftGearCommand extends CommandGroup {
 
-	//start: left edge of robot 5 feet away from left side of field
-	
-	double leftLength = 8.55,
-			fieldLength = 27,
-			lineHeight = 10-2.25,
-			dLeft = 8.55;
-			
-	
-    public RedLoadingLeftCommand() {
-    	addSequential(new DriveStraightToCommand(120/12, 0.420));
+    public LeftGearCommand() {
+    	
+    	addSequential(new DriveStraightToCommand(97/12, 0.420));
     	addSequential(new WaitCommand(0.5));
     	addSequential(new TimedTurnByCommand(1.5, 65));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new DriveStraightToCommand(33.875/12, 0.420/1.25));
+    	addSequential(new DriveStraightToCommand(1.5, 0.420/1.25));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new DriveStraightToCommand(2, 0.420/2));
-//    	addSequential(new TurnByCommand(Math.atan((lineHeight-1)/(dLeft-leftLength))));
-//    	addSequential(new WaitCommand(0.5));
-//    	addSequential(new DriveStraightToCommand(Math.sqrt(Math.pow(dLeft-leftLength, 2) + Math.pow(lineHeight-1, 2)), 0.25));
-//        addSequential(new TurnByCommand(-120));
-//        addSequential(new WaitCommand(0.5));
-//        addSequential(new DriveStraightToCommand(-1, 0.25));
-    	// Add Commands here:
+    	addSequential(new DriveStraightToCommand(.5, 0.420/2)); 
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new ScoreSequenceCommand());
+        // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.

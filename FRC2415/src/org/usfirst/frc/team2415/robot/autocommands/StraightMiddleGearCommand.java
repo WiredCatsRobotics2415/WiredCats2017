@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2415.robot.autocommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -33,6 +34,8 @@ public class StraightMiddleGearCommand extends CommandGroup {
     	addSequential(new DriveStraightToCommand(5.5, 0.35));
     	addSequential(new WaitCommand(0.5));
     	addSequential(new DriveStraightToCommand(2.2, 0.25));
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new ScoreSequenceCommand());
     	
     }
 }

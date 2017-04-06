@@ -17,7 +17,7 @@ public class ScoreSequenceCommand extends CommandGroup {
         // these will run in order.
     	
     	requires(Robot.driveSubsystem);
-    	requires(Robot.gearManipulatorSubsystem);
+    	requires(Robot.groundGearSubsystem);
     	
     	addParallel(new GroundGearCommand(Robot.groundGearSubsystem.GROUND, .1));
     	addParallel(new DriveStraightToCommand(-0.5, .2));

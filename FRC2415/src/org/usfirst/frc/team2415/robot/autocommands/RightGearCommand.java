@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2415.robot.autocommands;
 
-import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
-import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
+import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -17,13 +16,15 @@ public class RightGearCommand extends CommandGroup {
 	
     public RightGearCommand() {
     	
-    	addSequential(new DriveStraightToCommand(1, 0.5));
+    	addSequential(new DriveStraightToCommand(109/12, 0.420));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new TurnByCommand(90));
+    	addSequential(new TimedTurnByCommand(1.5, -63));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new ToggleGearManipulatorFlapCommand());
-    	addSequential(new WaitCommand(3));
-    	addSequential(new ToggleGearPushingMechanismCommand());
+    	addSequential(new DriveStraightToCommand(1.1, 0.420/1.25));
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new DriveStraightToCommand(.5, 0.420/2));
+    	addSequential(new WaitCommand(0.5));
+    	addSequential(new ScoreSequenceCommand());
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
