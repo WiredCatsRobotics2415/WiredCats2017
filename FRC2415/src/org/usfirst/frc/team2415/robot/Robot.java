@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 			operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
 		}
 		//TODO: Attempt #1
-		gearButton.whenActive(new ScoreSequenceCommand());
+		gearButton.whenPressed(new ScoreSequenceCommand());
 		
 
 	}
