@@ -12,15 +12,12 @@ public class ClimberCommand extends Command {
     public ClimberCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-//    	requires(Robot.intakeSubsystem);
     	requires(Robot.climberSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	if(Robot.gearManipulatorSubsystem.isExtended){
-//        	Robot.intakeSubsystem.setSolenoid(true);
-        	Robot.climberSubsystem.setMotor(1);
+        	Robot.climberSubsystem.setMotor(10);
 //    	}
     }
 

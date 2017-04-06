@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2415.robot.autocommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
-import org.usfirst.frc.team2415.robot.commands.ToggleGearManipulatorFlapCommand;
-import org.usfirst.frc.team2415.robot.commands.ToggleGearPushingMechanismCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;

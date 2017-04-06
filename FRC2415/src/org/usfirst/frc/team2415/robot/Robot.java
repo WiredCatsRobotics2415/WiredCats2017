@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.buttons.GearButton;
 import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
@@ -10,6 +9,7 @@ import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.GroundGearSubsystem;
+import org.usfirst.frc.team2415.robot.utilities.GearButton;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 

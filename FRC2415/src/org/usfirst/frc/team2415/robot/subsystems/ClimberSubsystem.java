@@ -3,6 +3,7 @@ package org.usfirst.frc.team2415.robot.subsystems;
 import org.usfirst.frc.team2415.robot.RobotMap;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -20,6 +21,9 @@ public class ClimberSubsystem extends Subsystem {
 	public ClimberSubsystem(){
 		climberTalon1 = new CANTalon(RobotMap.CLIMBER_TALON);
 		climberTalon2 = new CANTalon(RobotMap.CLIMBER_TALON2);
+		
+		climberTalon1.changeControlMode(TalonControlMode.Voltage);
+		climberTalon2.changeControlMode(TalonControlMode.Voltage);
 	}
 
     public void initDefaultCommand() {
@@ -27,9 +31,9 @@ public class ClimberSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void setMotor(double speed){
-    	climberTalon1.set(-speed);
-    	climberTalon2.set(speed);
+    public void setMotor(double voltage){
+    	climberTalon1.set(-voltage);
+    	climberTalon2.set(voltage);
     }
     
     public double getVoltage(){

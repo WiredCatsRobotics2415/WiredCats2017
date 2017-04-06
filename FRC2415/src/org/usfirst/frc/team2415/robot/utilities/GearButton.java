@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.buttons;
+package org.usfirst.frc.team2415.robot.utilities;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
