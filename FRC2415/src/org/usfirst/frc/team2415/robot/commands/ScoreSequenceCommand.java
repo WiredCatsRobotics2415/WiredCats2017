@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
-import org.usfirst.frc.team2415.robot.autocommands.DriveStraightToCommand;
+import org.usfirst.frc.team2415.robot.autocommands.SimpleAutoDriveCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -16,11 +16,12 @@ public class ScoreSequenceCommand extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	
-    	requires(Robot.driveSubsystem);
     	requires(Robot.groundGearSubsystem);
+    	requires(Robot.driveSubsystem);
     	
-    	addParallel(new GroundGearCommand(Robot.groundGearSubsystem.GROUND, .1));
-    	addParallel(new DriveStraightToCommand(-0.5, .2));
+//    	addParallel(new GroundGearCommand(Robot.groundGearSubsystem.GROUND, .1));
+    	addParallel(new GearOuttakeCommand(.1));
+    	addParallel(new SimpleAutoDriveCommand(0.4));
 
         // To run multiple commands at the same time,
         // use addParallel()

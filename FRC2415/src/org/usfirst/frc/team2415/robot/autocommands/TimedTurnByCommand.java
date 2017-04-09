@@ -58,13 +58,13 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(System.currentTimeMillis());
+//    	System.out.println(System.currentTimeMillis());
     	Robot.driveSubsystem.setMotors(rotateToAngleRate, -rotateToAngleRate);
     }
 
     // Called once after timeout
     protected void end() {
-    	System.out.println("DONE");
+//    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }
@@ -72,7 +72,7 @@ public class TimedTurnByCommand extends TimedCommand implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("DONE");
+//    	System.out.println("DONE");
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController.reset();
     }

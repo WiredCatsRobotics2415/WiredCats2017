@@ -6,14 +6,15 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
  */
-public class DriveStraightToCommand extends Command implements PIDOutput {
+public class TimedDriveStraightCommand extends TimedCommand implements PIDOutput {
 
 
+	
 	PIDController turnController;
 	double rotateToAngleRate;
 	double angle;
@@ -32,22 +33,17 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
 	
 	double distance;
 	double speed;
-	double time;
 //	double setpoint;
 	
-	
-	public DriveStraightToCommand(double distance, double speed, double time) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	public TimedDriveStraightCommand(double distance, double speed, double timeout) {
+		super(timeout);
 		requires(Robot.driveSubsystem);
 		this.distance = -distance;
 		this.speed = speed;
-		this.time = time;
-    }
-
+	}
+	
     // Called just before this Command runs the first time
     protected void initialize() {	
-    	startTime = System.currentTimeMillis()/1000;
     	Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
     	Robot.driveSubsystem.zeroEncoders();
 //    	Robot.driveSubsystem.zeroYaw();
@@ -81,12 +77,6 @@ public class DriveStraightToCommand extends Command implements PIDOutput {
     	System.out.println("AVG Dist: " + Math.abs(Robot.driveSubsystem.getDistance()[0]) + Math.abs(Robot.driveSubsystem.getDistance()[1])/2 + "\t DriveSetpoint: " + distance);
     	if(distance > 0) Robot.driveSubsystem.setMotors(rotateToAngleRate + speed, -rotateToAngleRate + speed);
     	else Robot.driveSubsystem.setMotors(-(-rotateToAngleRate + speed), -(rotateToAngleRate + speed));
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	return System.currentTimeMillis()/1000 - startTime > time ||
-    			Math.abs(distance) <= (Math.abs(Robot.driveSubsystem.getDistance()[1]) + Math.abs(Robot.driveSubsystem.getDistance()[0]))/2;
     }
 
     // Called once after isFinished returns true

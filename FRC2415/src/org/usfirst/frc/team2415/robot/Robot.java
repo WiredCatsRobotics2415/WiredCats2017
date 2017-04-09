@@ -4,7 +4,6 @@ package org.usfirst.frc.team2415.robot;
 import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
 import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
-
 import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -13,11 +12,13 @@ import org.usfirst.frc.team2415.robot.utilities.GearButton;
 import org.usfirst.frc.team2415.robot.utilities.WiredCatJoystick;
 import org.usfirst.frc.team2415.robot.utilities.XBoxOneGamepad;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,7 +41,9 @@ public class Robot extends IterativeRobot {
 	public static WiredCatJoystick operator;
 	public static GearButton gearButton;
 
-	public static boolean singlePlayerMode = false;
+	public static boolean singlePlayerMode = true;
+	
+	SendableChooser autoChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -48,7 +51,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-
+		CameraServer.getInstance().startAutomaticCapture();
 		driveSubsystem = new DriveSubsystem();
 		climberSubsystem = new ClimberSubsystem();
 		groundGearSubsystem = new GroundGearSubsystem();
@@ -62,25 +65,37 @@ public class Robot extends IterativeRobot {
 
 		driveSubsystem.zeroYaw();
 		driveSubsystem.zeroEncoders();
-		groundGearSubsystem.limpDick();
+//		groundGearSubsystem.limpDick();
 		
 		gamepad = new XBoxOneGamepad(0);
-
-		if(!singlePlayerMode) operator = new WiredCatJoystick(1);
 		gearButton = new GearButton();
 
+		if(!singlePlayerMode) operator = new WiredCatJoystick(1);
+
 		if(singlePlayerMode){
-			gamepad.rightBumper.whileHeld(new ClimberCommand());
-			gamepad.leftBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+			gamepad.leftJoystick.whileHeld(new ClimberCommand());
+			gamepad.rightJoystick.whileHeld(new ClimberCommand());
+			gamepad.leftBumper.whileHeld(new ScoreSequenceCommand());
+			gamepad.leftBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY, 0));
+			gamepad.rightBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
+			gamepad.rightBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY, 0));
+			gamepad.a_button.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.1));
+			
 		} else {
 			operator.buttons[3].whileHeld(new ClimberCommand());
 			operator.buttons[11].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
 			operator.buttons[1].whileHeld(new GroundGearCommand(groundGearSubsystem.CARRY, -0.25));
 			operator.buttons[10].whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.25));
+			operator.buttons[2].whenPressed(new ScoreSequenceCommand());
 		}
 		//TODO: Attempt #1
-		gearButton.whenActive(new ScoreSequenceCommand());
+//		gearButton.whenPressed(new ScoreSequenceCommand());
 		
+//		autoChooser = new SendableChooser();
+//		autoChooser.addDefault("Middle Gear", new StraightMiddleGearCommand());
+//		autoChooser.addObject("Left Gear", new LeftGearCommand());
+//		autoChooser.addObject("Right Gear", new RightGearCommand());
+//		SmartDashboard.putData("Auto chooser", autoChooser);
 
 	}
 
@@ -97,6 +112,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**
@@ -113,9 +129,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 
-		Robot.driveSubsystem.zeroYaw();
-		Robot.driveSubsystem.zeroEncoders();
+//		driveSubsystem.zeroYaw();
+		driveSubsystem.zeroEncoders();
+		groundGearSubsystem.raiseIntake();
 		
+//		Command auto = new RightGearCommand();
+//		Command auto = new LeftGearCommand();
 		Command auto = new StraightMiddleGearCommand();
 		auto.start();
 
@@ -131,7 +150,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-
+		groundGearSubsystem.raiseIntake();
 	}
 
 	/**
@@ -140,6 +159,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+//		System.out.println(Robot.groundGearSubsystem.rightIR.get());
 
 // 		//TODO: Attempt #2 (if work delete state stuff)
 // 		if(groundGearSubsystem.getButton()){

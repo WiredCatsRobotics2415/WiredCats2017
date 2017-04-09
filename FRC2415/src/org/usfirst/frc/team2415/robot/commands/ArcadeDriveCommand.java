@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ArcadeDriveCommand extends Command {
 	
-	private double INTERPOLATION_FACTOR = 0.75;
+	private double INTERPOLATION_FACTOR = 0.420;
 	private double DEADBAND = 0.05;
 	private double STRAIGHT_RESTRICTER = 1; 
-	private double TURN_SPEED_BOOST = 0.4;
+	private double TURN_SPEED_BOOST = 0.35;
 	private double overPower = .6;
 
     public ArcadeDriveCommand() {
@@ -35,12 +35,12 @@ public class ArcadeDriveCommand extends Command {
     	double leftY;
     	double rightX;
     	
-    	if (Robot.singlePlayerMode){
+    	if (!Robot.singlePlayerMode){
     		leftY = Robot.operator.Y();
     		rightX = Robot.operator.X();
     	}	else {
     		leftY = Robot.gamepad.leftY();
-    		rightX = Robot.gamepad.rightX();
+    		rightX = -Robot.gamepad.rightX();
     	}
     	
     	if (Math.abs(leftY) < DEADBAND) leftY = 0;
@@ -66,7 +66,10 @@ public class ArcadeDriveCommand extends Command {
             right = -1.0;
         }
     	
-    	Robot.driveSubsystem.setMotors(left, right);
+//        if (Robot.gamepad.leftTrigger.get()) Robot.driveSubsystem.setMotors(-left *.5, -right*.5);
+//        System.out.println("L VOLT: " + -left + "\t R VOLT: " + -right);
+//        System.out.println("L SPEED:" + Robot.driveSubsystem.getVelocity()[0] + "R SPEED: " + Robot.driveSubsystem.getVelocity()[1]);
+        Robot.driveSubsystem.setMotors(-left, -right);
     }
 
     // Make this return true when this Command no longer needs to run execute()

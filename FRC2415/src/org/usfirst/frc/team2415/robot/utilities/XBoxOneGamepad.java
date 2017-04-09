@@ -18,6 +18,8 @@ public class XBoxOneGamepad extends Joystick{
 	
 	public JoystickButton leftTrigger, rightTrigger;
 	
+	public JoystickButton leftJoystick, rightJoystick;
+	
 	public XBoxOneGamepad(int port) {
 		super(port);
 		
@@ -28,6 +30,9 @@ public class XBoxOneGamepad extends Joystick{
 		
 		leftBumper = new JoystickButton(this, 5);
 		rightBumper = new JoystickButton(this, 6);	
+		
+		leftJoystick = new JoystickButton(this, 9);
+		rightJoystick = new JoystickButton(this, 10);
 	}
 	
 	public double leftY(){

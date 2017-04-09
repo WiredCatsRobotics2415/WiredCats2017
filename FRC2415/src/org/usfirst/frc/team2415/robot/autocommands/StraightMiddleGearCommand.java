@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2415.robot.autocommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
-import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
+import org.usfirst.frc.team2415.robot.commands.GearOuttakeCommand;
+import org.usfirst.frc.team2415.robot.commands.ZeroEncoders;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -12,30 +13,16 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class StraightMiddleGearCommand extends CommandGroup {
 
     public StraightMiddleGearCommand() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
-    	
+        
     	requires(Robot.driveSubsystem);
     	
-    	addSequential(new DriveStraightToCommand(5.5, 0.35));
+    	addSequential(new DriveStraightToCommand(5.2, 0.35, 3));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new DriveStraightToCommand(2.2, 0.25));
+    	addSequential(new ZeroEncoders());
+    	addSequential(new DriveStraightToCommand(2.2, 0.20, 1.75));
     	addSequential(new WaitCommand(0.5));
-    	addSequential(new ScoreSequenceCommand());
+    	addParallel(new GearOuttakeCommand(0.1));
+    	addSequential(new DriveStraightToCommand(-3, 0.4, 3));
     	
     }
 }
