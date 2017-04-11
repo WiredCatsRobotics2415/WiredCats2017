@@ -19,15 +19,15 @@ public class VelocityDriveCommand extends Command {
 	//interpolation up maybe
 	//overpower down to 0.5
 	
-	private double STRAIGHT_INTERPOLATION_FACTOR = 0.60;
-	private double TURNING_INTERPOLATION_FACTOR = .2; // needs to be decided on
+	private double STRAIGHT_INTERPOLATION_FACTOR = 0.60; 
+	private double TURNING_INTERPOLATION_FACTOR = .3; // needs to be decided on
 														// by Nathan
 	private double DEADBAND = 0.075;
 	private double FORWARD_STRAIGHT_RESTRICTER = 1;
-	private double FORWARD_TURN_SPEED_BOOST = 0.23;
+	private double FORWARD_TURN_SPEED_BOOST = 0.4;
 	private double BACKWARD_STRAIGHT_RESTRICTER = 1;
-	private double BACKWARD_TURN_SPEED_BOOST = 0.285;
-	private double overPower = .55;
+	private double BACKWARD_TURN_SPEED_BOOST = 0.4;
+	private double overPower = .750; //.55
 	private boolean pointTurn;
 
 	public VelocityDriveCommand() {
@@ -57,12 +57,13 @@ public class VelocityDriveCommand extends Command {
 		// }
 
 		if (pointTurn) {
-			Robot.driveSubsystem.setMotors(.8 * 1079 * rightX, -.8 * 1079 * rightX);
+			Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
+			Robot.driveSubsystem.setMotors(.87 * 1079 * rightX, -.87 * 1079 * rightX);
 			Robot.driveSubsystem.setBreakMode(true);
 
 		} else {
 
-			Robot.driveSubsystem.setBreakMode(false);
+			Robot.driveSubsystem.setBreakMode(true);
 
 			if (Math.abs(leftY) < DEADBAND)
 				leftY = 0;
@@ -96,38 +97,41 @@ public class VelocityDriveCommand extends Command {
 				left += overPower * (-1.0 - right);
 				right = -1.0;
 			}
-/*
-			if (Math.abs(Robot.driveSubsystem.getOutputVoltage()[0]) > 0 && rightX < 0.1) {
-				Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
 
-//				double leftRate = Robot.driveSubsystem.getVelocity()[0] / (1079 * left) <= 0 && (rightX < 0.5) ? 0 : 27.4285714286;
-				double leftRate = 27.4285714286;
-				Robot.driveSubsystem.setLeftRampRate(leftRate);   
-
-//				double rightRate = -(Robot.driveSubsystem.getVelocity()[1] / (1079 * right)) <= 0 && (rightX < 0.5) ? 0 : 27.4285714286;
-				double rightRate = 27.4285714286;
-				Robot.driveSubsystem.setRightRampRate(rightRate);
-
-			} else if (rightX <= 0.1 && (-1040 * left) / Robot.driveSubsystem.getVelocity()[0] < 0.05) {
-				Robot.driveSubsystem.setBreakMode(true);
+//			if (rightX <= 0.1 && (-1040 * left) / Robot.driveSubsystem.getVelocity()[0] < -.05) {
+//				Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
+//			
+//				Robot.driveSubsystem.setMotors(0, 0);
+//				System.out.println("Brakes on!");
 				
-				Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
-				Robot.driveSubsystem.setMotors(0, 0);
-				
+//			}
+//			
+//			else if (Math.abs(Robot.driveSubsystem.getOutputVoltage()[0]) > 0 && rightX < 0.1) {
+//				Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
+//
+//				double leftRate = 27.4285714286;
+//				Robot.driveSubsystem.setLeftRampRate(leftRate);   
+//
+//				double rightRate = 27.4285714286;
+//				Robot.driveSubsystem.setRightRampRate(rightRate);
+//
+//			} else {
+//				Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
+//				Robot.driveSubsystem.setLeftRampRate(0);
+//				Robot.driveSubsystem.setRightRampRate(0);
+//			}
+
+			if (Robot.gamepad.rightJoystick.get() || Robot.gamepad.leftJoystick.get()) {
+				Robot.driveSubsystem.setMotors(-1040/12*Robot.driveSubsystem.getBusVoltage() * left *.65, .65 * -1040/12*Robot.driveSubsystem.getBusVoltage() * right);
 			} else {
-				Robot.driveSubsystem.changeControlMode(TalonControlMode.Speed);
-				
-				Robot.driveSubsystem.setLeftRampRate(0);
-				Robot.driveSubsystem.setRightRampRate(0);
+			Robot.driveSubsystem.setMotors(-1040/12*Robot.driveSubsystem.getBusVoltage() * left, -1040/12*Robot.driveSubsystem.getBusVoltage() * right);
 			}
-*/
-			Robot.driveSubsystem.setMotors(-1040 * left, -1040 * right);
-
-//			System.out.println("L SET: " + -1040 * left + "\t R SET: " + -1040 * right);
-//			System.out.println("L SPEED:" + Robot.driveSubsystem.getVelocity()[0] + "\t R SPEED: "
-//					+ Robot.driveSubsystem.getVelocity()[1]);
-//			System.out.println("L ERROR: " + Robot.driveSubsystem.getError()[0] + "\t R ERROR: "
-//					+ Robot.driveSubsystem.getError()[1]);
+			
+			System.out.println("L SET: " + -1040/12*Robot.driveSubsystem.getBusVoltage() * left + "\t R SET: " + -1040/12*Robot.driveSubsystem.getBusVoltage() * right);
+			System.out.println("L SPEED:" + Robot.driveSubsystem.getVelocity()[0] + "\t R SPEED: "
+					+ Robot.driveSubsystem.getVelocity()[1]);
+			System.out.println("L ERROR: " + Robot.driveSubsystem.getError()[0] + "\t R ERROR: "
+					+ Robot.driveSubsystem.getError()[1]);
 
 			// StreamerPacket data = new StreamerPacket("driveData");
 			// data.addAttribute("leftSpeed",
@@ -143,7 +147,8 @@ public class VelocityDriveCommand extends Command {
 			// If the RPM is less than 50 then the robot is considered not
 			// moving
 			Robot.driveSubsystem.isMoving = Robot.driveSubsystem.getVelocity()[0] > 50
-					|| Robot.driveSubsystem.getVelocity()[0] > 50;
+					|| Robot.driveSubsystem.getVelocity()[1] > 50;
+			
 		}
 	}
 

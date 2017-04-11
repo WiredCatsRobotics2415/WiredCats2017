@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 		driveSubsystem = new DriveSubsystem();
 		climberSubsystem = new ClimberSubsystem();
 		groundGearSubsystem = new GroundGearSubsystem();
@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
 		if(!singlePlayerMode) operator = new WiredCatJoystick(1);
 
 		if(singlePlayerMode){
-			gamepad.leftJoystick.whileHeld(new ClimberCommand());
+//			gamepad.leftJoystick.whileHeld(new ClimberCommand());
 			gamepad.rightJoystick.whileHeld(new ClimberCommand());
 			gamepad.leftBumper.whileHeld(new ScoreSequenceCommand());
 			gamepad.leftBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY, 0));

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
 import org.usfirst.frc.team2415.robot.utilities.PixyCam;
 
@@ -105,11 +104,11 @@ public class DriveSubsystem extends Subsystem {
     	if(mode == TalonControlMode.Speed){
     		//TODO: see 12.4
     		leftTalFront.configNominalOutputVoltage(0, 0);
-    		leftTalFront.configPeakOutputVoltage(12, -12);
-    		setPIDF(leftTalFront, 0.1696969696 * 1.25, 0, 0, 0.144);  //.1696969696, 0, 0, 2/1000
+//    		leftTalFront.configPeakOutputVoltage(12, -12);
+    		setPIDF(leftTalFront, 0.1696969696 * 1.25, 0, 0, 0.15);  //.1696969696, 0, 0, 2/1000
 
     		rightTalFront.configNominalOutputVoltage(0, 0);
-    		rightTalFront.configPeakOutputVoltage(12, -12);
+//    		rightTalFront.configPeakOutputVoltage(12, -12);
     		setPIDF(rightTalFront, 0.1696969696 * 1.25, 0, 0, 0.144); //.175, 0, 0, 2/1000
     		
     		//code running native units, input into talon is RPM
@@ -172,6 +171,10 @@ public class DriveSubsystem extends Subsystem {
     
     public double[] getError(){
     return new double[]{leftTalFront.getClosedLoopError(), rightTalFront.getClosedLoopError()};
+    }
+    
+    public double getBusVoltage(){
+    	return DriverStation.getInstance().getBatteryVoltage();
     }
     
     public double[] getOutputVoltage(){
