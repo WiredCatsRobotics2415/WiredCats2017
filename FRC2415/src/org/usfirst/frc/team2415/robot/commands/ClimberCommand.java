@@ -18,6 +18,7 @@ public class ClimberCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         	Robot.climberSubsystem.setMotor(10);
+        	Robot.compressor.stop();
 //    	}
     }
 
@@ -35,6 +36,7 @@ public class ClimberCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.climberSubsystem.setMotor(0);
+    	Robot.compressor.start();
     }
 
     // Called when another command which requires one or more of the same

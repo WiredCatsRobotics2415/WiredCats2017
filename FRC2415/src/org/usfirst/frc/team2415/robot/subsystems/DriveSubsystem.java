@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 	
-	private CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
+	public CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
 	public AHRS ahrs;
 	private PixyCam pixy;
 	

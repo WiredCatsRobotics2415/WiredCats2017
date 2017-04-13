@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static GroundGearSubsystem groundGearSubsystem;
 
-	private Compressor compressor;
+	public static Compressor compressor;
 	
 	public static DataSender dataSender;
   
@@ -159,6 +159,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		
 //		System.out.println(Robot.groundGearSubsystem.rightIR.get());
 
 // 		//TODO: Attempt #2 (if work delete state stuff)
