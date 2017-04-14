@@ -50,7 +50,7 @@ public class VelocityDriveCommand extends Command {
 		double leftY = Robot.gamepad.leftY();
 		double rightX = Robot.gamepad.rightX();
 
-		pointTurn = Math.abs(leftY) <= .1;
+		pointTurn = Math.abs(leftY) <= .1 && Math.abs(rightX) >= .1;
 		// Hailey changed from Deadband
 
 		// if(Robot.operator.buttons[10].get()) {
@@ -58,7 +58,7 @@ public class VelocityDriveCommand extends Command {
 		// return;
 		// }
 		
-	
+	if (!pointTurn) {
 
 			Robot.driveSubsystem.setBreakMode(true);
 
@@ -123,7 +123,7 @@ public class VelocityDriveCommand extends Command {
 //				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.leftTalFront, 0, 0, 0, 0.15);
 //				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.rightTalFront, 0, 0, 0, 0.144);
 //				Robot.driveSubsystem.setBreakMode(false);
-			 if (((1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left)/(Robot.driveSubsystem.getVelocity()[0]+.001)) < 0.5 && 
+			 if (Math.abs((1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left)/(Robot.driveSubsystem.getVelocity()[0]+.001)) < 0.5 && 
 						rightX < .3) {
 				 System.out.println("brake mode pls work");
 				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.leftTalFront, 0, 0, 0, 0);
@@ -134,7 +134,6 @@ public class VelocityDriveCommand extends Command {
 				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.rightTalFront, 0.1696969696 * 1.25, 0, 0, 0.144);
 				Robot.driveSubsystem.setBreakMode(false);
 			}
-			
 			 
 			if (Robot.gamepad.rightJoystick.get() || Robot.gamepad.leftJoystick.get()) {
 				Robot.driveSubsystem.setMotors(-1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left * .65,
@@ -151,13 +150,14 @@ public class VelocityDriveCommand extends Command {
 			System.out.println("L ERROR: " + Robot.driveSubsystem.getError()[0] + "\t R ERROR: "
 					+ Robot.driveSubsystem.getError()[1]);
 			System.out.println(((1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left)/(Robot.driveSubsystem.getVelocity()[0]+.001)));
+	}
 
-
-//			if (pointTurn) {
-//				Robot.driveSubsystem.setMotors(.87 * 1079 * rightX, -.87 * 1079 * rightX);
-//				Robot.driveSubsystem.setBreakMode(true);
-//
-//			} 
+			else {
+				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.leftTalFront, 0.1696969696 * 1.25, 0, 0, 0.15);
+				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.rightTalFront, 0.1696969696 * 1.25, 0, 0, 0.144);
+				Robot.driveSubsystem.setMotors(.87 * 1079 * rightX, -.87 * 1079 * rightX);
+				Robot.driveSubsystem.setBreakMode(true);
+			} 
 			
 			// StreamerPacket data = new StreamerPacket("driveData");
 			// data.addAttribute("leftSpeed",
