@@ -16,13 +16,12 @@ public class StraightMiddleGearCommand extends CommandGroup {
         
     	requires(Robot.driveSubsystem);
     	
-    	addSequential(new DriveStraightToCommand(5.2, 0.35, 3));
+    	addSequential(new DriveStraightToCommand(4.7, 0.35, 3));
     	addSequential(new WaitCommand(0.5));
     	addSequential(new ZeroEncoders());
-    	addSequential(new DriveStraightToCommand(2.2, 0.20, 1.75));
-    	addSequential(new WaitCommand(0.5));
+    	addSequential(new DriveStraightToCommand(2.0, 0.20, .75));
+    	addSequential(new WaitCommand(0.25));
     	addParallel(new GearOuttakeCommand(0.1));
-    	addSequential(new DriveStraightToCommand(-3, 0.4, 3));
     	
     }
 }

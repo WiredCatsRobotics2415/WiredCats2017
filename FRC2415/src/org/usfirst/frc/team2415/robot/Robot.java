@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-//		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();
 		driveSubsystem = new DriveSubsystem();
 		climberSubsystem = new ClimberSubsystem();
 		groundGearSubsystem = new GroundGearSubsystem();
@@ -73,13 +73,22 @@ public class Robot extends IterativeRobot {
 		if(!singlePlayerMode) operator = new WiredCatJoystick(1);
 
 		if(singlePlayerMode){
-//			gamepad.leftJoystick.whileHeld(new ClimberCommand());
+			
 			gamepad.rightJoystick.whileHeld(new ClimberCommand());
-			gamepad.leftBumper.whileHeld(new ScoreSequenceCommand());
-			gamepad.leftBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY, 0));
-			gamepad.rightBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -1));
-			gamepad.rightBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY, 0));
-			gamepad.a_button.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, 0.1));
+			
+//			/* to be tested
+//			gamepad.leftBumper.whileHeld(new GearSequenceCommand());
+//			gamepad.leftBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY));
+//			gamepad.rightBumper.whileHeld(new GearSequenceCommand());
+//			gamepad.rightTriggerButton.whileHeld(new GearSequenceCommand());
+//			*/
+			
+			/* this is known to work
+			gamepad.leftBumper.whileHeld(new GearOuttakeCommand(.2));
+			gamepad.leftBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY));
+			gamepad.rightBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -.75));
+			gamepad.rightBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY));
+			*/
 			
 		} else {
 			operator.buttons[3].whileHeld(new ClimberCommand());
@@ -112,7 +121,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		
+//		System.out.println("enc: " + Robot.driveSubsystem.getDistance()[0] + "\t gyro: " + Robot.driveSubsystem.ahrs.getYaw());
+		System.out.println("IR Sensor: " + Robot.groundGearSubsystem.getIR());
 	}
 
 	/**
@@ -150,6 +160,8 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+//		Command gear = new GroundGearCommand(groundGearSubsystem.CARRY);
+//		gear.start();
 		groundGearSubsystem.raiseIntake();
 	}
 
@@ -158,7 +170,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+//		System.out.println(Robot.groundGearSubsystem.getIR());
 		Scheduler.getInstance().run();
+//		System.out.println("enc: " + Robot.driveSubsystem.getDistance()[0] + "\t gyro: " + Robot.driveSubsystem.ahrs.getYaw());
 		
 		
 //		System.out.println(Robot.groundGearSubsystem.rightIR.get());

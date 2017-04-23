@@ -20,7 +20,7 @@ public class ScoreSequenceCommand extends CommandGroup {
     	requires(Robot.driveSubsystem);
     	
 //    	addParallel(new GroundGearCommand(Robot.groundGearSubsystem.GROUND, .1));
-    	addParallel(new GearOuttakeCommand(.1));
+    	addParallel(new GearOuttakeCommand(.2));
     	addParallel(new SimpleAutoDriveCommand(0.4));
 
         // To run multiple commands at the same time,

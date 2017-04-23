@@ -125,7 +125,7 @@ public class VelocityDriveCommand extends Command {
 //				Robot.driveSubsystem.setBreakMode(false);
 			 if (Math.abs((1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left)/(Robot.driveSubsystem.getVelocity()[0]+.001)) < 0.5 && 
 						rightX < .3) {
-				 System.out.println("brake mode pls work");
+//				 System.out.println("brake mode pls work");
 				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.leftTalFront, 0, 0, 0, 0);
 				Robot.driveSubsystem.setPIDF(Robot.driveSubsystem.rightTalFront, 0, 0, 0, 0);
 				Robot.driveSubsystem.setBreakMode(true);
@@ -143,13 +143,13 @@ public class VelocityDriveCommand extends Command {
 											   -1040 / 12 * Robot.driveSubsystem.getBusVoltage() * right);
 			}
 			
-			System.out.println("L SET: " + -1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left + "\t R SET: "
-					+ -1040 / 12 * Robot.driveSubsystem.getBusVoltage() * right);
-			System.out.println("L SPEED:" + Robot.driveSubsystem.getVelocity()[0] + "\t R SPEED: "
-					+ Robot.driveSubsystem.getVelocity()[1]);
-			System.out.println("L ERROR: " + Robot.driveSubsystem.getError()[0] + "\t R ERROR: "
-					+ Robot.driveSubsystem.getError()[1]);
-			System.out.println(((1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left)/(Robot.driveSubsystem.getVelocity()[0]+.001)));
+//			System.out.println("L SET: " + -1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left + "\t R SET: "
+//					+ -1040 / 12 * Robot.driveSubsystem.getBusVoltage() * right);
+//			System.out.println("L SPEED:" + Robot.driveSubsystem.getVelocity()[0] + "\t R SPEED: "
+//					+ Robot.driveSubsystem.getVelocity()[1]);
+//			System.out.println("L ERROR: " + Robot.driveSubsystem.getError()[0] + "\t R ERROR: "
+//					+ Robot.driveSubsystem.getError()[1]);
+//			System.out.println(((1040 / 12 * Robot.driveSubsystem.getBusVoltage() * left)/(Robot.driveSubsystem.getVelocity()[0]+.001)));
 	}
 
 			else {

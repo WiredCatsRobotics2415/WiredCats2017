@@ -70,10 +70,10 @@ public class GroundGearCommand extends Command {
 			startTime = System.currentTimeMillis() / 1000;
 		}
 		
-		if (System.currentTimeMillis() / 1000 - startTime >= 0.3
+		if (System.currentTimeMillis() / 1000 - startTime >= 0.05
 				&& Robot.groundGearSubsystem.getIR()) {
 			Robot.groundGearSubsystem.raiseIntake();
-			Robot.groundGearSubsystem.setMotor(-0.75);
+			Robot.groundGearSubsystem.setMotor(-0.65);
 
 		}
 		

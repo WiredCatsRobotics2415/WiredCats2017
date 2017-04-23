@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
-import org.usfirst.frc.team2415.robot.Robot;
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
+import org.usfirst.frc.team2415.robot.commands.GearSequenceCommand;
 
 import com.ctre.CANTalon;
 
@@ -38,6 +37,7 @@ public class GroundGearSubsystem extends Subsystem {
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
 //        setDefaultCommand(new GroundGearCommand(Robot.groundGearSubsystem.CARRY,0));
+		setDefaultCommand(new GearSequenceCommand());
     }
     
 	public void dropIntake(){

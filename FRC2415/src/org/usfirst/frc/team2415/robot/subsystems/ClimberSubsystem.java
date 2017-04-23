@@ -22,13 +22,11 @@ public class ClimberSubsystem extends Subsystem {
 		climberTalon1 = new CANTalon(RobotMap.CLIMBER_TALON);
 		climberTalon2 = new CANTalon(RobotMap.CLIMBER_TALON2);
 		
-		climberTalon1.changeControlMode(TalonControlMode.Current);
-		climberTalon2.changeControlMode(TalonControlMode.Current);
+		climberTalon1.changeControlMode(TalonControlMode.Voltage);
+		climberTalon2.changeControlMode(TalonControlMode.Voltage);
 		
-		climberTalon1.EnableCurrentLimit(true);
-		climberTalon1.setCurrentLimit(85);
-		climberTalon2.EnableCurrentLimit(true);
-		climberTalon2.setCurrentLimit(85);
+		climberTalon1.configMaxOutputVoltage(10);
+		climberTalon2.configMaxOutputVoltage(10);
 	}
 
     public void initDefaultCommand() {

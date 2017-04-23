@@ -105,7 +105,7 @@ public class DriveSubsystem extends Subsystem {
     		//TODO: see 12.4
     		leftTalFront.configNominalOutputVoltage(0, 0);
 //    		leftTalFront.configPeakOutputVoltage(12, -12);
-    		setPIDF(leftTalFront, 0.1696969696 * 1.25, 0, 0, 0.15);  //.1696969696, 0, 0, 2/1000
+    		setPIDF(leftTalFront, 0.1696969696 * 1.25, 0, 0, 0.144);  //.1696969696, 0, 0, 2/1000
 
     		rightTalFront.configNominalOutputVoltage(0, 0);
 //    		rightTalFront.configPeakOutputVoltage(12, -12);
