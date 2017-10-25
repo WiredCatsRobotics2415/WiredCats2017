@@ -3,6 +3,8 @@ package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.autocommands.StraightMiddleGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ClimberCommand;
+import org.usfirst.frc.team2415.robot.commands.GearOuttakeCommand;
+import org.usfirst.frc.team2415.robot.commands.GearSequenceCommand;
 import org.usfirst.frc.team2415.robot.commands.GroundGearCommand;
 import org.usfirst.frc.team2415.robot.commands.ScoreSequenceCommand;
 import org.usfirst.frc.team2415.robot.subsystems.ClimberSubsystem;
@@ -83,12 +85,13 @@ public class Robot extends IterativeRobot {
 //			gamepad.rightTriggerButton.whileHeld(new GearSequenceCommand());
 //			*/
 			
-			/* this is known to work
-			gamepad.leftBumper.whileHeld(new GearOuttakeCommand(.2));
+			
+			gamepad.leftBumper.whileHeld(new GearOuttakeCommand(-.2));
 			gamepad.leftBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY));
-			gamepad.rightBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -.75));
+//			gamepad.rightBumper.whileHeld(new GroundGearCommand(groundGearSubsystem.GROUND, -.75));
+			gamepad.rightBumper.whileHeld(new GearSequenceCommand());
 			gamepad.rightBumper.whenReleased(new GroundGearCommand(groundGearSubsystem.CARRY));
-			*/
+			
 			
 		} else {
 			operator.buttons[3].whileHeld(new ClimberCommand());

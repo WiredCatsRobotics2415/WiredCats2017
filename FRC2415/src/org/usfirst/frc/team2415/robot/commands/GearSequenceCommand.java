@@ -126,7 +126,7 @@ public class GearSequenceCommand extends Command {
 //    		else speed = 0;
 //    	}
     	
-    	Robot.groundGearSubsystem.setMotor(speed);
+    	Robot.groundGearSubsystem.setMotor(-speed);
     	if (state) Robot.groundGearSubsystem.raiseIntake();
     	else Robot.groundGearSubsystem.dropIntake();
     	
