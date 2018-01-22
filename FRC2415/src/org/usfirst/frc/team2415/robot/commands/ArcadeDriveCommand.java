@@ -2,8 +2,6 @@ package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
-import com.ctre.CANTalon.TalonControlMode;
-
 import cheesy.CheesyDriveHelper;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -22,7 +20,6 @@ public class ArcadeDriveCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveSubsystem.changeControlMode(TalonControlMode.PercentVbus);
 		Robot.driveSubsystem.stopMotors();
 	}
 

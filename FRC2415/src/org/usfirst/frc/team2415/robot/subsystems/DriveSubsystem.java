@@ -1,12 +1,13 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.commands.VelocityDriveCommand;
+import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
 import org.usfirst.frc.team2415.robot.utilities.PixyCam;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import cheesy.DriveSignal;
@@ -19,7 +20,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 
-	private CANTalon leftTalBack, leftTalFront, rightTalBack, rightTalFront;
+	private TalonSRX leftTalBack, leftTalFront, rightTalBack, rightTalFront;
 	public AHRS ahrs;
 	private PixyCam pixy;
 
@@ -52,88 +53,50 @@ public class DriveSubsystem extends Subsystem {
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
 
-		leftTalBack = new CANTalon(RobotMap.LEFT_TALON_BACK);
-		leftTalFront = new CANTalon(RobotMap.LEFT_TALON_FRONT);
-		rightTalBack = new CANTalon(RobotMap.RIGHT_TALON_BACK);
-		rightTalFront = new CANTalon(RobotMap.RIGHT_TALON_FRONT);
+		leftTalBack = new TalonSRX(RobotMap.LEFT_TALON_BACK);
+		leftTalFront = new TalonSRX(RobotMap.LEFT_TALON_FRONT);
+		rightTalBack = new TalonSRX(RobotMap.RIGHT_TALON_BACK);
+		rightTalFront = new TalonSRX(RobotMap.RIGHT_TALON_FRONT);
 
-		leftTalBack.changeControlMode(TalonControlMode.Follower);
-		leftTalBack.set(leftTalFront.getDeviceID());
-		rightTalBack.changeControlMode(TalonControlMode.Follower);
-		rightTalBack.set(rightTalFront.getDeviceID());
+		leftTalBack.set(ControlMode.Follower, leftTalFront.getDeviceID());
+		rightTalBack.set(ControlMode.Follower, rightTalFront.getDeviceID());
 
-		leftTalFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		rightTalFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		leftTalFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+		rightTalFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 
-		leftTalFront.enableBrakeMode(false);
-		rightTalFront.enableBrakeMode(false);
+		leftTalFront.setNeutralMode(NeutralMode.Brake);
+		rightTalFront.setNeutralMode(NeutralMode.Brake);
 
 	}
 
 	public void stopMotors() {
-		leftTalFront.set(0);
-		rightTalFront.set(0);
+		leftTalFront.set(ControlMode.PercentOutput, 0);
+		rightTalFront.set(ControlMode.PercentOutput, 0);
 	}
 
 	public void setMotors(double left, double right) {
-		leftTalFront.set(-left);
-		rightTalFront.set(right);
+		leftTalFront.set(ControlMode.PercentOutput, -left);
+		rightTalFront.set(ControlMode.PercentOutput, right);
 	}
 
 	public void setMotors(DriveSignal signal) {
-		leftTalonFront.set(signal.getLeft());
-		rightTalonFront.set(-signal.getRight());
+		leftTalFront.set(ControlMode.PercentOutput, -signal.getLeft());
+		rightTalFront.set(ControlMode.PercentOutput, signal.getRight());
 	}
 
 	public void setLeft(double speed) {
-		leftTalFront.set(-speed);
+		leftTalFront.set(ControlMode.PercentOutput, -speed);
 	}
 
 	public void setRight(double speed) {
-		rightTalFront.set(speed);
+		rightTalFront.set(ControlMode.PercentOutput, speed);
 	}
 
-	public void setBreakMode(boolean mode) {
-		leftTalFront.enableBrakeMode(mode);
-		rightTalFront.enableBrakeMode(mode);
-		leftTalBack.enableBrakeMode(mode);
-		rightTalBack.enableBrakeMode(mode);
-	}
-
-	public void setTalonLimits(double max) {
-		leftTalBack.configPeakOutputVoltage(max, -max);
-		rightTalBack.configPeakOutputVoltage(max, -max);
-	}
-
-	public void changeControlMode(TalonControlMode mode) {
-		leftTalFront.changeControlMode(mode);
-		rightTalFront.changeControlMode(mode);
-
-		if (mode == TalonControlMode.Speed) {
-			// TODO: see 12.4
-			leftTalFront.configNominalOutputVoltage(0, 0);
-			leftTalFront.configPeakOutputVoltage(12, -12);
-			setPIDF(leftTalFront, .1696969696, 0, 0, 2 / 1000);
-
-			rightTalFront.configNominalOutputVoltage(0, 0);
-			rightTalFront.configPeakOutputVoltage(12, -12);
-			setPIDF(rightTalFront, .175, 0, 0, 2 / 1000);
-
-		} else if (mode == TalonControlMode.Position) {
-			leftTalFront.configNominalOutputVoltage(0, 0);
-			leftTalFront.configPeakOutputVoltage(12, -12);
-			setPIDF(leftTalFront, 1.125, 0, 0, 0);
-
-			rightTalFront.configNominalOutputVoltage(0, 0);
-			rightTalFront.configPeakOutputVoltage(12, -12);
-			setPIDF(rightTalFront, 1.125, 0, 0, 0);
-		}
-	}
-
-	public void setPIDF(CANTalon talon, double kP, double kI, double kD, double kF) {
-		talon.setProfile(0);
-		talon.setPID(kP, kI, kD);
-		talon.setF(kF);
+	public void setBreakMode(NeutralMode mode) {
+		leftTalFront.setNeutralMode(mode);
+		rightTalFront.setNeutralMode(mode);
+		leftTalBack.setNeutralMode(mode);
+		rightTalBack.setNeutralMode(mode);
 	}
 
 	public double getPitch() {
@@ -160,39 +123,5 @@ public class DriveSubsystem extends Subsystem {
 		return (fps * 60) / (WHEEL_CIRCUMFERENCE);
 	}
 
-	public double[] getDistance() {
-		return new double[] { leftTalFront.getPosition() * WHEEL_CIRCUMFERENCE,
-				rightTalFront.getPosition() * WHEEL_CIRCUMFERENCE };
-	}
-
-	public void zeroEncoders() {
-		leftTalFront.setPosition(0);
-		rightTalFront.setPosition(0);
-	}
-
-	public double[] getVelocity() {
-		return new double[] { leftTalFront.getSpeed(), rightTalFront.getSpeed() };
-	}
-
-	public double[] getError() {
-		return new double[] { leftTalFront.getClosedLoopError(), rightTalFront.getClosedLoopError() };
-	}
-
-	// no slip @ 27.4285714286
-	public void setLeftRampRate(double rate) {
-		leftTalFront.setVoltageRampRate(rate);
-	}
-
-	public void setRightRampRate(double rate) {
-		rightTalFront.setVoltageRampRate(rate);
-	}
-
-	public double getVoltage() {
-		return leftTalFront.getOutputVoltage() / leftTalFront.getBusVoltage();
-	}
-
-	public void updateStatus() {
-
-	}
 
 }
