@@ -30,10 +30,10 @@ public class ArcadeDriveCommand extends Command {
 		double rightX;
 
 		if (Robot.singlePlayerMode) {
-			leftY = Robot.operator.Y();
+			leftY = -Robot.operator.Y();
 			rightX = Robot.operator.X();
 		} else {
-			leftY = Robot.gamepad.leftY();
+			leftY = -Robot.gamepad.leftY();
 			rightX = Robot.gamepad.rightX();
 		}
 

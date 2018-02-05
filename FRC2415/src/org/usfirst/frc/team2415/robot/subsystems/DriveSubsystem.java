@@ -66,6 +66,17 @@ public class DriveSubsystem extends Subsystem {
 
 		leftTalFront.setNeutralMode(NeutralMode.Brake);
 		rightTalFront.setNeutralMode(NeutralMode.Brake);
+		
+		leftTalFront.configPeakCurrentLimit(35, 10);
+		leftTalFront.configPeakCurrentDuration(200, 10);
+		leftTalFront.configContinuousCurrentLimit(30, 10);
+		leftTalFront.enableCurrentLimit(true);
+		
+		rightTalFront.configPeakCurrentLimit(30, 10);
+		rightTalFront.configPeakCurrentDuration(200, 10);
+		rightTalFront.configContinuousCurrentLimit(25, 10);
+		rightTalFront.enableCurrentLimit(true);
+		
 
 	}
 
